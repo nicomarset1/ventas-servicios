@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 
 export default function ScrollToTopProgress() {
   const [progress, setProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const updateProgress = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       const nextProgress = scrollable > 0 ? window.scrollY / scrollable : 0;
       setProgress(Math.max(0, Math.min(1, nextProgress)));
+      setIsVisible(window.scrollY > 180);
     };
 
     updateProgress();
@@ -30,10 +32,12 @@ export default function ScrollToTopProgress() {
 
   return (
     <button
-      className="scroll-indicator"
+      className={`scroll-indicator ${isVisible ? "is-visible" : ""}`}
       type="button"
       onClick={handleClick}
       aria-label="Volver al inicio"
+      aria-hidden={!isVisible}
+      tabIndex={isVisible ? 0 : -1}
       style={{ "--scroll-progress": `${progress * 100}%` } as CSSProperties}
     >
       <ArrowUp size={23} />
