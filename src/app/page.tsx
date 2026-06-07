@@ -1,7 +1,7 @@
 import Image from "next/image";
+import ScrollToTopProgress from "./ScrollToTopProgress";
 import {
   ArrowRight,
-  ArrowUp,
   BarChart3,
   Blocks,
   Bot,
@@ -495,12 +495,7 @@ export default function Home() {
         </div>
       </footer>
 
-      <a className="scroll-indicator" href="#inicio" aria-label="Volver al inicio">
-        <span className="scroll-rail" aria-hidden="true" />
-        <span className="scroll-ring" aria-hidden="true">
-          <ArrowUp size={22} />
-        </span>
-      </a>
+      <ScrollToTopProgress />
     </main>
   );
 }
