@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {
   ArrowRight,
+  ArrowUp,
   BarChart3,
   Blocks,
   Bot,
@@ -49,7 +50,7 @@ const services = [
 ];
 
 const trustSignals = [
-  { value: "1:1", label: "Atencion directa conmigo" },
+  { value: "1:1", label: "Atencion directa del equipo" },
   { value: "100%", label: "Responsive y preparado para publicar" },
   { value: "24/7", label: "Tu web o sistema disponible online" },
   { value: "+IA", label: "Automatizaciones cuando aportan valor" },
@@ -72,22 +73,22 @@ const process = [
   {
     step: "01",
     title: "Diagnostico",
-    text: "Entiendo el negocio, el objetivo comercial y las tareas que hoy te hacen perder tiempo.",
+    text: "Se analiza el negocio, el objetivo comercial y las tareas que hoy frenan la operacion.",
   },
   {
     step: "02",
     title: "Mapa de pantallas",
-    text: "Defino secciones, formularios, datos, acciones y recorrido del usuario antes de desarrollar.",
+    text: "Se definen secciones, formularios, datos, acciones y recorridos antes de desarrollar.",
   },
   {
     step: "03",
     title: "Construccion",
-    text: "Desarrollo la web o sistema con una interfaz prolija, veloz y preparada para crecer.",
+    text: "Se construye la web o sistema con una interfaz prolija, veloz y preparada para crecer.",
   },
   {
     step: "04",
     title: "Publicacion",
-    text: "Probamos formularios, enlaces, responsive, rendimiento y dejamos la version online.",
+    text: "Se prueban formularios, enlaces, responsive y rendimiento antes de dejar la version online.",
   },
 ];
 
@@ -183,15 +184,15 @@ export default function Home() {
             <p className="eyebrow">
               <Sparkles size={16} /> Desarrollo de software a medida
             </p>
-            <h1>Webs y sistemas premium para vender, gestionar y crecer con tecnologia propia</h1>
+            <h1>Creamos software a medida para negocios que venden, operan y escalan</h1>
             <p className="hero-copy">
-              Creo paginas web, catalogos, paneles internos y sistemas de stock para negocios que
-              necesitan una herramienta clara, rapida y confiable. Diseno, desarrollo y publicacion
-              en una misma solucion.
+              Traducimos objetivos comerciales y procesos internos en sitios web, catalogos, paneles
+              de gestion y sistemas de stock. Tecnologia clara, rapida y confiable para convertir
+              consultas, ordenar operaciones y sostener el crecimiento.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href={whatsappUrl}>
-                <MessageCircle size={20} /> Hablar por WhatsApp
+                <MessageCircle size={20} /> Solicitar diagnostico
               </a>
               <a className="button button-secondary" href="#trabajos">
                 Ver proyecto real <ArrowRight size={19} />
@@ -286,7 +287,7 @@ export default function Home() {
       <section className="section services-section" id="servicios">
         <div className="container">
           <div className="section-heading">
-            <p className="eyebrow"><Code2 size={16} /> Que puedo crear</p>
+            <p className="eyebrow"><Code2 size={16} /> Soluciones digitales</p>
             <h2>Soluciones concretas para que tu negocio deje de depender de parches</h2>
           </div>
           <div className="service-grid">
@@ -320,7 +321,7 @@ export default function Home() {
               <Gauge size={22} />
               <span>
                 <strong>Performance, claridad y confianza</strong>
-                Cada pantalla se piensa para que el cliente entienda rapido y para que vos puedas operar sin friccion.
+                Cada pantalla se piensa para que el cliente entienda rapido y la operacion diaria avance sin friccion.
               </span>
             </div>
           </div>
@@ -358,7 +359,7 @@ export default function Home() {
           <div className="section-heading section-heading-row">
             <div>
               <p className="eyebrow"><LayoutDashboard size={16} /> Proyecto destacado</p>
-              <h2>Una muestra real del tipo de software que puedo construir</h2>
+              <h2>Una muestra real del tipo de software que se puede construir</h2>
             </div>
             <p className="section-note">
               Este primer caso muestra una tienda con funcionalidades reales. A medida que termine
@@ -413,8 +414,8 @@ export default function Home() {
             <p className="eyebrow"><Bot size={16} /> Extra profesional</p>
             <h2>Automatizaciones e IA cuando realmente mejoran el negocio</h2>
             <p>
-              Puedo sumar respuestas automaticas, clasificacion de consultas, reportes, formularios
-              inteligentes o integraciones con herramientas que ya uses.
+              Se pueden sumar respuestas automaticas, clasificacion de consultas, reportes,
+              formularios inteligentes o integraciones con herramientas ya existentes.
             </p>
           </div>
           <div className="automation-flow" aria-hidden="true">
@@ -460,11 +461,11 @@ export default function Home() {
       <section className="contact-section" id="contacto">
         <div className="container contact-grid">
           <div className="reveal">
-            <p className="eyebrow"><MousePointer2 size={16} /> Hablemos</p>
-            <h2>Contame que queres vender, mostrar o gestionar</h2>
+            <p className="eyebrow"><MousePointer2 size={16} /> Diagnostico inicial</p>
+            <h2>El proximo sistema empieza con una conversacion clara</h2>
             <p>
-              Mandame un mensaje con tu idea, rubro y que problema queres resolver. Te respondo
-              con una propuesta de alcance y proximos pasos.
+              El primer paso es entender el rubro, el objetivo y el problema operativo o comercial
+              a resolver. A partir de eso se propone un alcance concreto y los proximos pasos.
             </p>
           </div>
           <div className="contact-actions reveal reveal-delay-2">
@@ -493,6 +494,13 @@ export default function Home() {
           <span>Desarrollo de software, paginas web, paneles de gestion y sistemas de stock</span>
         </div>
       </footer>
+
+      <a className="scroll-indicator" href="#inicio" aria-label="Volver al inicio">
+        <span className="scroll-rail" aria-hidden="true" />
+        <span className="scroll-ring" aria-hidden="true">
+          <ArrowUp size={22} />
+        </span>
+      </a>
     </main>
   );
 }
