@@ -16,8 +16,8 @@ Abrir `http://localhost:3008` si se usa el puerto iniciado por Codex, o el puert
 Editar estas constantes en `src/app/page.tsx`:
 
 ```ts
-const whatsappNumber = "5492230000000";
-const email = "tu-email@ejemplo.com";
+const whatsappNumber = "5492234264682";
+const email = "nicolasmarsetg@gmail.com";
 const agrovetProjectUrl = "";
 ```
 

@@ -17,8 +17,8 @@ import {
   Store,
 } from "lucide-react";
 
-const whatsappNumber = "5492230000000";
-const email = "tu-email@ejemplo.com";
+const whatsappNumber = "5492234264682";
+const email = "nicolasmarsetg@gmail.com";
 const agrovetProjectUrl = "";
 
 const services = [
@@ -81,7 +81,7 @@ const projects = [
 
 export default function Home() {
   const message =
-    "Hola, quiero consultar por desarrollo de software a medida para mi negocio.";
+    "Hola Nicolas, quiero hacer una consulta por desarrollo de software a medida para mi negocio.";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   const mailUrl = `mailto:${email}?subject=${encodeURIComponent(
     "Consulta por desarrollo de software a medida"
