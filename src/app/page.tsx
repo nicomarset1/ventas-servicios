@@ -63,8 +63,8 @@ const stack = ["Next.js", "React", "Base de datos", "APIs", "WhatsApp", "Deploy"
 
 const navItems = [
   { id: "servicios", label: "Servicios" },
-  { id: "trabajos", label: "Proyectos" },
   { id: "proceso", label: "Proceso" },
+  { id: "trabajos", label: "Proyectos" },
   { id: "planes", label: "Planes" },
   { id: "contacto", label: "Contacto" },
 ];
