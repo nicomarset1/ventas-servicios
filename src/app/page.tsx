@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import ScrollToTopProgress from "./ScrollToTopProgress";
 import {
@@ -60,6 +61,14 @@ const trustSignals = [
 
 const stack = ["Next.js", "React", "Base de datos", "APIs", "WhatsApp", "Deploy"];
 
+const navItems = [
+  { id: "servicios", label: "Servicios" },
+  { id: "trabajos", label: "Proyectos" },
+  { id: "proceso", label: "Proceso" },
+  { id: "planes", label: "Planes" },
+  { id: "contacto", label: "Contacto" },
+];
+
 const features = [
   "Diseno responsive para celular, tablet y escritorio",
   "Carga rapida y estructura clara para Google",
@@ -118,35 +127,77 @@ const projects = [
     name: "Agrovet MDP",
     status: "Tienda online",
     type: "Catalogo + carrito",
-    pageUrl: "/proyectos/agrovet",
     liveUrl: agrovetProjectUrl,
     image: "/agrovet-preview-actual.png",
     description:
       "Una tienda online para veterinaria y pet shop con enfoque comercial, navegacion limpia y base lista para seguir creciendo.",
     chips: ["Responsive", "Carrito", "Stock"],
-    highlights: ["Catalogo de productos", "Pedidos online", "Panel de gestion"],
   },
   {
     name: "Mecanica Marset",
-    status: "Sitio local",
+    status: "Sitio online",
     type: "Taller mecanico",
-    pageUrl: "/proyectos/mecanica-marset",
-    liveUrl: "",
+    liveUrl: "https://mecanicamarset.netlify.app/",
     image: "/pag-taller-preview.png",
     description:
       "Sitio informativo para un taller mecanico con hero fuerte, turnos por WhatsApp, resenas, ubicacion y contenido pensado para generar confianza.",
-    chips: ["WhatsApp", "resenas", "Ubicacion"],
-    highlights: ["Atencion por turno", "Mapa embebido", "Prueba social"],
+    chips: ["WhatsApp", "Resenas", "Ubicacion"],
   },
 ];
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState("inicio");
   const message =
     "Hola Nicolas, quiero hacer una consulta por desarrollo de software a medida para mi negocio.";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   const mailUrl = `mailto:${email}?subject=${encodeURIComponent(
     "Consulta por desarrollo de software a medida"
   )}&body=${encodeURIComponent(message)}`;
+
+  useEffect(() => {
+    const sections = ["inicio", ...navItems.map((item) => item.id)];
+    let frame = 0;
+
+    const updateActiveSection = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const marker = 360;
+        let current = "inicio";
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        sections.forEach((id) => {
+          const element = document.getElementById(id);
+          if (!element) return;
+
+          const rect = element.getBoundingClientRect();
+          const distance = Math.abs(rect.top - marker);
+
+          if (rect.top <= marker && rect.bottom > marker) {
+            current = id;
+            closestDistance = 0;
+            return;
+          }
+
+          if (rect.top <= marker && distance < closestDistance) {
+            current = id;
+            closestDistance = distance;
+          }
+        });
+
+        setActiveSection(current);
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
 
   return (
     <main>
@@ -164,11 +215,16 @@ export default function Home() {
           </span>
         </a>
         <nav className="nav" aria-label="Principal">
-          <a href="#servicios">Servicios</a>
-          <a href="#trabajos">Proyectos</a>
-          <a href="#proceso">Proceso</a>
-          <a href="#planes">Planes</a>
-          <a href="#contacto">Contacto</a>
+          {navItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={activeSection === item.id ? "is-active" : ""}
+              aria-current={activeSection === item.id ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
         <a className="header-cta" href={whatsappUrl}>
           <MessageCircle size={18} />
@@ -417,25 +473,11 @@ export default function Home() {
                         <span key={chip}>{chip}</span>
                       ))}
                     </div>
-                    <div className="project-actions">
-                      <a className="button project-link" href={project.pageUrl}>
-                        Ver pagina
-                        <ArrowRight size={18} />
-                      </a>
-                      {project.liveUrl ? (
-                        <a className="project-text-link" href={project.liveUrl} target="_blank" rel="noreferrer">
-                          Abrir sitio online <ExternalLink size={16} />
-                        </a>
-                      ) : (
-                        <span className="project-text-link project-text-muted">No publicado aun</span>
-                      )}
-                    </div>
+                    <a className="button project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                      Abrir sitio online
+                      <ExternalLink size={18} />
+                    </a>
                   </div>
-                  <ul className="project-highlights">
-                    {project.highlights.map((point) => (
-                      <li key={point}><Check size={15} /> {point}</li>
-                    ))}
-                  </ul>
                 </div>
               </article>
             ))}
@@ -591,8 +633,10 @@ export default function Home() {
 
         .project-grid {
           display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 14px;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 10px;
+          max-width: 880px;
+          margin: 0 auto;
         }
 
         .project-card {
@@ -600,20 +644,20 @@ export default function Home() {
           border-radius: 8px;
           overflow: hidden;
           background: white;
-          box-shadow: 0 14px 36px rgba(11, 16, 20, 0.08);
+          box-shadow: 0 12px 28px rgba(11, 16, 20, 0.07);
           transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
         }
 
         .project-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-3px);
           border-color: rgba(8, 124, 123, 0.28);
-          box-shadow: 0 22px 52px rgba(11, 16, 20, 0.12);
+          box-shadow: 0 18px 42px rgba(11, 16, 20, 0.1);
         }
 
         .project-preview {
           position: relative;
           border-bottom: 1px solid var(--line);
-          aspect-ratio: 16 / 11;
+          aspect-ratio: 16 / 8.2;
           background:
             linear-gradient(135deg, rgba(8, 124, 123, 0.1), rgba(239, 107, 74, 0.1)),
             #fbf8ff;
@@ -676,13 +720,13 @@ export default function Home() {
         }
 
         .project-content {
-          padding: 16px;
+          padding: 10px;
           display: grid;
-          gap: 14px;
+          gap: 10px;
         }
 
         .project-meta {
-          margin-bottom: 10px;
+          margin-bottom: 8px;
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
@@ -703,26 +747,26 @@ export default function Home() {
 
         .project-content h3 {
           margin: 0;
-          font-size: clamp(20px, 1.8vw, 26px);
+          font-size: clamp(17px, 1.4vw, 20px);
           line-height: 1.05;
         }
 
         .project-content p {
-          margin: 8px 0 0;
+          margin: 7px 0 0;
           color: var(--muted);
-          line-height: 1.55;
-          font-size: 14px;
+          line-height: 1.4;
+          font-size: 12.5px;
         }
 
         .project-chips {
-          margin-top: 12px;
+          margin-top: 8px;
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
         }
 
         .project-chips span {
-          min-height: 30px;
+          min-height: 26px;
           padding: 0 10px;
           border: 1px solid rgba(8, 124, 123, 0.14);
           border-radius: 8px;
@@ -734,66 +778,23 @@ export default function Home() {
           font-weight: 820;
         }
 
-        .project-actions {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-          align-items: center;
-        }
-
-        .project-text-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          color: var(--teal-dark);
-          font-size: 13px;
-          font-weight: 850;
-        }
-
-        .project-text-muted {
-          color: var(--muted);
-          font-weight: 800;
-        }
-
-        .project-highlights {
-          margin: 0;
-          padding: 0;
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 10px;
-          list-style: none;
-        }
-
-        .project-highlights li {
-          min-height: 44px;
-          padding: 10px 12px;
-          border: 1px solid var(--line);
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          color: var(--text);
-          background: var(--soft);
-          font-size: 13px;
-          font-weight: 820;
-        }
-
-        .project-highlights li svg {
-          color: var(--coral);
-          flex: 0 0 auto;
-        }
-
         .project-link {
-          min-height: 42px;
+          min-height: 38px;
           width: fit-content;
           margin-top: 0;
-          padding: 0 16px;
+          padding: 0 14px;
           background: var(--teal);
           color: white;
         }
 
         .project-link:hover {
           background: var(--teal-dark);
+        }
+
+        .nav a.is-active {
+          color: white;
+          background: rgba(255, 255, 255, 0.14);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
         }
 
         .assurance-section {
@@ -895,17 +896,16 @@ export default function Home() {
         }
 
         @media (max-width: 920px) {
-          .project-grid,
           .assurance-shell {
+            grid-template-columns: 1fr;
+          }
+
+          .project-grid {
             grid-template-columns: 1fr;
           }
         }
 
         @media (max-width: 640px) {
-          .project-highlights {
-            grid-template-columns: 1fr;
-          }
-
           .project-link {
             width: 100%;
           }
