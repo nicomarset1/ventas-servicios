@@ -28,7 +28,7 @@ import {
 
 const whatsappNumber = "5492234264682";
 const email = "nicolasmarsetg@gmail.com";
-const agrovetProjectUrl = "";
+const agrovetProjectUrl = "https://agrovet-gestion-y-web.vercel.app";
 
 const services = [
   {
@@ -118,25 +118,25 @@ const projects = [
     name: "Agrovet MDP",
     status: "Tienda online",
     type: "Catalogo + carrito",
-    url: agrovetProjectUrl,
+    pageUrl: "/proyectos/agrovet",
+    liveUrl: agrovetProjectUrl,
     image: "/agrovet-preview-actual.png",
     description:
       "Una tienda online para veterinaria y pet shop con enfoque comercial, navegacion limpia y base lista para seguir creciendo.",
     chips: ["Responsive", "Carrito", "Stock"],
-    note: "Proyecto en evolucion con base real de negocio.",
-    stats: ["Catalogo de productos", "Pedidos online", "Panel de gestion"],
+    highlights: ["Catalogo de productos", "Pedidos online", "Panel de gestion"],
   },
   {
     name: "Mecanica Marset",
     status: "Sitio local",
     type: "Taller mecanico",
-    url: "",
+    pageUrl: "/proyectos/mecanica-marset",
+    liveUrl: "",
     image: "/pag-taller-preview.png",
     description:
-      "Sitio informativo para un taller mecanico con hero fuerte, turnos por WhatsApp, reseñas, ubicacion y contenido pensado para generar confianza.",
-    chips: ["WhatsApp", "Reseñas", "Ubicacion"],
-    note: "Disponible como proyecto de portfolio.",
-    stats: ["Atencion por turno", "Mapa embebido", "Prueba social"],
+      "Sitio informativo para un taller mecanico con hero fuerte, turnos por WhatsApp, resenas, ubicacion y contenido pensado para generar confianza.",
+    chips: ["WhatsApp", "resenas", "Ubicacion"],
+    highlights: ["Atencion por turno", "Mapa embebido", "Prueba social"],
   },
 ];
 
@@ -417,26 +417,65 @@ export default function Home() {
                         <span key={chip}>{chip}</span>
                       ))}
                     </div>
-                    <a
-                      className={`button project-link ${project.url ? "" : "button-disabled"}`}
-                      href={project.url || "#trabajos"}
-                      target={project.url ? "_blank" : undefined}
-                      rel={project.url ? "noreferrer" : undefined}
-                      aria-disabled={!project.url}
-                    >
-                      {project.url ? "Ver proyecto online" : "Proyecto en portfolio"}
-                      {project.url ? <ExternalLink size={18} /> : <Clock3 size={18} />}
-                    </a>
+                    <div className="project-actions">
+                      <a className="button project-link" href={project.pageUrl}>
+                        Ver pagina
+                        <ArrowRight size={18} />
+                      </a>
+                      {project.liveUrl ? (
+                        <a className="project-text-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                          Abrir sitio online <ExternalLink size={16} />
+                        </a>
+                      ) : (
+                        <span className="project-text-link project-text-muted">No publicado aun</span>
+                      )}
+                    </div>
                   </div>
-                  <ul className="project-points">
-                    {project.stats.map((point) => (
+                  <ul className="project-highlights">
+                    {project.highlights.map((point) => (
                       <li key={point}><Check size={15} /> {point}</li>
                     ))}
                   </ul>
-                  <p className="project-note">{project.note}</p>
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section assurance-section">
+        <div className="container assurance-shell reveal">
+          <div className="assurance-copy">
+            <p className="eyebrow"><ShieldCheck size={16} /> Garantia y orden</p>
+            <h2>Si algo no queda como lo acordamos, se ajusta hasta que quede correcto.</h2>
+            <p>
+              Trabajo con revisiones claras, seguimiento directo y una entrega pensada para que no
+              tengas una pagina suelta sino una presencia comercial seria.
+            </p>
+            <div className="assurance-list">
+              <span>Revisiones incluidas</span>
+              <span>Sin letra chica</span>
+              <span>Soporte por WhatsApp</span>
+              <span>Entrega lista para publicar</span>
+            </div>
+          </div>
+          <div className="assurance-stats" aria-label="Indicadores de valor">
+            <div>
+              <strong>2</strong>
+              <span>Proyectos en portada</span>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <span>Responsive</span>
+            </div>
+            <div>
+              <strong>24/7</strong>
+              <span>Disponible online</span>
+            </div>
+            <div>
+              <strong>1:1</strong>
+              <span>Atencion directa</span>
+            </div>
           </div>
         </div>
       </section>
@@ -530,7 +569,7 @@ export default function Home() {
 
       <style jsx global>{`
         .work-proofs {
-          margin-bottom: 18px;
+          margin-bottom: 16px;
           display: flex;
           flex-wrap: wrap;
           gap: 10px;
@@ -553,7 +592,7 @@ export default function Home() {
         .project-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 16px;
+          gap: 14px;
         }
 
         .project-card {
@@ -561,20 +600,20 @@ export default function Home() {
           border-radius: 8px;
           overflow: hidden;
           background: white;
-          box-shadow: 0 16px 48px rgba(11, 16, 20, 0.1);
+          box-shadow: 0 14px 36px rgba(11, 16, 20, 0.08);
           transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
         }
 
         .project-card:hover {
           transform: translateY(-4px);
           border-color: rgba(8, 124, 123, 0.28);
-          box-shadow: 0 24px 64px rgba(11, 16, 20, 0.14);
+          box-shadow: 0 22px 52px rgba(11, 16, 20, 0.12);
         }
 
         .project-preview {
           position: relative;
           border-bottom: 1px solid var(--line);
-          aspect-ratio: 16 / 10;
+          aspect-ratio: 16 / 11;
           background:
             linear-gradient(135deg, rgba(8, 124, 123, 0.1), rgba(239, 107, 74, 0.1)),
             #fbf8ff;
@@ -637,13 +676,13 @@ export default function Home() {
         }
 
         .project-content {
-          padding: 22px;
+          padding: 16px;
           display: grid;
-          gap: 18px;
+          gap: 14px;
         }
 
         .project-meta {
-          margin-bottom: 14px;
+          margin-bottom: 10px;
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
@@ -664,25 +703,26 @@ export default function Home() {
 
         .project-content h3 {
           margin: 0;
-          font-size: clamp(24px, 2.2vw, 32px);
+          font-size: clamp(20px, 1.8vw, 26px);
           line-height: 1.05;
         }
 
         .project-content p {
-          margin: 12px 0 0;
+          margin: 8px 0 0;
           color: var(--muted);
-          line-height: 1.65;
+          line-height: 1.55;
+          font-size: 14px;
         }
 
         .project-chips {
-          margin-top: 16px;
+          margin-top: 12px;
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
         }
 
         .project-chips span {
-          min-height: 32px;
+          min-height: 30px;
           padding: 0 10px;
           border: 1px solid rgba(8, 124, 123, 0.14);
           border-radius: 8px;
@@ -694,18 +734,39 @@ export default function Home() {
           font-weight: 820;
         }
 
-        .project-points {
+        .project-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          align-items: center;
+        }
+
+        .project-text-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: var(--teal-dark);
+          font-size: 13px;
+          font-weight: 850;
+        }
+
+        .project-text-muted {
+          color: var(--muted);
+          font-weight: 800;
+        }
+
+        .project-highlights {
           margin: 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 10px;
           list-style: none;
         }
 
-        .project-points li {
-          min-height: 52px;
-          padding: 12px;
+        .project-highlights li {
+          min-height: 44px;
+          padding: 10px 12px;
           border: 1px solid var(--line);
           border-radius: 8px;
           display: flex;
@@ -717,14 +778,16 @@ export default function Home() {
           font-weight: 820;
         }
 
-        .project-points li svg {
+        .project-highlights li svg {
           color: var(--coral);
           flex: 0 0 auto;
         }
 
         .project-link {
+          min-height: 42px;
           width: fit-content;
-          margin-top: 2px;
+          margin-top: 0;
+          padding: 0 16px;
           background: var(--teal);
           color: white;
         }
@@ -733,39 +796,131 @@ export default function Home() {
           background: var(--teal-dark);
         }
 
-        .project-note {
-          margin: 0;
-          color: var(--muted);
-          font-size: 14px;
+        .assurance-section {
+          background:
+            radial-gradient(circle at 10% 20%, rgba(255, 196, 61, 0.12), transparent 22rem),
+            linear-gradient(180deg, #0b1014, #121922);
+          color: white;
         }
 
-        .button-disabled,
-        .button-disabled:hover {
-          background: #e9eeee;
-          color: #637076;
-          border-color: #d8e1e2;
-          box-shadow: none;
-          cursor: default;
-          transform: none;
+        .assurance-shell {
+          display: grid;
+          grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+          gap: 18px;
+          align-items: stretch;
+        }
+
+        .assurance-copy,
+        .assurance-stats {
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(14px);
+          box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+        }
+
+        .assurance-copy {
+          padding: 28px;
+        }
+
+        .assurance-copy h2 {
+          margin: 12px 0 0;
+          color: white;
+          font-size: clamp(28px, 3vw, 42px);
+          line-height: 1.06;
+        }
+
+        .assurance-copy p {
+          margin: 16px 0 0;
+          color: rgba(255, 255, 255, 0.72);
+          line-height: 1.7;
+          font-size: 16px;
+        }
+
+        .assurance-list {
+          margin-top: 22px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .assurance-list span {
+          min-height: 34px;
+          padding: 0 12px;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          color: white;
+          background: rgba(255, 255, 255, 0.05);
+          font-size: 13px;
+          font-weight: 850;
+        }
+
+        .assurance-stats {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          overflow: hidden;
+        }
+
+        .assurance-stats div {
+          min-height: 150px;
+          padding: 22px;
+          border-right: 1px solid rgba(255, 255, 255, 0.08);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          display: grid;
+          align-content: center;
+          gap: 8px;
+          text-align: center;
+        }
+
+        .assurance-stats div:nth-child(2n) {
+          border-right: 0;
+        }
+
+        .assurance-stats div:nth-last-child(-n + 2) {
+          border-bottom: 0;
+        }
+
+        .assurance-stats strong {
+          color: #8c7bff;
+          font-size: clamp(34px, 4vw, 54px);
+          line-height: 1;
+        }
+
+        .assurance-stats span {
+          color: rgba(255, 255, 255, 0.74);
+          font-size: 15px;
+          font-weight: 800;
         }
 
         @media (max-width: 920px) {
-          .project-grid {
+          .project-grid,
+          .assurance-shell {
             grid-template-columns: 1fr;
           }
         }
 
         @media (max-width: 640px) {
-          .project-points {
+          .project-highlights {
             grid-template-columns: 1fr;
-          }
-
-          .project-preview {
-            aspect-ratio: 16 / 10;
           }
 
           .project-link {
             width: 100%;
+          }
+
+          .assurance-copy {
+            padding: 22px;
+          }
+
+          .assurance-stats {
+            grid-template-columns: 1fr;
+          }
+
+          .assurance-stats div {
+            min-height: 120px;
+            border-right: 0;
           }
         }
       `}</style>
