@@ -466,17 +466,21 @@ export default function Home() {
                       <span className="status-pill">{project.status}</span>
                       <span className="project-kind">{project.type}</span>
                     </div>
-                    <h3>{project.name}</h3>
-                    <p>{project.description}</p>
-                    <div className="project-chips" aria-label={`Tecnologias y rasgos de ${project.name}`}>
-                      {project.chips.map((chip) => (
-                        <span key={chip}>{chip}</span>
-                      ))}
+                    <div className="project-body">
+                      <h3>{project.name}</h3>
+                      <p>{project.description}</p>
                     </div>
-                    <a className="button project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
-                      Abrir sitio online
-                      <ExternalLink size={18} />
-                    </a>
+                    <div className="project-footer">
+                      <div className="project-chips" aria-label={`Tecnologias y rasgos de ${project.name}`}>
+                        {project.chips.map((chip) => (
+                          <span key={chip}>{chip}</span>
+                        ))}
+                      </div>
+                      <a className="button project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                        Abrir sitio online
+                        <ExternalLink size={18} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -734,6 +738,19 @@ export default function Home() {
           flex: 1;
           flex-direction: column;
           gap: 8px;
+          min-height: 0;
+        }
+
+        .project-body {
+          display: grid;
+          gap: 8px;
+          align-content: start;
+        }
+
+        .project-footer {
+          margin-top: auto;
+          display: grid;
+          gap: 8px;
         }
 
         .project-meta {
@@ -770,7 +787,6 @@ export default function Home() {
         }
 
         .project-chips {
-          margin-top: 8px;
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
