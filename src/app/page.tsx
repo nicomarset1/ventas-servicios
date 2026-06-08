@@ -722,7 +722,7 @@ export default function Home() {
         .project-content {
           padding: 10px;
           display: grid;
-          gap: 10px;
+          gap: 8px;
         }
 
         .project-meta {
@@ -779,16 +779,21 @@ export default function Home() {
         }
 
         .project-link {
-          min-height: 38px;
+          min-height: 34px;
           width: fit-content;
-          margin-top: 0;
-          padding: 0 14px;
+          margin-top: 6px;
+          padding: 0 12px;
           background: var(--teal);
           color: white;
+          align-self: start;
+          font-size: 13px;
+          border-radius: 7px;
+          box-shadow: 0 10px 22px rgba(8, 124, 123, 0.18);
         }
 
         .project-link:hover {
           background: var(--teal-dark);
+          box-shadow: 0 14px 28px rgba(8, 124, 123, 0.22);
         }
 
         .nav a.is-active {
