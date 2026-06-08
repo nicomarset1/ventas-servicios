@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import ScrollToTopProgress from "./ScrollToTopProgress";
 import {
@@ -114,13 +116,27 @@ const packages = [
 const projects = [
   {
     name: "Agrovet MDP",
-    status: "Proyecto destacado",
-    type: "Tienda online + gestion interna",
+    status: "Tienda online",
+    type: "Catalogo + carrito",
     url: agrovetProjectUrl,
     image: "/agrovet-preview-actual.png",
     description:
-      "Tienda online para una veterinaria/pet shop, con catalogo de productos, carrito, pedidos y estructura de administracion. Es un proyecto en evolucion, pero ya muestra una solucion real aplicada a un negocio concreto.",
-    points: ["Catalogo de productos", "Carrito y pedidos", "Panel de administracion", "Base para control de stock"],
+      "Una tienda online para veterinaria y pet shop con enfoque comercial, navegacion limpia y base lista para seguir creciendo.",
+    chips: ["Responsive", "Carrito", "Stock"],
+    note: "Proyecto en evolucion con base real de negocio.",
+    stats: ["Catalogo de productos", "Pedidos online", "Panel de gestion"],
+  },
+  {
+    name: "Mecanica Marset",
+    status: "Sitio local",
+    type: "Taller mecanico",
+    url: "",
+    image: "/pag-taller-preview.png",
+    description:
+      "Sitio informativo para un taller mecanico con hero fuerte, turnos por WhatsApp, reseñas, ubicacion y contenido pensado para generar confianza.",
+    chips: ["WhatsApp", "Reseñas", "Ubicacion"],
+    note: "Disponible como proyecto de portfolio.",
+    stats: ["Atencion por turno", "Mapa embebido", "Prueba social"],
   },
 ];
 
@@ -358,49 +374,66 @@ export default function Home() {
         <div className="container">
           <div className="section-heading section-heading-row">
             <div>
-              <p className="eyebrow"><LayoutDashboard size={16} /> Proyecto destacado</p>
-              <h2>Una muestra real del tipo de software que se puede construir</h2>
+              <p className="eyebrow"><LayoutDashboard size={16} /> Portfolio</p>
+              <h2>Proyectos reales, mostrados de forma mas limpia y ordenada</h2>
             </div>
             <p className="section-note">
-              Este primer caso muestra una tienda con funcionalidades reales. A medida que termine
-              nuevos trabajos, este apartado va creciendo.
+              Dos ejemplos actuales: una tienda online para Agrovet y un sitio para un taller mecanico.
             </p>
           </div>
-          <div className="work-grid">
+          <div className="work-proofs" aria-label="Señales de confianza">
+            <span><ShieldCheck size={16} /> Trabajo real</span>
+            <span><MousePointer2 size={16} /> CTA directo</span>
+            <span><Gauge size={16} /> Diseno ordenado</span>
+            <span><BarChart3 size={16} /> Pensado para vender</span>
+          </div>
+          <div className="project-grid">
             {projects.map((project) => (
-              <article className="work-card reveal" key={project.name}>
-                <div className="work-preview">
+              <article className="project-card reveal" key={project.name}>
+                <div className="project-preview">
                   <Image
                     src={project.image}
                     alt={`Vista previa del proyecto ${project.name}`}
                     width={1200}
-                    height={568}
+                    height={750}
                     loading="eager"
-                    sizes="(max-width: 920px) calc(100vw - 64px), 1100px"
+                    sizes="(max-width: 920px) calc(100vw - 56px), (max-width: 1280px) 46vw, 560px"
                   />
-                </div>
-                <div className="work-content">
-                  <div>
-                    <span className="status-pill">{project.status}</span>
-                    <h3>{project.name}</h3>
+                  <div className="project-badge">
+                    <span>{project.status}</span>
                     <strong>{project.type}</strong>
+                  </div>
+                </div>
+                <div className="project-content">
+                  <div>
+                    <div className="project-meta">
+                      <span className="status-pill">{project.status}</span>
+                      <span className="project-kind">{project.type}</span>
+                    </div>
+                    <h3>{project.name}</h3>
                     <p>{project.description}</p>
+                    <div className="project-chips" aria-label={`Tecnologias y rasgos de ${project.name}`}>
+                      {project.chips.map((chip) => (
+                        <span key={chip}>{chip}</span>
+                      ))}
+                    </div>
                     <a
-                      className={`button work-link ${project.url ? "" : "button-disabled"}`}
+                      className={`button project-link ${project.url ? "" : "button-disabled"}`}
                       href={project.url || "#trabajos"}
                       target={project.url ? "_blank" : undefined}
                       rel={project.url ? "noreferrer" : undefined}
                       aria-disabled={!project.url}
                     >
-                      {project.url ? "Ver proyecto online" : "Proximamente online"}
+                      {project.url ? "Ver proyecto online" : "Proyecto en portfolio"}
                       {project.url ? <ExternalLink size={18} /> : <Clock3 size={18} />}
                     </a>
                   </div>
-                  <ul>
-                    {project.points.map((point) => (
-                      <li key={point}><Check size={16} /> {point}</li>
+                  <ul className="project-points">
+                    {project.stats.map((point) => (
+                      <li key={point}><Check size={15} /> {point}</li>
                     ))}
                   </ul>
+                  <p className="project-note">{project.note}</p>
                 </div>
               </article>
             ))}
@@ -494,6 +527,248 @@ export default function Home() {
           <span>Desarrollo de software, paginas web, paneles de gestion y sistemas de stock</span>
         </div>
       </footer>
+
+      <style jsx global>{`
+        .work-proofs {
+          margin-bottom: 18px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .work-proofs span {
+          min-height: 34px;
+          padding: 0 12px;
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: var(--soft);
+          color: var(--text);
+          font-size: 13px;
+          font-weight: 820;
+        }
+
+        .project-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+        }
+
+        .project-card {
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          overflow: hidden;
+          background: white;
+          box-shadow: 0 16px 48px rgba(11, 16, 20, 0.1);
+          transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
+        .project-card:hover {
+          transform: translateY(-4px);
+          border-color: rgba(8, 124, 123, 0.28);
+          box-shadow: 0 24px 64px rgba(11, 16, 20, 0.14);
+        }
+
+        .project-preview {
+          position: relative;
+          border-bottom: 1px solid var(--line);
+          aspect-ratio: 16 / 10;
+          background:
+            linear-gradient(135deg, rgba(8, 124, 123, 0.1), rgba(239, 107, 74, 0.1)),
+            #fbf8ff;
+          overflow: hidden;
+        }
+
+        .project-preview::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(115deg, transparent 22%, rgba(255, 255, 255, 0.22), transparent 42%);
+          transform: translateX(-120%);
+          transition: transform 0.7s ease;
+          pointer-events: none;
+        }
+
+        .project-card:hover .project-preview::after {
+          transform: translateX(120%);
+        }
+
+        .project-preview img {
+          width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: cover;
+          object-position: top center;
+          transition: transform 0.34s ease;
+        }
+
+        .project-card:hover .project-preview img {
+          transform: scale(1.025);
+        }
+
+        .project-badge {
+          position: absolute;
+          left: 14px;
+          bottom: 14px;
+          padding: 10px 12px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          border-radius: 8px;
+          background: rgba(8, 14, 18, 0.72);
+          color: white;
+          backdrop-filter: blur(14px);
+        }
+
+        .project-badge span {
+          display: block;
+          color: rgba(255, 255, 255, 0.72);
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .project-badge strong {
+          display: block;
+          margin-top: 4px;
+          font-size: 14px;
+          line-height: 1.1;
+        }
+
+        .project-content {
+          padding: 22px;
+          display: grid;
+          gap: 18px;
+        }
+
+        .project-meta {
+          margin-bottom: 14px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          align-items: center;
+        }
+
+        .project-kind {
+          min-height: 32px;
+          padding: 0 12px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          color: var(--muted);
+          font-size: 12px;
+          font-weight: 850;
+        }
+
+        .project-content h3 {
+          margin: 0;
+          font-size: clamp(24px, 2.2vw, 32px);
+          line-height: 1.05;
+        }
+
+        .project-content p {
+          margin: 12px 0 0;
+          color: var(--muted);
+          line-height: 1.65;
+        }
+
+        .project-chips {
+          margin-top: 16px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .project-chips span {
+          min-height: 32px;
+          padding: 0 10px;
+          border: 1px solid rgba(8, 124, 123, 0.14);
+          border-radius: 8px;
+          display: inline-flex;
+          align-items: center;
+          background: rgba(8, 124, 123, 0.05);
+          color: var(--teal-dark);
+          font-size: 12px;
+          font-weight: 820;
+        }
+
+        .project-points {
+          margin: 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+          list-style: none;
+        }
+
+        .project-points li {
+          min-height: 52px;
+          padding: 12px;
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--text);
+          background: var(--soft);
+          font-size: 13px;
+          font-weight: 820;
+        }
+
+        .project-points li svg {
+          color: var(--coral);
+          flex: 0 0 auto;
+        }
+
+        .project-link {
+          width: fit-content;
+          margin-top: 2px;
+          background: var(--teal);
+          color: white;
+        }
+
+        .project-link:hover {
+          background: var(--teal-dark);
+        }
+
+        .project-note {
+          margin: 0;
+          color: var(--muted);
+          font-size: 14px;
+        }
+
+        .button-disabled,
+        .button-disabled:hover {
+          background: #e9eeee;
+          color: #637076;
+          border-color: #d8e1e2;
+          box-shadow: none;
+          cursor: default;
+          transform: none;
+        }
+
+        @media (max-width: 920px) {
+          .project-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .project-points {
+            grid-template-columns: 1fr;
+          }
+
+          .project-preview {
+            aspect-ratio: 16 / 10;
+          }
+
+          .project-link {
+            width: 100%;
+          }
+        }
+      `}</style>
 
       <ScrollToTopProgress />
     </main>
