@@ -637,6 +637,7 @@ export default function Home() {
           gap: 10px;
           max-width: 880px;
           margin: 0 auto;
+          align-items: stretch;
         }
 
         .project-card {
@@ -646,6 +647,9 @@ export default function Home() {
           background: white;
           box-shadow: 0 12px 28px rgba(11, 16, 20, 0.07);
           transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
         }
 
         .project-card:hover {
@@ -721,7 +725,14 @@ export default function Home() {
 
         .project-content {
           padding: 10px;
-          display: grid;
+          display: flex;
+          flex: 1;
+        }
+
+        .project-content > div {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
           gap: 8px;
         }
 
@@ -781,7 +792,7 @@ export default function Home() {
         .project-link {
           min-height: 34px;
           width: fit-content;
-          margin-top: 6px;
+          margin-top: auto;
           padding: 0 12px;
           background: var(--teal);
           color: white;
