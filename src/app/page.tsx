@@ -204,10 +204,24 @@ export default function Home() {
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Inicio">
           <span className="brand-mark" aria-hidden="true">
-            <span className="brand-core">NM</span>
+            <svg className="brand-core" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
+              <defs>
+                <linearGradient id="brandBlue" x1="18" x2="48" y1="14" y2="50" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#79bfff" />
+                  <stop offset="0.5" stopColor="#1789ff" />
+                  <stop offset="1" stopColor="#0b4fd6" />
+                </linearGradient>
+              </defs>
+              <circle cx="32" cy="32" r="29.5" fill="none" stroke="#1f6fef" strokeWidth="2.6" />
+              <path
+                d="M13.5 18.2h7.6l22.2 22.3V18.2H49V46h-7.5L19.9 23.9V46h-6.4V18.2Z"
+                fill="#ffffff"
+              />
+              <path d="M30.8 18.2h7.7L49 28.7V46h-6.4V31.1l-12-12.9Z" fill="url(#brandBlue)" />
+              <circle cx="17" cy="46.5" r="2.7" fill="#ff7a1a" />
+              <circle cx="47.4" cy="17.6" r="2.2" fill="#ffb238" />
+            </svg>
             <span className="brand-orbit brand-orbit-one" />
-            <span className="brand-orbit brand-orbit-two" />
-            <i />
           </span>
           <span>
             <strong>Nicolas Marset</strong>
