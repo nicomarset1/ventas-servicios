@@ -204,21 +204,15 @@ export default function Home() {
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Inicio">
           <span className="brand-mark" aria-hidden="true">
-            <svg className="brand-core" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
-              <defs>
-                <linearGradient id="brandBlue" x1="18" x2="48" y1="14" y2="50" gradientUnits="userSpaceOnUse">
-                  <stop offset="0" stopColor="#79bfff" />
-                  <stop offset="0.5" stopColor="#1789ff" />
-                  <stop offset="1" stopColor="#0b4fd6" />
-                </linearGradient>
-              </defs>
-              <circle cx="32" cy="32" r="29.5" fill="none" stroke="#1f6fef" strokeWidth="2.6" />
-              <path d="M15 20h6.2l11.8 14.8V20H39v24h-6.1L21 29.1V44h-6V20Z" fill="#ffffff" />
-              <path d="M33 20h6.1l6.1 9.5 6.1-9.5H52v24h-5.9V31l-5.8 8.8h-1.8L32.8 31v13H27V20h6Z" fill="url(#brandBlue)" />
-              <circle cx="17" cy="46.5" r="2.7" fill="#ff7a1a" />
-              <circle cx="47.4" cy="17.6" r="2.2" fill="#ffb238" />
-            </svg>
-            <span className="brand-orbit brand-orbit-one" />
+            <Image
+              className="brand-core"
+              src="/logo-circle.png"
+              alt=""
+              width={48}
+              height={48}
+              priority
+            />
+            <span className="brand-orbit" />
           </span>
           <span>
             <strong>Nicolas Marset</strong>
