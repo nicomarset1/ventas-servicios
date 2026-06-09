@@ -17,7 +17,6 @@ import {
   ExternalLink,
   Gauge,
   LayoutDashboard,
-  Mail,
   MessageCircle,
   MousePointer2,
   PackageCheck,
@@ -30,7 +29,6 @@ import {
 } from "lucide-react";
 
 const whatsappNumber = "5492234264682";
-const email = "nicolasmarsetg@gmail.com";
 const agrovetProjectUrl = "https://agrovet-gestion-y-web.vercel.app";
 const instagramUrl = "https://www.instagram.com/nm.software/";
 const facebookUrl = "https://www.facebook.com/profile.php?id=61590461681057";
@@ -76,7 +74,7 @@ const navItems = [
 const features = [
   "Diseno responsive para celular, tablet y escritorio",
   "Carga rapida y estructura clara para Google",
-  "Contacto directo por WhatsApp, email o formulario",
+  "Contacto directo por WhatsApp, Instagram o formulario",
   "Panel privado con permisos cuando el proyecto lo requiere",
   "Base de datos, reportes y automatizaciones a medida",
   "Preparado para publicar en Vercel, Netlify o hosting propio",
@@ -154,9 +152,6 @@ export default function Home() {
   const message =
     "Hola Nicolas, quiero hacer una consulta por desarrollo de software a medida para mi negocio.";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  const mailUrl = `mailto:${email}?subject=${encodeURIComponent(
-    "Consulta por desarrollo de software a medida"
-  )}&body=${encodeURIComponent(message)}`;
 
   useEffect(() => {
     const sections = ["inicio", ...navItems.map((item) => item.id)];
@@ -599,11 +594,6 @@ export default function Home() {
             <a className="contact-link" href={whatsappUrl}>
               <MessageCircle size={22} />
               <span><strong>WhatsApp</strong><small>Consulta rapida y directa</small></span>
-              <ArrowRight size={18} />
-            </a>
-            <a className="contact-link" href={mailUrl}>
-              <Mail size={22} />
-              <span><strong>Email</strong><small>{email}</small></span>
               <ArrowRight size={18} />
             </a>
             <a className="contact-link" href={instagramUrl} target="_blank" rel="noreferrer">
