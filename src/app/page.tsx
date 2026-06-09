@@ -649,7 +649,7 @@ export default function Home() {
           border-radius: 8px;
           overflow: hidden;
           background: white;
-          box-shadow: 0 12px 28px rgba(11, 16, 20, 0.07);
+          box-shadow: 0 12px 28px rgba(3, 16, 31, 0.07);
           transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
           display: flex;
           flex-direction: column;
@@ -658,8 +658,8 @@ export default function Home() {
 
         .project-card:hover {
           transform: translateY(-3px);
-          border-color: rgba(8, 124, 123, 0.28);
-          box-shadow: 0 18px 42px rgba(11, 16, 20, 0.1);
+          border-color: rgba(0, 84, 210, 0.28);
+          box-shadow: 0 18px 42px rgba(3, 16, 31, 0.1);
         }
 
         .project-preview {
@@ -667,8 +667,8 @@ export default function Home() {
           border-bottom: 1px solid var(--line);
           aspect-ratio: 16 / 8.2;
           background:
-            linear-gradient(135deg, rgba(8, 124, 123, 0.1), rgba(239, 107, 74, 0.1)),
-            #fbf8ff;
+            linear-gradient(135deg, rgba(0, 84, 210, 0.1), rgba(255, 122, 26, 0.1)),
+            #f5f9ff;
           overflow: hidden;
         }
 
@@ -795,11 +795,11 @@ export default function Home() {
         .project-chips span {
           min-height: 26px;
           padding: 0 10px;
-          border: 1px solid rgba(8, 124, 123, 0.14);
+          border: 1px solid rgba(0, 84, 210, 0.14);
           border-radius: 8px;
           display: inline-flex;
           align-items: center;
-          background: rgba(8, 124, 123, 0.05);
+          background: rgba(0, 84, 210, 0.05);
           color: var(--teal-dark);
           font-size: 12px;
           font-weight: 820;
@@ -815,12 +815,12 @@ export default function Home() {
           align-self: start;
           font-size: 13px;
           border-radius: 7px;
-          box-shadow: 0 10px 22px rgba(8, 124, 123, 0.18);
+          box-shadow: 0 10px 22px rgba(0, 84, 210, 0.18);
         }
 
         .project-link:hover {
           background: var(--teal-dark);
-          box-shadow: 0 14px 28px rgba(8, 124, 123, 0.22);
+          box-shadow: 0 14px 28px rgba(0, 84, 210, 0.22);
         }
 
         .nav a.is-active {
@@ -832,7 +832,7 @@ export default function Home() {
         .assurance-section {
           background:
             radial-gradient(circle at 10% 20%, rgba(255, 196, 61, 0.12), transparent 22rem),
-            linear-gradient(180deg, #0b1014, #121922);
+            linear-gradient(180deg, #03101f, #061a33);
           color: white;
         }
 
@@ -916,7 +916,7 @@ export default function Home() {
         }
 
         .assurance-stats strong {
-          color: #8c7bff;
+          color: #ff9b24;
           font-size: clamp(34px, 4vw, 54px);
           line-height: 1;
         }

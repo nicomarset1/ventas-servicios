@@ -12,7 +12,7 @@ const highlights = [
 
 export default function AgrovetProjectPage() {
   return (
-    <main style={{ background: "#f5f8f9" }}>
+    <main style={{ background: "#f4f8fc" }}>
       <section className="section" style={{ paddingTop: "120px" }}>
         <div className="container" style={{ display: "grid", gap: "24px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: "18px", flexWrap: "wrap" }}>
@@ -104,13 +104,13 @@ export default function AgrovetProjectPage() {
               style={{
                 border: "1px solid var(--line)",
                 borderRadius: "8px",
-                background: "#0b1014",
+                background: "#03101f",
                 color: "white",
                 padding: "24px",
                 boxShadow: "0 12px 32px rgba(11,16,20,0.12)",
               }}
             >
-              <p className="eyebrow" style={{ color: "#dfe8ff" }}>
+              <p className="eyebrow" style={{ color: "#eaf5ff" }}>
                 <Check size={16} /> Enfoque
               </p>
               <p style={{ margin: "12px 0 0", color: "rgba(255,255,255,0.72)", lineHeight: 1.75 }}>
