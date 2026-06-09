@@ -8,6 +8,7 @@ import {
   BarChart3,
   Blocks,
   Bot,
+  Camera,
   Check,
   ChevronRight,
   Clock3,
@@ -20,6 +21,7 @@ import {
   MessageCircle,
   MousePointer2,
   PackageCheck,
+  Share2,
   Rocket,
   ShieldCheck,
   Sparkles,
@@ -30,6 +32,8 @@ import {
 const whatsappNumber = "5492234264682";
 const email = "nicolasmarsetg@gmail.com";
 const agrovetProjectUrl = "https://agrovet-gestion-y-web.vercel.app";
+const instagramUrl = "https://www.instagram.com/nm.software/";
+const facebookUrl = "https://www.facebook.com/profile.php?id=61590461681057";
 
 const services = [
   {
@@ -600,6 +604,16 @@ export default function Home() {
             <a className="contact-link" href={mailUrl}>
               <Mail size={22} />
               <span><strong>Email</strong><small>{email}</small></span>
+              <ArrowRight size={18} />
+            </a>
+            <a className="contact-link" href={instagramUrl} target="_blank" rel="noreferrer">
+              <Camera size={22} />
+              <span><strong>Instagram</strong><small>@nm.software</small></span>
+              <ArrowRight size={18} />
+            </a>
+            <a className="contact-link" href={facebookUrl} target="_blank" rel="noreferrer">
+              <Share2 size={22} />
+              <span><strong>Facebook</strong><small>NM Software</small></span>
               <ArrowRight size={18} />
             </a>
             <a className="contact-link" href="#inicio">
