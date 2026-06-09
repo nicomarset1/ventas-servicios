@@ -213,11 +213,8 @@ export default function Home() {
                 </linearGradient>
               </defs>
               <circle cx="32" cy="32" r="29.5" fill="none" stroke="#1f6fef" strokeWidth="2.6" />
-              <path
-                d="M13.5 18.2h7.6l22.2 22.3V18.2H49V46h-7.5L19.9 23.9V46h-6.4V18.2Z"
-                fill="#ffffff"
-              />
-              <path d="M30.8 18.2h7.7L49 28.7V46h-6.4V31.1l-12-12.9Z" fill="url(#brandBlue)" />
+              <path d="M15 20h6.2l11.8 14.8V20H39v24h-6.1L21 29.1V44h-6V20Z" fill="#ffffff" />
+              <path d="M33 20h6.1l6.1 9.5 6.1-9.5H52v24h-5.9V31l-5.8 8.8h-1.8L32.8 31v13H27V20h6Z" fill="url(#brandBlue)" />
               <circle cx="17" cy="46.5" r="2.7" fill="#ff7a1a" />
               <circle cx="47.4" cy="17.6" r="2.2" fill="#ffb238" />
             </svg>
