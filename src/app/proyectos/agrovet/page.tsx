@@ -1,8 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLeft, Check, ExternalLink, Store } from "lucide-react";
 
 const liveUrl = "https://agrovet-gestion-y-web.vercel.app";
+
+export const metadata: Metadata = {
+  title: "Proyecto Agrovet MDP - tienda online para veterinaria",
+  description:
+    "Caso de proyecto de NM Software: tienda online para veterinaria y pet shop con catalogo, carrito y estructura preparada para crecer.",
+  alternates: {
+    canonical: "/proyectos/agrovet",
+  },
+  openGraph: {
+    title: "Proyecto Agrovet MDP - tienda online para veterinaria",
+    description:
+      "Tienda online para veterinaria y pet shop desarrollada por NM Software.",
+    url: "https://nmsoftware.com.ar/proyectos/agrovet",
+    images: ["/agrovet-preview-actual.png"],
+  },
+};
 
 const highlights = [
   "Catalogo con foco comercial",

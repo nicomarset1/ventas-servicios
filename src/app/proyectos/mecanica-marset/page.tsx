@@ -1,6 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLeft, Check, Clock3, MapPinned, MessageCircle, ShieldCheck, Wrench } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Proyecto Mecanica Marset - sitio web para taller mecanico",
+  description:
+    "Caso de proyecto de NM Software: sitio web para taller mecanico con turnos por WhatsApp, resenas, ubicacion y contenido comercial.",
+  alternates: {
+    canonical: "/proyectos/mecanica-marset",
+  },
+  openGraph: {
+    title: "Proyecto Mecanica Marset - sitio web para taller mecanico",
+    description:
+      "Sitio web para taller mecanico desarrollado por NM Software.",
+    url: "https://nmsoftware.com.ar/proyectos/mecanica-marset",
+    images: ["/pag-taller-preview.png"],
+  },
+};
 
 const highlights = [
   "Turnos por WhatsApp",
