@@ -16,6 +16,7 @@ import {
   ExternalLink,
   Gauge,
   LayoutDashboard,
+  Lock,
   MessageCircle,
   MousePointer2,
   PackageCheck,
@@ -123,7 +124,17 @@ const packages = [
   },
 ];
 
-const projects = [
+type Project = {
+  name: string;
+  status: string;
+  type: string;
+  liveUrl?: string;
+  image: string;
+  description: string;
+  chips: string[];
+};
+
+const projects: Project[] = [
   {
     name: "Agrovet MDP",
     status: "Tienda online",
@@ -143,6 +154,25 @@ const projects = [
     description:
       "Sitio informativo para un taller mecanico con hero fuerte, turnos por WhatsApp, resenas, ubicacion y contenido pensado para generar confianza.",
     chips: ["WhatsApp", "Resenas", "Ubicacion"],
+  },
+  {
+    name: "Hasta Que Nos Vayamos",
+    status: "Sitio online",
+    type: "Programa de radio",
+    liveUrl: "https://hastaquenosvayamos.com.ar",
+    image: "/hnv-preview.png",
+    description:
+      "Sitio para un programa de radio estudiantil con streaming en vivo, archivo de programas y grabacion, subida y publicacion 100% automatizadas cada semana.",
+    chips: ["Streaming en vivo", "Automatizacion", "Archivo de audios"],
+  },
+  {
+    name: "Forza Presupuestos",
+    status: "Panel privado",
+    type: "App de presupuestos",
+    image: "/forza-preview.png",
+    description:
+      "Webapp pensada para celular para una empresa de reformas en Mallorca (España): arma presupuestos, guarda el historial y genera el PDF final desde cualquier lugar, con acceso protegido por login.",
+    chips: ["Acceso con login", "Historial", "PDF"],
   },
 ];
 
@@ -211,7 +241,7 @@ export default function Home() {
             "@type": "CreativeWork",
             name: project.name,
             description: project.description,
-            url: project.liveUrl,
+            ...(project.liveUrl ? { url: project.liveUrl } : {}),
           },
         })),
       },
@@ -528,7 +558,8 @@ export default function Home() {
               <h2>Proyectos reales, mostrados de forma mas limpia y ordenada</h2>
             </div>
             <p className="section-note">
-              Dos ejemplos actuales: una tienda online para Agrovet y un sitio para un taller mecanico.
+              Ejemplos actuales: una tienda online para Agrovet, un sitio para un taller mecanico, una
+              web con automatizacion para un programa de radio y una app de presupuestos a medida.
             </p>
           </div>
           <div className="work-proofs" aria-label="Señales de confianza">
@@ -570,10 +601,17 @@ export default function Home() {
                           <span key={chip}>{chip}</span>
                         ))}
                       </div>
-                      <a className="button project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
-                        Abrir sitio online
-                        <ExternalLink size={18} />
-                      </a>
+                      {project.liveUrl ? (
+                        <a className="button project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                          Abrir sitio online
+                          <ExternalLink size={18} />
+                        </a>
+                      ) : (
+                        <span className="project-link project-link-locked">
+                          Panel privado
+                          <Lock size={16} />
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -601,7 +639,7 @@ export default function Home() {
           </div>
           <div className="assurance-stats" aria-label="Indicadores de valor">
             <div>
-              <strong>2</strong>
+              <strong>4</strong>
               <span>Proyectos en portada</span>
             </div>
             <div>
@@ -900,6 +938,13 @@ export default function Home() {
         .project-link:hover {
           background: var(--teal-dark);
           box-shadow: 0 14px 28px rgba(0, 84, 210, 0.22);
+        }
+
+        .project-link-locked {
+          background: var(--soft);
+          color: var(--muted);
+          cursor: default;
+          box-shadow: none;
         }
 
         .nav a.is-active {
