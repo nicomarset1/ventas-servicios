@@ -1017,11 +1017,13 @@ export default function Home() {
           width: 100%;
           max-width: 640px;
           max-height: 90vh;
-          overflow-y: auto;
           background: white;
           border-radius: 12px;
           box-shadow: 0 30px 80px rgba(3, 16, 31, 0.32);
           position: relative;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
         }
 
         .project-modal-close {
@@ -1042,12 +1044,20 @@ export default function Home() {
 
         .project-modal-gallery {
           position: relative;
+          flex-shrink: 0;
+          max-height: 42vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           background: var(--soft);
+          overflow: hidden;
         }
 
         .project-modal-gallery img {
           width: 100%;
-          height: auto;
+          height: 100%;
+          max-height: 42vh;
+          object-fit: contain;
           display: block;
         }
 
@@ -1099,6 +1109,8 @@ export default function Home() {
           padding: 22px;
           display: grid;
           gap: 12px;
+          overflow-y: auto;
+          min-height: 0;
         }
 
         .project-modal-content h3 {
