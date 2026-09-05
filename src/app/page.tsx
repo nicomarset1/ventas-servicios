@@ -10,6 +10,7 @@ import {
   Bot,
   Camera,
   Check,
+  ChevronLeft,
   ChevronRight,
   Clock3,
   Code2,
@@ -24,6 +25,7 @@ import {
   Rocket,
   ShieldCheck,
   Sparkles,
+  X,
   Zap,
 } from "lucide-react";
 
@@ -129,7 +131,7 @@ type Project = {
   status: string;
   type: string;
   liveUrl?: string;
-  image: string;
+  images: string[];
   description: string;
   chips: string[];
 };
@@ -140,7 +142,7 @@ const projects: Project[] = [
     status: "Tienda online",
     type: "Catalogo + carrito",
     liveUrl: agrovetProjectUrl,
-    image: "/agrovet-preview-actual.png",
+    images: ["/agrovet-preview-actual.png"],
     description:
       "Una tienda online para veterinaria y pet shop con enfoque comercial, navegacion limpia y base lista para seguir creciendo.",
     chips: ["Responsive", "Carrito", "Stock"],
@@ -150,7 +152,7 @@ const projects: Project[] = [
     status: "Sitio online",
     type: "Taller mecanico",
     liveUrl: "https://mecanicamarset.netlify.app/",
-    image: "/pag-taller-preview.png",
+    images: ["/pag-taller-preview.png"],
     description:
       "Sitio informativo para un taller mecanico con hero fuerte, turnos por WhatsApp, resenas, ubicacion y contenido pensado para generar confianza.",
     chips: ["WhatsApp", "Resenas", "Ubicacion"],
@@ -160,7 +162,7 @@ const projects: Project[] = [
     status: "Sitio online",
     type: "Programa de radio",
     liveUrl: "https://hastaquenosvayamos.com.ar",
-    image: "/hnv-preview.png",
+    images: ["/hnv-preview.png"],
     description:
       "Sitio para un programa de radio estudiantil con streaming en vivo, archivo de programas y grabacion, subida y publicacion 100% automatizadas cada semana.",
     chips: ["Streaming en vivo", "Automatizacion", "Archivo de audios"],
@@ -169,7 +171,7 @@ const projects: Project[] = [
     name: "Forza Presupuestos",
     status: "Panel privado",
     type: "App de presupuestos",
-    image: "/forza-preview.png",
+    images: ["/forza-preview.png", "/forza-pdf-preview.png"],
     description:
       "Webapp pensada para celular para una empresa de reformas en Mallorca (España): arma presupuestos, guarda el historial y genera el PDF final desde cualquier lugar, con acceso protegido por login.",
     chips: ["Acceso con login", "Historial", "PDF"],
@@ -178,6 +180,30 @@ const projects: Project[] = [
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("inicio");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+
+  const closeProjectModal = () => {
+    setSelectedProject(null);
+    setGalleryIndex(0);
+  };
+
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeProjectModal();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
+
   const message =
     "Hola Nicolas, quiero hacer una consulta por desarrollo de software a medida para mi negocio.";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -570,10 +596,23 @@ export default function Home() {
           </div>
           <div className="project-grid">
             {projects.map((project) => (
-              <article className="project-card reveal" key={project.name}>
+              <article
+                className="project-card reveal"
+                key={project.name}
+                role="button"
+                tabIndex={0}
+                aria-label={`Ver mas sobre ${project.name}`}
+                onClick={() => setSelectedProject(project)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setSelectedProject(project);
+                  }
+                }}
+              >
                 <div className="project-preview">
                   <Image
-                    src={project.image}
+                    src={project.images[0]}
                     alt={`Vista previa del proyecto ${project.name}`}
                     width={1200}
                     height={750}
@@ -602,7 +641,13 @@ export default function Home() {
                         ))}
                       </div>
                       {project.liveUrl ? (
-                        <a className="button project-link" href={project.liveUrl} target="_blank" rel="noreferrer">
+                        <a
+                          className="button project-link"
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(event) => event.stopPropagation()}
+                        >
                           Abrir sitio online
                           <ExternalLink size={18} />
                         </a>
@@ -947,6 +992,135 @@ export default function Home() {
           box-shadow: none;
         }
 
+        .project-card {
+          cursor: pointer;
+        }
+
+        .project-card:focus-visible {
+          outline: 2px solid var(--teal);
+          outline-offset: 3px;
+        }
+
+        .project-modal-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 80;
+          display: grid;
+          place-items: center;
+          padding: 24px;
+          background: rgba(3, 16, 31, 0.6);
+          backdrop-filter: blur(6px);
+          animation: modalFade 0.18s ease;
+        }
+
+        .project-modal {
+          width: 100%;
+          max-width: 640px;
+          max-height: 90vh;
+          overflow-y: auto;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 30px 80px rgba(3, 16, 31, 0.32);
+          position: relative;
+        }
+
+        .project-modal-close {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          z-index: 2;
+          width: 36px;
+          height: 36px;
+          border-radius: 999px;
+          border: none;
+          background: rgba(8, 14, 18, 0.65);
+          color: white;
+          display: grid;
+          place-items: center;
+          cursor: pointer;
+        }
+
+        .project-modal-gallery {
+          position: relative;
+          background: var(--soft);
+        }
+
+        .project-modal-gallery img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+
+        .project-modal-nav {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 38px;
+          height: 38px;
+          border-radius: 999px;
+          border: none;
+          background: rgba(8, 14, 18, 0.6);
+          color: white;
+          display: grid;
+          place-items: center;
+          cursor: pointer;
+        }
+
+        .project-modal-prev {
+          left: 12px;
+        }
+
+        .project-modal-next {
+          right: 12px;
+        }
+
+        .project-modal-dots {
+          position: absolute;
+          bottom: 12px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 6px;
+        }
+
+        .project-modal-dots span {
+          width: 8px;
+          height: 8px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.55);
+          cursor: pointer;
+        }
+
+        .project-modal-dots span.is-active {
+          background: white;
+        }
+
+        .project-modal-content {
+          padding: 22px;
+          display: grid;
+          gap: 12px;
+        }
+
+        .project-modal-content h3 {
+          margin: 0;
+          font-size: clamp(20px, 2.4vw, 26px);
+        }
+
+        .project-modal-content p {
+          margin: 0;
+          color: var(--muted);
+          line-height: 1.6;
+        }
+
+        @keyframes modalFade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
         .nav a.is-active {
           color: white;
           background: rgba(255, 255, 255, 0.14);
@@ -1080,6 +1254,88 @@ export default function Home() {
           }
         }
       `}</style>
+
+      {selectedProject ? (
+        <div
+          className="project-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Detalle del proyecto ${selectedProject.name}`}
+          onClick={closeProjectModal}
+        >
+          <div className="project-modal" onClick={(event) => event.stopPropagation()}>
+            <button className="project-modal-close" onClick={closeProjectModal} aria-label="Cerrar">
+              <X size={20} />
+            </button>
+
+            <div className="project-modal-gallery">
+              <Image
+                src={selectedProject.images[galleryIndex]}
+                alt={`Captura ${galleryIndex + 1} de ${selectedProject.name}`}
+                width={1200}
+                height={750}
+                sizes="(max-width: 720px) 100vw, 640px"
+              />
+              {selectedProject.images.length > 1 ? (
+                <>
+                  <button
+                    className="project-modal-nav project-modal-prev"
+                    aria-label="Imagen anterior"
+                    onClick={() =>
+                      setGalleryIndex(
+                        (index) => (index - 1 + selectedProject.images.length) % selectedProject.images.length
+                      )
+                    }
+                  >
+                    <ChevronLeft size={22} />
+                  </button>
+                  <button
+                    className="project-modal-nav project-modal-next"
+                    aria-label="Imagen siguiente"
+                    onClick={() => setGalleryIndex((index) => (index + 1) % selectedProject.images.length)}
+                  >
+                    <ChevronRight size={22} />
+                  </button>
+                  <div className="project-modal-dots">
+                    {selectedProject.images.map((image, index) => (
+                      <span
+                        key={image}
+                        className={index === galleryIndex ? "is-active" : ""}
+                        onClick={() => setGalleryIndex(index)}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : null}
+            </div>
+
+            <div className="project-modal-content">
+              <div className="project-meta">
+                <span className="status-pill">{selectedProject.status}</span>
+                <span className="project-kind">{selectedProject.type}</span>
+              </div>
+              <h3>{selectedProject.name}</h3>
+              <p>{selectedProject.description}</p>
+              <div className="project-chips" aria-label={`Tecnologias y rasgos de ${selectedProject.name}`}>
+                {selectedProject.chips.map((chip) => (
+                  <span key={chip}>{chip}</span>
+                ))}
+              </div>
+              {selectedProject.liveUrl ? (
+                <a className="button project-link" href={selectedProject.liveUrl} target="_blank" rel="noreferrer">
+                  Abrir sitio online
+                  <ExternalLink size={18} />
+                </a>
+              ) : (
+                <span className="project-link project-link-locked">
+                  Panel privado
+                  <Lock size={16} />
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <ScrollToTopProgress />
     </main>
