@@ -13,7 +13,6 @@ import {
   ChevronRight,
   Clock3,
   Code2,
-  Database,
   ExternalLink,
   Gauge,
   LayoutDashboard,
@@ -24,7 +23,6 @@ import {
   Rocket,
   ShieldCheck,
   Sparkles,
-  Store,
   Zap,
 } from "lucide-react";
 
@@ -36,22 +34,22 @@ const siteUrl = "https://nmsoftware.com.ar";
 
 const services = [
   {
-    icon: Store,
-    title: "Webs que venden",
-    text: "Landings, catalogos y tiendas online con una estructura pensada para convertir visitas en consultas reales.",
-    details: ["Copy comercial", "WhatsApp directo", "SEO inicial"],
+    icon: Code2,
+    title: "Software a medida",
+    text: "Sitios web, catalogos, tiendas online y paneles de gestion pensados para tu operacion real, no una plantilla generica.",
+    details: ["Diseno a medida", "Panel de administracion", "Listo para publicar"],
   },
   {
-    icon: LayoutDashboard,
-    title: "Sistemas de gestion",
-    text: "Paneles privados para administrar pedidos, clientes, productos, movimientos y reportes desde un solo lugar.",
-    details: ["Usuarios y permisos", "Reportes", "Flujos a medida"],
+    icon: Zap,
+    title: "Automatizaciones",
+    text: "Tareas manuales y repetitivas resueltas solas: notificaciones, reportes, cargas de datos y seguimientos que hoy hacen a mano.",
+    details: ["Menos trabajo manual", "Reportes automaticos", "Alertas en tiempo real"],
   },
   {
-    icon: Database,
-    title: "Stock e inventario",
-    text: "Control de productos, categorias, variantes, precios, movimientos y alertas para ordenar la operacion diaria.",
-    details: ["Base de datos", "Alertas", "Historial"],
+    icon: Blocks,
+    title: "Integraciones",
+    text: "Conectamos las herramientas que ya usas (WhatsApp, planillas, CRMs, sistemas de pago, APIs) para que la informacion fluya sola entre ellas.",
+    details: ["WhatsApp y CRMs", "Planillas y bases de datos", "APIs y pagos"],
   },
 ];
 
@@ -165,7 +163,7 @@ export default function Home() {
         logo: `${siteUrl}/logo-circle.png`,
         image: `${siteUrl}/hero-sistemas.png`,
         description:
-          "Desarrollo de software a medida, paginas web, tiendas online, paneles de gestion y sistemas de stock para negocios.",
+          "Desarrollo de software a medida, automatizaciones de procesos e integraciones entre herramientas, paginas web, tiendas online y paneles de gestion para negocios.",
         areaServed: [
           {
             "@type": "Country",
@@ -286,7 +284,7 @@ export default function Home() {
           </span>
           <span>
             <strong>Nicolas Marset</strong>
-            <small>Software, webs y gestion</small>
+            <small>Software, automatizaciones e integraciones</small>
           </span>
         </a>
         <nav className="nav" aria-label="Principal">
@@ -329,13 +327,13 @@ export default function Home() {
         <div className="container hero-layout">
           <div className="hero-content reveal">
             <p className="eyebrow">
-              <Sparkles size={16} /> Desarrollo de software a medida
+              <Sparkles size={16} /> Software, automatizaciones e integraciones a medida
             </p>
-            <h1>Creamos software a medida para negocios que venden, operan y escalan</h1>
+            <h1>Creamos software, automatizaciones e integraciones para negocios que venden, operan y escalan</h1>
             <p className="hero-copy">
-              Traducimos objetivos comerciales y procesos internos en sitios web, catalogos, paneles
-              de gestion y sistemas de stock. Tecnologia clara, rapida y confiable para convertir
-              consultas, ordenar operaciones y sostener el crecimiento.
+              Traducimos objetivos comerciales y procesos internos en sitios web, sistemas de gestion,
+              automatizaciones y conexiones entre las herramientas que ya usas. Tecnologia clara, rapida
+              y confiable para convertir consultas, ordenar operaciones y sostener el crecimiento.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href={whatsappUrl}>
@@ -451,6 +449,27 @@ export default function Home() {
                 </ul>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section ai-section">
+        <div className="container ai-panel reveal">
+          <div>
+            <p className="eyebrow"><Bot size={16} /> Automatizaciones e integraciones</p>
+            <h2>Procesos que se resuelven solos, sistemas que se hablan entre si</h2>
+            <p>
+              No es un agregado, es parte del sistema: respuestas automaticas, reportes que se arman
+              solos, sincronizacion de datos y conexiones entre las herramientas que ya usas como
+              WhatsApp, planillas, CRMs y sistemas de pago.
+            </p>
+          </div>
+          <div className="automation-flow" aria-hidden="true">
+            <span><MessageCircle size={18} /> WhatsApp</span>
+            <i />
+            <span><Zap size={18} /> Automatizacion</span>
+            <i />
+            <span><Share2 size={18} /> CRM / Planilla</span>
           </div>
         </div>
       </section>
@@ -601,26 +620,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section ai-section">
-        <div className="container ai-panel reveal">
-          <div>
-            <p className="eyebrow"><Bot size={16} /> Extra profesional</p>
-            <h2>Automatizaciones e IA cuando realmente mejoran el negocio</h2>
-            <p>
-              Se pueden sumar respuestas automaticas, clasificacion de consultas, reportes,
-              formularios inteligentes o integraciones con herramientas ya existentes.
-            </p>
-          </div>
-          <div className="automation-flow" aria-hidden="true">
-            <span><MousePointer2 size={18} /> Consulta</span>
-            <i />
-            <span><Blocks size={18} /> Sistema</span>
-            <i />
-            <span><BarChart3 size={18} /> Reporte</span>
-          </div>
-        </div>
-      </section>
-
       <section className="section plans-section" id="planes">
         <div className="container">
           <div className="section-heading section-heading-row">
@@ -679,7 +678,7 @@ export default function Home() {
             </a>
             <a className="contact-link" href="#inicio">
               <BarChart3 size={22} />
-              <span><strong>Ver enfoque</strong><small>Web, gestion y stock</small></span>
+              <span><strong>Ver enfoque</strong><small>Software, automatizaciones e integraciones</small></span>
               <ArrowRight size={18} />
             </a>
           </div>
@@ -689,7 +688,7 @@ export default function Home() {
       <footer className="footer">
         <div className="container footer-inner">
           <span>Nicolas Marset</span>
-          <span>Desarrollo de software, paginas web, paneles de gestion y sistemas de stock</span>
+          <span>Desarrollo de software, automatizaciones e integraciones a medida</span>
         </div>
       </footer>
 

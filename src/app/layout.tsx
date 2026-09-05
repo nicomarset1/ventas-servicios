@@ -15,14 +15,16 @@ const display = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL("https://nmsoftware.com.ar"),
   title: {
-    default: "NM Software | Desarrollo de software a medida para negocios",
+    default: "NM Software | Software, automatizaciones e integraciones a medida",
     template: "%s | NM Software",
   },
   description:
-    "NM Software desarrolla paginas web, tiendas online, paneles de gestion, sistemas de stock y herramientas digitales a medida para negocios.",
+    "NM Software desarrolla software a medida, automatizaciones de procesos e integraciones entre herramientas para negocios: paginas web, tiendas online, paneles de gestion y sistemas de stock.",
   keywords: [
     "NM Software",
     "desarrollo de software a medida",
+    "automatizacion de procesos",
+    "integraciones entre sistemas",
     "paginas web para negocios",
     "sistemas de gestion",
     "sistemas de stock",
@@ -41,9 +43,9 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: "https://nmsoftware.com.ar/",
     siteName: "NM Software",
-    title: "NM Software | Desarrollo de software a medida para negocios",
+    title: "NM Software | Software, automatizaciones e integraciones a medida",
     description:
-      "Paginas web, tiendas online, paneles de gestion y sistemas de stock hechos a medida para vender y administrar mejor.",
+      "Software a medida, automatizaciones de procesos e integraciones entre herramientas para vender y administrar mejor.",
     images: [
       {
         url: "/hero-sistemas.png",
@@ -55,9 +57,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "NM Software | Desarrollo de software a medida",
+    title: "NM Software | Software, automatizaciones e integraciones",
     description:
-      "Software, webs, tiendas online y sistemas de gestion a medida para negocios.",
+      "Software, automatizaciones e integraciones a medida para negocios.",
     images: ["/hero-sistemas.png"],
   },
   robots: {
