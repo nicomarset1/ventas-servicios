@@ -97,7 +97,7 @@ export default function Header() {
       <div className={`${styles.overlay} ${menuOpen ? styles.overlayOpen : ""}`} aria-hidden="true" onClick={closeMenu} />
 
       <header className={`${styles.header} ${solid ? styles.solid : ""} ${menuOpen ? styles.menuOpen : ""}`}>
-        <div className={`container ${styles.bar}`}>
+        <div className={styles.bar}>
           <a className={styles.brand} href="#inicio" onClick={closeMenu}>
             <Image src="/logo-circle.png" alt="" width={36} height={36} preload />
             <span>NM Software</span>
@@ -141,7 +141,7 @@ export default function Header() {
           className={`${styles.panel} ${menuOpen ? styles.panelOpen : ""}`}
           inert={!menuOpen}
         >
-          <nav className="container" aria-label="Principal mobile">
+          <nav className={styles.panelNav} aria-label="Principal mobile">
             {navItems.map((item) => (
               <a
                 key={item.id}

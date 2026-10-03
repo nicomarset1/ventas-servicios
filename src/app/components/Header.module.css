@@ -1,29 +1,58 @@
+/* Arriba de todo es una barra transparente de ancho completo; al scrollear se despega y queda flotante, tipo vidrio */
 .header {
   position: fixed;
-  inset: 0 0 auto;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  border: 1px solid transparent;
+  border-radius: 0;
   color: white;
-  border-bottom: 1px solid transparent;
   transition:
-    background-color 0.35s var(--ease),
-    border-color 0.35s var(--ease),
-    color 0.35s var(--ease),
-    backdrop-filter 0.35s var(--ease);
+    top 0.5s var(--ease),
+    width 0.5s var(--ease),
+    max-width 0.5s var(--ease),
+    border-radius 0.5s var(--ease),
+    background-color 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease),
+    color 0.3s var(--ease),
+    backdrop-filter 0.4s var(--ease);
 }
 
 .solid {
-  background: rgba(255, 255, 255, 0.82);
-  border-bottom-color: var(--line);
+  top: 12px;
+  width: calc(100% - 24px);
+  max-width: 1040px;
+  border-color: rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 10px 34px rgba(5, 15, 29, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   color: var(--ink);
-  backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(18px);
 }
 
 .bar {
+  width: min(1120px, calc(100% - 40px));
   height: var(--header-h);
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  transition:
+    width 0.5s var(--ease),
+    height 0.5s var(--ease),
+    padding 0.5s var(--ease);
+}
+
+.solid .bar {
+  width: 100%;
+  height: 60px;
+  padding: 0 8px 0 14px;
 }
 
 .brand {
@@ -105,7 +134,7 @@
 }
 
 .menuOpen {
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 @media (hover: hover) {
@@ -118,7 +147,7 @@
 .overlay {
   position: fixed;
   z-index: 49;
-  inset: var(--header-h) 0 0;
+  inset: 0;
   background: rgba(5, 15, 29, 0.55);
   backdrop-filter: blur(4px);
   opacity: 0;
@@ -139,9 +168,11 @@
 /* Panel mobile */
 .panel {
   position: absolute;
-  inset: 100% 0 auto;
+  inset: calc(100% + 8px) 0 auto;
+  overflow: hidden;
   background: var(--paper);
-  border-bottom: 1px solid var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   color: var(--ink);
   opacity: 0;
@@ -163,12 +194,12 @@
     visibility 0s;
 }
 
-.panel nav {
+.panelNav {
   display: grid;
-  padding: 8px 0 20px;
+  padding: 8px 20px 20px;
 }
 
-.panel nav > a:not(.panelCta) {
+.panelNav > a:not(.panelCta) {
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
   font-size: 17px;
@@ -176,7 +207,7 @@
   color: var(--text);
 }
 
-.panel nav > a.active {
+.panelNav > a.active {
   color: var(--brand);
 }
 
