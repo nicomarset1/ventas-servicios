@@ -28,12 +28,12 @@ Los colores, radios, sombras y espaciados son tokens definidos en `src/app/globa
 
 | Archivo | Qué es |
 | --- | --- |
-| `src/app/page.tsx` | Home: arma las secciones en orden y el JSON de datos estructurados |
+| `src/app/page.tsx` | Home: la pantalla dividida y el JSON de datos estructurados |
 | `components/Header.tsx` | Header fijo, links con sección activa y menú mobile |
 | `components/Hero.tsx` | Portada con CTA a WhatsApp y capturas de proyectos |
 | `components/Projects.tsx` | Grilla de proyectos; cada tarjeta abre `ProjectModal.tsx` |
 | `src/app/web`, `src/app/software` | Páginas de cada área, sobre la plantilla `components/AreaPage.tsx` |
-| `components/Areas.tsx` | Home: tarjetas que llevan a cada área |
+| `components/Split.tsx` | Home: pantalla dividida en dos, cada mitad lleva a un área |
 | `components/Services.tsx` | Tarjetas de servicios de un área |
 | `components/Process.tsx` | Pasos de cómo trabajo |
 | `components/Contact.tsx` | Bloque final de contacto |

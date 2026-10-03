@@ -1,11 +1,4 @@
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Projects from "./components/Projects";
-import Areas from "./components/Areas";
-import Process from "./components/Process";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import ScrollToTopProgress from "./ScrollToTopProgress";
+import Split from "./components/Split";
 import { areas, facebookUrl, instagramUrl, projects, siteUrl, whatsappNumber } from "./content";
 
 const services = areas.flatMap((area) => area.services);
@@ -66,16 +59,7 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <Header />
-      <main>
-        <Hero />
-        <Projects />
-        <Areas />
-        <Process />
-        <Contact />
-      </main>
-      <Footer />
-      <ScrollToTopProgress />
+      <Split />
     </>
   );
 }
