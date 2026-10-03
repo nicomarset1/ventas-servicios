@@ -18,7 +18,9 @@ Antes de publicar conviene correr `npm run lint` y `npx tsc --noEmit`.
 
 Todo el contenido está en `src/app/content.ts`: número de WhatsApp (formato internacional, sin `+` ni espacios), mensaje predefinido, redes, textos de cada sección, servicios, pasos del proceso y proyectos.
 
-Para sumar un proyecto, agregalo a `projects` en ese archivo y poné sus capturas en `public/`. Cargá también el tamaño real de cada captura en `src/app/components/projectMedia.ts`.
+El sitio tiene dos áreas, definidas en `areas`: desarrollo web (`/web`) y software para empresas (`/software`). Cada una tiene su portada y sus servicios, y muestra los proyectos que llevan su `area`.
+
+Para sumar un proyecto, agregalo a `projects` en ese archivo, con el `area` que le corresponde, y poné sus capturas en `public/`. Cargá también el tamaño real de cada captura en `src/app/components/projectMedia.ts`.
 
 Los colores, radios, sombras y espaciados son tokens definidos en `src/app/globals.css`. Los módulos usan solo esos tokens.
 
@@ -30,7 +32,9 @@ Los colores, radios, sombras y espaciados son tokens definidos en `src/app/globa
 | `components/Header.tsx` | Header fijo, links con sección activa y menú mobile |
 | `components/Hero.tsx` | Portada con CTA a WhatsApp y capturas de proyectos |
 | `components/Projects.tsx` | Grilla de proyectos; cada tarjeta abre `ProjectModal.tsx` |
-| `components/Services.tsx` | Tarjetas de servicios |
+| `src/app/web`, `src/app/software` | Páginas de cada área, sobre la plantilla `components/AreaPage.tsx` |
+| `components/Areas.tsx` | Home: tarjetas que llevan a cada área |
+| `components/Services.tsx` | Tarjetas de servicios de un área |
 | `components/Process.tsx` | Pasos de cómo trabajo |
 | `components/Contact.tsx` | Bloque final de contacto |
 | `components/Footer.tsx` | Footer con redes (íconos en `socials.tsx`) |

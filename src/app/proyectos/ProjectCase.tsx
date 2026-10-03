@@ -33,7 +33,7 @@ export default function ProjectCase({ slug, highlights }: Props) {
             <Image src="/logo-circle.png" alt="" width={32} height={32} />
             NM Software
           </Link>
-          <Link href="/#proyectos" className={styles.back}>
+          <Link href={`/${project.area}#proyectos`} className={styles.back}>
             <ArrowLeft size={18} />
             Volver a proyectos
           </Link>

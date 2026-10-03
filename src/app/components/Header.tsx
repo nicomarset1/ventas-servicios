@@ -1,12 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Menu, MessageCircle, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { hero, navItems, whatsappUrl } from "../content";
+import type { AreaSlug } from "../content";
+import { areas, hero, navItems, whatsappUrl } from "../content";
 import styles from "./Header.module.css";
 
-export default function Header() {
+type Props = {
+  // Página de área (/web o /software); sin valor es la home.
+  area?: AreaSlug;
+};
+
+export default function Header({ area }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -90,6 +97,14 @@ export default function Header() {
 
   const solid = scrolled || menuOpen;
   const closeMenu = () => setMenuOpen(false);
+  // En una página de área se ofrece el salto a la otra.
+  const otherArea = area ? areas.find((item) => item.slug !== area) : undefined;
+  const brand = (
+    <>
+      <Image src="/logo-circle.png" alt="" width={36} height={36} preload />
+      <span>NM Software</span>
+    </>
+  );
 
   return (
     <>
@@ -98,10 +113,15 @@ export default function Header() {
 
       <header className={`${styles.header} ${solid ? styles.solid : ""} ${menuOpen ? styles.menuOpen : ""}`}>
         <div className={styles.bar}>
-          <a className={styles.brand} href="#inicio" onClick={closeMenu}>
-            <Image src="/logo-circle.png" alt="" width={36} height={36} preload />
-            <span>NM Software</span>
-          </a>
+          {area ? (
+            <Link className={styles.brand} href="/" onClick={closeMenu}>
+              {brand}
+            </Link>
+          ) : (
+            <a className={styles.brand} href="#inicio" onClick={closeMenu}>
+              {brand}
+            </a>
+          )}
 
           <nav className={styles.nav} aria-label="Principal">
             {navItems.map((item) => (
@@ -114,6 +134,11 @@ export default function Header() {
                 {item.label}
               </a>
             ))}
+            {otherArea && (
+              <Link href={`/${otherArea.slug}`} className={styles.switch}>
+                {otherArea.short}
+              </Link>
+            )}
           </nav>
 
           <div className={styles.actions}>
@@ -152,6 +177,11 @@ export default function Header() {
                 {item.label}
               </a>
             ))}
+            {otherArea && (
+              <Link href={`/${otherArea.slug}`} onClick={closeMenu}>
+                {otherArea.label}
+              </Link>
+            )}
             <a
               className={`button button-primary ${styles.panelCta}`}
               href={whatsappUrl}

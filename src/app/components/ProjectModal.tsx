@@ -18,7 +18,7 @@ type Props = {
 
 const CLOSE_MS = 200;
 // Proyectos que tienen subpágina en /proyectos/{slug}.
-const CASE_PAGES = new Set(["agrovet", "mecanica-marset", "hasta-que-nos-vayamos"]);
+const CASE_PAGES = new Set(["agrovet", "mecanica-marset", "hasta-que-nos-vayamos", "mareflota"]);
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export default function ProjectModal({ project, opener, onClose }: Props) {

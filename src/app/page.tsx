@@ -1,12 +1,14 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
-import Services from "./components/Services";
+import Areas from "./components/Areas";
 import Process from "./components/Process";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollToTopProgress from "./ScrollToTopProgress";
-import { facebookUrl, instagramUrl, projects, services, siteUrl, whatsappNumber } from "./content";
+import { areas, facebookUrl, instagramUrl, projects, siteUrl, whatsappNumber } from "./content";
+
+const services = areas.flatMap((area) => area.services);
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -68,7 +70,7 @@ export default function Home() {
       <main>
         <Hero />
         <Projects />
-        <Services />
+        <Areas />
         <Process />
         <Contact />
       </main>
