@@ -85,7 +85,7 @@ export const areas: Area[] = [
     icon: LayoutDashboard,
     summary: "Sistemas de gestión, automatizaciones e integraciones hechos para tu operación.",
     hero: {
-      eyebrow: "Sistemas · Automatizaciones · Integraciones",
+      eyebrow: "Sistemas · Automatizaciones",
       title: "Software a medida para tu empresa",
       copy: "Sistemas de gestión y automatizaciones hechos para tu operación, para ordenar el trabajo y decidir con datos.",
     },

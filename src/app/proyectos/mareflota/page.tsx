@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 const highlights = [
-  { title: "Tripulación y documentos", text: "Roles a bordo y alertas antes de que venza una libreta o un certificado." },
+  { title: "Tripulación", text: "Roles a bordo y alertas antes de que venza un documento." },
   { title: "Viajes", text: "Dotación, zarpe, regreso y captura por especie en cada viaje." },
   { title: "Estadísticas", text: "Capturas por barco, especie y mes para decidir con datos." },
 ];
