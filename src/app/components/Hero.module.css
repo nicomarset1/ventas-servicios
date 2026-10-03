@@ -142,6 +142,12 @@
   }
 }
 
+/* Una sola captura: queda fija, sin rotación */
+.still .slide {
+  opacity: 1;
+  animation: none;
+}
+
 /* Entrada escalonada al cargar */
 .enter {
   animation: enter 0.7s var(--ease) both;

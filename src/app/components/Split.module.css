@@ -1,0 +1,260 @@
+.split {
+  /* Margen lateral compartido por la barra de arriba y el contenido, para que la marca quede alineada con el texto */
+  --pad: clamp(20px, 6vw, 96px);
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ink);
+  color: white;
+}
+
+/* El hueco que reserva scrollbar-gutter queda oscuro, igual que la pantalla */
+:global(html):has(.split) {
+  background: var(--ink);
+}
+
+/* Marca y WhatsApp flotando sobre las dos mitades */
+.top {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
+  padding: 0 var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  pointer-events: none;
+}
+
+.top > * {
+  pointer-events: auto;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+}
+
+.whatsapp {
+  min-height: 42px;
+  padding: 0 18px;
+  font-size: 15px;
+  box-shadow: none;
+}
+
+.panels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Apiladas: cada mitad mide al menos media pantalla y crece si el contenido no entra */
+  flex: 1 0 auto;
+  min-height: 50svh;
+  padding: 28px var(--pad);
+  display: flex;
+  align-items: center;
+  transition: flex-grow 0.6s var(--ease);
+}
+
+.panel:first-child {
+  padding-top: calc(var(--header-h) + 12px);
+}
+
+.panel + .panel {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Cada área tiñe su mitad con un color de la paleta */
+.software {
+  --tint: var(--brand);
+}
+
+.web {
+  --tint: var(--accent);
+}
+
+.shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(closest-side at 50% 45%, color-mix(in srgb, var(--tint) 30%, transparent), transparent),
+    linear-gradient(180deg, var(--navy), var(--ink));
+}
+
+.content {
+  width: min(440px, 100%);
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+
+/* En celular no hay alto para el ícono: aparece desde 760px */
+.icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  display: none;
+  place-items: center;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.content h2 {
+  color: white;
+  font-size: clamp(30px, 4.4vw, 60px);
+}
+
+.summary {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.6;
+}
+
+.cta {
+  margin-top: 10px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  transition:
+    background-color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.cta svg {
+  transition: transform 0.3s var(--ease);
+}
+
+/* Captura de un proyecto del área asomando desde abajo; solo en pantallas con lugar */
+.preview {
+  display: none;
+}
+
+.panel:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -8px;
+  border-radius: 0;
+}
+
+.panel:focus-visible .cta {
+  border-color: white;
+  background: white;
+  color: var(--ink);
+}
+
+@media (hover: hover) {
+  .panel:hover .cta {
+    border-color: white;
+    background: white;
+    color: var(--ink);
+  }
+
+  .panel:hover .cta svg {
+    transform: translateX(3px);
+  }
+
+  .panel:hover .preview {
+    opacity: 1;
+    transform: translateY(-14px);
+  }
+}
+
+/* Celulares bajos: sin la bajada, para que las dos mitades entren en una pantalla */
+@media (max-width: 759px) and (max-height: 700px) {
+  .summary {
+    display: none;
+  }
+}
+
+@media (min-width: 760px) {
+  .panels {
+    flex-direction: row;
+  }
+
+  .icon {
+    display: inline-grid;
+  }
+
+  /* Las dos mitades arrancan a la misma altura aunque un título ocupe más renglones */
+  .panel,
+  .panel:first-child {
+    flex: 1 1 0;
+    min-height: 100svh;
+    align-items: flex-start;
+    padding: max(calc(var(--header-h) + 24px), 24svh) var(--pad) 56px;
+  }
+
+  .panel + .panel {
+    border-top: 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (min-width: 760px) and (min-height: 760px) {
+  .preview {
+    position: absolute;
+    z-index: -1;
+    top: 76svh;
+    left: var(--pad);
+    width: min(440px, calc(100% - var(--pad) * 2));
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius) var(--radius) 0 0;
+    box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.35);
+    display: block;
+    opacity: 0.6;
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.5s var(--ease);
+  }
+
+  .previewImage {
+    object-fit: cover;
+    object-position: top;
+  }
+}
+
+/* La mitad bajo el cursor gana un poco de ancho; solo donde el texto no se reacomoda al achicarse la otra */
+@media (min-width: 1040px) and (hover: hover) {
+  .panel:hover {
+    flex-grow: 1.3;
+  }
+}

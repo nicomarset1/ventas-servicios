@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Blocks, Code2, Zap } from "lucide-react";
+import { Blocks, Globe, LayoutDashboard, Palette, ShoppingCart, Zap } from "lucide-react";
 
 export const whatsappNumber = "5492234264682";
 export const instagramUrl = "https://www.instagram.com/nm.software/";
@@ -30,21 +30,84 @@ export type Service = {
   text: string;
 };
 
-export const services: Service[] = [
+export type AreaSlug = "web" | "software";
+
+export type Area = {
+  slug: AreaSlug;
+  label: string;
+  // Nombre corto para el menú.
+  short: string;
+  icon: LucideIcon;
+  summary: string;
+  hero: { eyebrow: string; title: string; copy: string };
+  servicesTitle: string;
+  services: Service[];
+  projectsTitle: string;
+};
+
+// Las dos áreas del sitio: cada una tiene su página (/web y /software) con sus servicios y proyectos.
+export const areas: Area[] = [
   {
-    icon: Code2,
-    title: "Webs y sistemas",
-    text: "Sitios, tiendas online y paneles de gestión hechos para tu negocio, no una plantilla.",
+    slug: "web",
+    label: "Desarrollo web",
+    short: "Web",
+    icon: Globe,
+    summary: "Sitios y tiendas online a medida para que te encuentren, te conozcan y te compren.",
+    hero: {
+      eyebrow: "Sitios · Tiendas online · Landings",
+      title: "Tu negocio en internet, bien hecho",
+      copy: "Sitios y tiendas a medida para que te encuentren, te conozcan y te compren.",
+    },
+    servicesTitle: "Qué incluye el desarrollo web",
+    services: [
+      {
+        icon: Globe,
+        title: "Sitios web",
+        text: "Sitios y landings que cargan rápido y se ven bien en el celular.",
+      },
+      {
+        icon: ShoppingCart,
+        title: "Tiendas online",
+        text: "Catálogo, carrito y stock para vender por internet sin depender de terceros.",
+      },
+      {
+        icon: Palette,
+        title: "Diseño a medida",
+        text: "Un diseño pensado para tu marca, no una plantilla.",
+      },
+    ],
+    projectsTitle: "Sitios y tiendas publicados",
   },
   {
-    icon: Zap,
-    title: "Automatizaciones",
-    text: "Reportes, avisos y cargas de datos que hoy hacés a mano, resueltos solos.",
-  },
-  {
-    icon: Blocks,
-    title: "Integraciones",
-    text: "WhatsApp, planillas, pagos y tus sistemas conectados entre sí.",
+    slug: "software",
+    label: "Software para empresas",
+    short: "Software",
+    icon: LayoutDashboard,
+    summary: "Sistemas de gestión, automatizaciones e integraciones hechos para tu operación.",
+    hero: {
+      eyebrow: "Sistemas · Automatizaciones",
+      title: "Software a medida para tu empresa",
+      copy: "Sistemas de gestión y automatizaciones hechos para tu operación, para ordenar el trabajo y decidir con datos.",
+    },
+    servicesTitle: "Qué incluye el software para empresas",
+    services: [
+      {
+        icon: LayoutDashboard,
+        title: "Sistemas de gestión",
+        text: "Paneles y apps para manejar personal, stock, flota o lo que tu operación necesite.",
+      },
+      {
+        icon: Zap,
+        title: "Automatizaciones",
+        text: "Reportes, avisos y cargas de datos que hoy hacés a mano, resueltos solos.",
+      },
+      {
+        icon: Blocks,
+        title: "Integraciones",
+        text: "WhatsApp, planillas, pagos y tus sistemas conectados entre sí.",
+      },
+    ],
+    projectsTitle: "Sistemas en uso",
   },
 ];
 
@@ -57,6 +120,7 @@ export const processSteps = [
 
 export type Project = {
   slug: string;
+  area: AreaSlug;
   name: string;
   type: string;
   summary: string;
@@ -69,6 +133,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "agrovet",
+    area: "web",
     name: "Agrovet MDP",
     type: "Tienda online",
     summary: "Tienda online con carrito y control de stock para una veterinaria.",
@@ -80,6 +145,7 @@ export const projects: Project[] = [
   },
   {
     slug: "mecanica-marset",
+    area: "web",
     name: "Mecánica Marset",
     type: "Sitio web",
     summary: "Sitio para un taller mecánico con turnos por WhatsApp.",
@@ -91,6 +157,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hasta-que-nos-vayamos",
+    area: "web",
     name: "Hasta Que Nos Vayamos",
     type: "Radio online",
     summary: "Radio en vivo con grabación y publicación automática.",
@@ -101,7 +168,32 @@ export const projects: Project[] = [
     images: ["/hnv-preview.png"],
   },
   {
+    slug: "latin-prospects",
+    area: "web",
+    name: "Latin Prospects",
+    type: "Sitio web",
+    summary: "Sitio de scouting de básquet con rankings de prospectos latinoamericanos.",
+    description:
+      "Sitio para una plataforma de scouting de básquet de Latinoamérica: rankings de prospectos por año de nacimiento con el perfil de cada jugador, noticias, calendario de eventos y solicitud de evaluación.",
+    chips: ["Rankings", "Noticias", "Evaluaciones"],
+    liveUrl: "https://latin-prospects-web.vercel.app",
+    images: ["/latin-prospects-preview.png"],
+  },
+  {
+    slug: "mareflota",
+    area: "software",
+    name: "Mareflota",
+    type: "Sistema de gestión",
+    summary: "Gestión de tripulación, barcos y capturas para una pesquera.",
+    description:
+      "Web app para una empresa pesquera: tripulación, barcos, viajes y capturas en un solo lugar, con alertas de vencimiento de documentos y estadísticas por barco y especie.",
+    chips: ["Tripulación", "Viajes", "Vencimientos"],
+    liveUrl: "https://mareflota.com.ar",
+    images: ["/mareflota-preview.png"],
+  },
+  {
     slug: "forza",
+    area: "software",
     name: "Forza Presupuestos",
     type: "App privada",
     summary: "App para armar presupuestos en PDF desde el celular.",

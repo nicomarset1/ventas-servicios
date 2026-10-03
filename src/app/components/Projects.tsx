@@ -2,13 +2,20 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import type { Project } from "../content";
 import { projects } from "../content";
 import ProjectModal from "./ProjectModal";
 import Reveal from "./Reveal";
 import { isPortrait } from "./projectMedia";
 import styles from "./Projects.module.css";
 
-export default function Projects() {
+type Props = {
+  // Proyectos a mostrar; por defecto todos.
+  items?: Project[];
+  title?: string;
+};
+
+export default function Projects({ items = projects, title = "Trabajos recientes" }: Props) {
   const [active, setActive] = useState<{ index: number; opener: HTMLElement } | null>(null);
 
   return (
@@ -16,11 +23,11 @@ export default function Projects() {
       <div className="container">
         <Reveal className="section-head is-center">
           <p className="eyebrow">Proyectos</p>
-          <h2>Trabajos recientes</h2>
+          <h2>{title}</h2>
         </Reveal>
 
         <div className={styles.grid}>
-          {projects.map((project, index) => {
+          {items.map((project, index) => {
             const portrait = isPortrait(project.images[0]);
             const shots = portrait ? project.images.slice(0, 2) : project.images.slice(0, 1);
 
@@ -59,7 +66,7 @@ export default function Projects() {
       </div>
 
       <ProjectModal
-        project={active ? projects[active.index] : null}
+        project={active ? items[active.index] : null}
         opener={active?.opener ?? null}
         onClose={() => setActive(null)}
       />

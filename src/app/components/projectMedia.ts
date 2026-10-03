@@ -3,6 +3,8 @@ const sizes: Record<string, { width: number; height: number }> = {
   "/agrovet-preview-actual.png": { width: 1899, height: 884 },
   "/pag-taller-preview.png": { width: 1366, height: 900 },
   "/hnv-preview.png": { width: 1897, height: 911 },
+  "/latin-prospects-preview.png": { width: 1600, height: 870 },
+  "/mareflota-preview.png": { width: 1600, height: 800 },
   "/forza-preview.png": { width: 738, height: 1505 },
   "/forza-pdf-preview.png": { width: 700, height: 982 },
 };
