@@ -13,7 +13,7 @@ const order: AreaSlug[] = ["software", "web"];
 export default function Split() {
   const panels = order.map((slug) => {
     const area = areas.find((item) => item.slug === slug)!;
-    // Fondo: la primera captura horizontal de un proyecto del área.
+    // Captura que asoma abajo: la primera horizontal de un proyecto del área.
     const cover = projects.find((project) => project.area === slug && !isPortrait(project.images[0]))?.images[0];
     return { area, cover };
   });
@@ -34,22 +34,17 @@ export default function Split() {
       </div>
 
       <div className={styles.panels}>
-        {panels.map(({ area, cover }, index) => {
+        {panels.map(({ area, cover }) => {
           const Icon = area.icon;
 
           return (
             <Link key={area.slug} href={`/${area.slug}`} className={`${styles.panel} ${styles[area.slug]}`}>
-              {cover && (
-                <Image
-                  src={cover}
-                  alt=""
-                  fill
-                  sizes="(min-width: 760px) 60vw, 100vw"
-                  className={styles.cover}
-                  loading={index === 0 ? "eager" : "lazy"}
-                />
-              )}
               <span className={styles.shade} aria-hidden="true" />
+              {cover && (
+                <span className={styles.preview} aria-hidden="true">
+                  <Image src={cover} alt="" fill sizes="440px" className={styles.previewImage} />
+                </span>
+              )}
 
               <span className={styles.content}>
                 <span className={styles.icon} aria-hidden="true">
