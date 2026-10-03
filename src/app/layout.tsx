@@ -19,20 +19,20 @@ export const metadata: Metadata = {
     template: "%s | NM Software",
   },
   description:
-    "NM Software desarrolla software a medida, automatizaciones de procesos e integraciones entre herramientas para negocios: paginas web, tiendas online, paneles de gestion y sistemas de stock.",
+    "NM Software desarrolla software a medida, automatizaciones de procesos e integraciones entre herramientas para negocios: páginas web, tiendas online, paneles de gestión y sistemas de stock.",
   keywords: [
     "NM Software",
     "desarrollo de software a medida",
-    "automatizacion de procesos",
+    "automatización de procesos",
     "integraciones entre sistemas",
-    "paginas web para negocios",
-    "sistemas de gestion",
+    "páginas web para negocios",
+    "sistemas de gestión",
     "sistemas de stock",
     "tiendas online",
     "software para empresas",
     "desarrollo web Argentina",
   ],
-  authors: [{ name: "Nicolas Marset" }],
+  authors: [{ name: "Nicolás Marset" }],
   creator: "NM Software",
   publisher: "NM Software",
   alternates: {
@@ -46,21 +46,12 @@ export const metadata: Metadata = {
     title: "NM Software | Software, automatizaciones e integraciones a medida",
     description:
       "Software a medida, automatizaciones de procesos e integraciones entre herramientas para vender y administrar mejor.",
-    images: [
-      {
-        url: "/hero-sistemas.png",
-        width: 1823,
-        height: 863,
-        alt: "NM Software - desarrollo de software a medida",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "NM Software | Software, automatizaciones e integraciones",
     description:
       "Software, automatizaciones e integraciones a medida para negocios.",
-    images: ["/hero-sistemas.png"],
   },
   robots: {
     index: true,
@@ -81,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es-AR">
       <body className={`${body.variable} ${display.variable}`}>{children}</body>
     </html>
   );

@@ -1,0 +1,61 @@
+.section {
+  background: var(--soft);
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+/* Suma la transición de hover a la de .reveal sin pisarla */
+.card:global(.reveal) {
+  transition:
+    opacity var(--dur) var(--ease) var(--delay, 0ms),
+    translate var(--dur) var(--ease) var(--delay, 0ms),
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+
+.card:global(.is-visible):hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-soft);
+  color: var(--brand);
+  display: inline-grid;
+  place-items: center;
+}
+
+.card p {
+  color: var(--muted);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    padding: 32px;
+  }
+}

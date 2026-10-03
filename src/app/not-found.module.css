@@ -1,0 +1,76 @@
+.page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: calc(100svh - 72px);
+  display: flex;
+  align-items: center;
+  padding: 64px 0;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--ink) 100%);
+  color: white;
+}
+
+/* Mismo glow de marca que el hero */
+.glow {
+  position: absolute;
+  z-index: -1;
+  top: -20%;
+  left: 50%;
+  width: min(900px, 140vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 55%, transparent), transparent);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.content {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.brand {
+  margin-bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: white;
+}
+
+.brand img {
+  border-radius: 999px;
+}
+
+.eyebrow {
+  color: var(--accent);
+}
+
+.content h1 {
+  color: white;
+  font-size: clamp(36px, 5vw, 60px);
+}
+
+.copy {
+  max-width: 460px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 18px;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.page :focus-visible {
+  outline-color: white;
+}

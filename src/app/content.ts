@@ -1,0 +1,119 @@
+import type { LucideIcon } from "lucide-react";
+import { Blocks, Code2, Zap } from "lucide-react";
+
+export const whatsappNumber = "5492234264682";
+export const instagramUrl = "https://www.instagram.com/nm.software/";
+export const facebookUrl = "https://www.facebook.com/profile.php?id=61590461681057";
+export const siteUrl = "https://nmsoftware.com.ar";
+
+const whatsappMessage = "Hola Nicolás, quiero consultar por un desarrollo para mi negocio.";
+export const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+export const navItems = [
+  { id: "proyectos", label: "Proyectos" },
+  { id: "servicios", label: "Servicios" },
+  { id: "proceso", label: "Cómo trabajo" },
+  { id: "contacto", label: "Contacto" },
+];
+
+export const hero = {
+  eyebrow: "Webs · Sistemas · Automatizaciones",
+  title: "Software a medida que trabaja por vos",
+  copy: "Herramientas hechas para tu negocio, para que venda más y pierda menos tiempo.",
+  primaryCta: "Hablemos por WhatsApp",
+  secondaryCta: "Ver proyectos",
+};
+
+export type Service = {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+};
+
+export const services: Service[] = [
+  {
+    icon: Code2,
+    title: "Webs y sistemas",
+    text: "Sitios, tiendas online y paneles de gestión hechos para tu negocio, no una plantilla.",
+  },
+  {
+    icon: Zap,
+    title: "Automatizaciones",
+    text: "Reportes, avisos y cargas de datos que hoy hacés a mano, resueltos solos.",
+  },
+  {
+    icon: Blocks,
+    title: "Integraciones",
+    text: "WhatsApp, planillas, pagos y tus sistemas conectados entre sí.",
+  },
+];
+
+export const processSteps = [
+  { step: "01", title: "Charlamos", text: "Entiendo tu negocio y qué querés resolver." },
+  { step: "02", title: "Propuesta", text: "Te paso alcance, plazo y precio claros." },
+  { step: "03", title: "Desarrollo", text: "Construyo y vas viendo avances reales." },
+  { step: "04", title: "Online", text: "Lo publico, lo probamos juntos y te acompaño." },
+];
+
+export type Project = {
+  slug: string;
+  name: string;
+  type: string;
+  summary: string;
+  description: string;
+  chips: string[];
+  liveUrl?: string;
+  images: string[];
+};
+
+export const projects: Project[] = [
+  {
+    slug: "agrovet",
+    name: "Agrovet MDP",
+    type: "Tienda online",
+    summary: "Tienda online con carrito y control de stock para una veterinaria.",
+    description:
+      "Tienda online para veterinaria y pet shop con catálogo, carrito, stock y un panel para administrar todo desde el celular.",
+    chips: ["Catálogo", "Carrito", "Stock"],
+    liveUrl: "https://agrovet-gestion-y-web.vercel.app",
+    images: ["/agrovet-preview-actual.png"],
+  },
+  {
+    slug: "mecanica-marset",
+    name: "Mecánica Marset",
+    type: "Sitio web",
+    summary: "Sitio para un taller mecánico con turnos por WhatsApp.",
+    description:
+      "Sitio para un taller mecánico con turnos por WhatsApp, reseñas y ubicación, pensado para generar confianza desde el primer vistazo.",
+    chips: ["WhatsApp", "Reseñas", "Ubicación"],
+    liveUrl: "https://mecanicamarset.netlify.app/",
+    images: ["/pag-taller-preview.png"],
+  },
+  {
+    slug: "hasta-que-nos-vayamos",
+    name: "Hasta Que Nos Vayamos",
+    type: "Radio online",
+    summary: "Radio en vivo con grabación y publicación automática.",
+    description:
+      "Sitio para un programa de radio con streaming en vivo y un archivo de programas que se graba, sube y publica solo cada semana.",
+    chips: ["En vivo", "Automatización", "Archivo"],
+    liveUrl: "https://hastaquenosvayamos.com.ar",
+    images: ["/hnv-preview.png"],
+  },
+  {
+    slug: "forza",
+    name: "Forza Presupuestos",
+    type: "App privada",
+    summary: "App para armar presupuestos en PDF desde el celular.",
+    description:
+      "Webapp para una empresa de reformas en Mallorca: arma presupuestos, guarda el historial y genera el PDF final desde cualquier lugar, con acceso por login.",
+    chips: ["Login", "Historial", "PDF"],
+    images: ["/forza-preview.png", "/forza-pdf-preview.png"],
+  },
+];
+
+export const contact = {
+  title: "¿Tenés una idea o un proceso para ordenar?",
+  copy: "Contame qué necesitás y te respondo con una propuesta concreta.",
+  cta: "Escribime por WhatsApp",
+};

@@ -1,0 +1,76 @@
+.section {
+  padding-top: 0;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 80px);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, var(--navy) 0%, var(--ink) 100%);
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.glow {
+  position: absolute;
+  z-index: -1;
+  top: -55%;
+  left: 50%;
+  width: min(760px, 160%);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 55%, transparent), transparent);
+  pointer-events: none;
+}
+
+.card h2 {
+  max-width: 640px;
+  color: white;
+}
+
+.copy {
+  max-width: 480px;
+  margin-bottom: 14px;
+  font-size: 18px;
+}
+
+@media (max-width: 420px) {
+  .card {
+    padding-inline: 20px;
+  }
+}
+
+.socials {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+}
+
+.socials a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color 0.25s var(--ease);
+}
+
+.socials a:hover {
+  color: white;
+}
+
+.card :focus-visible {
+  outline-color: white;
+}
