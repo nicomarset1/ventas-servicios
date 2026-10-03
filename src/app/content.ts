@@ -168,6 +168,18 @@ export const projects: Project[] = [
     images: ["/hnv-preview.png"],
   },
   {
+    slug: "latin-prospects",
+    area: "web",
+    name: "Latin Prospects",
+    type: "Sitio web",
+    summary: "Sitio de scouting de básquet con rankings de prospectos latinoamericanos.",
+    description:
+      "Sitio para una plataforma de scouting de básquet de Latinoamérica: rankings de prospectos por año de nacimiento con el perfil de cada jugador, noticias, calendario de eventos y solicitud de evaluación.",
+    chips: ["Rankings", "Noticias", "Evaluaciones"],
+    liveUrl: "https://latin-prospects-web.vercel.app",
+    images: ["/latin-prospects-preview.png"],
+  },
+  {
     slug: "mareflota",
     area: "software",
     name: "Mareflota",
