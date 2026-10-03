@@ -1,0 +1,69 @@
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 36px;
+}
+
+.step {
+  position: relative;
+  padding-left: 72px;
+  display: grid;
+  gap: 6px;
+}
+
+.number {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--brand);
+  opacity: 0.35;
+}
+
+/* Línea conectora vertical en mobile */
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 48px;
+  bottom: -28px;
+  left: 22px;
+  width: 1px;
+  background: var(--line);
+}
+
+.step p {
+  color: var(--muted);
+}
+
+@media (min-width: 900px) {
+  .steps {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+
+  .step {
+    padding-left: 0;
+    padding-top: 72px;
+  }
+
+  .number {
+    top: 0;
+    font-size: 48px;
+  }
+
+  /* Línea conectora horizontal entre pasos */
+  .step:not(:last-child)::after {
+    top: 24px;
+    bottom: auto;
+    left: 80px;
+    right: -16px;
+    width: auto;
+    height: 1px;
+  }
+}

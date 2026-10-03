@@ -1,0 +1,204 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--header-h) + 40px) 0 72px;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--ink) 100%);
+  color: white;
+}
+
+/* Un solo glow de marca, detrás del visual */
+.glow {
+  position: absolute;
+  z-index: -1;
+  top: -10%;
+  right: -15%;
+  width: min(900px, 110vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 55%, transparent), transparent);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.layout {
+  display: grid;
+  gap: 56px;
+  align-items: center;
+}
+
+.content {
+  display: grid;
+  justify-items: start;
+  gap: 22px;
+  max-width: 600px;
+}
+
+.eyebrow {
+  color: var(--accent);
+}
+
+.content h1 {
+  color: white;
+  font-size: clamp(40px, 5.4vw, 68px);
+}
+
+.copy {
+  max-width: 520px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(17px, 1.4vw, 19px);
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Marco de navegador con capturas reales */
+.browser {
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.chrome {
+  height: 40px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.address {
+  position: relative;
+  flex: 1;
+  max-width: 280px;
+  height: 24px;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.address .slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  white-space: nowrap;
+}
+
+.screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--navy);
+}
+
+.screen .slide {
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Rotación lenta: 3 capturas, 5 s cada una, fundido corto para no superponerlas */
+.slide {
+  opacity: 0;
+  animation: showcase 15s linear infinite both;
+}
+
+@keyframes showcase {
+  0% {
+    opacity: 0;
+  }
+  3%,
+  33.3% {
+    opacity: 1;
+  }
+  36.3%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Entrada escalonada al cargar */
+.enter {
+  animation: enter 0.7s var(--ease) both;
+}
+
+.enterVisual {
+  animation: enterVisual 0.9s var(--ease) 0.32s both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes enterVisual {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+}
+
+.hero :focus-visible {
+  outline-color: white;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 64px;
+  }
+
+  .hero {
+    padding-bottom: 56px;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .actions {
+    display: grid;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    animation: none;
+  }
+
+  .slide:first-child {
+    opacity: 1;
+  }
+}
