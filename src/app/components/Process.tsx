@@ -8,7 +8,7 @@ export default function Process() {
       <div className="container">
         <Reveal className="section-head is-center">
           <p className="eyebrow">Cómo trabajo</p>
-          <h2>Simple, claro y sin vueltas</h2>
+          <h2>Cuatro pasos, sin vueltas</h2>
         </Reveal>
 
         <ol className={styles.steps}>
