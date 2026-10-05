@@ -31,6 +31,9 @@ export default function Split() {
       <div className={styles.panels}>
         {panels.map((area) => {
           const Icon = area.icon;
+          // La última palabra del título baja de renglón en escritorio, así los dos títulos ocupan lo mismo
+          const words = area.label.split(" ");
+          const lastWord = words.pop();
 
           return (
             <Link key={area.slug} href={`/${area.slug}`} className={`${styles.panel} ${styles[area.slug]}`}>
@@ -43,12 +46,15 @@ export default function Split() {
                     <Icon size={24} />
                   </span>
                   <span className={styles.eyebrow}>{area.hero.eyebrow}</span>
-                  <h2>{area.label}</h2>
+                  <h2>
+                    {words.join(" ")} <span className={styles.titleEnd}>{lastWord}</span>
+                  </h2>
                   <span className={styles.summary}>{area.summary}</span>
-                  <span className={styles.cta}>
-                    Entrar
-                    <ArrowRight size={18} aria-hidden="true" />
-                  </span>
+                </span>
+                {/* Fila propia para que los dos botones queden a la misma altura */}
+                <span className={styles.cta}>
+                  Entrar
+                  <ArrowRight size={18} aria-hidden="true" />
                 </span>
                 {/* Animación del área debajo del texto; asoma recortada por el borde de abajo */}
                 <span className={styles.stage}>

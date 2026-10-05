@@ -192,6 +192,17 @@ export const projects: Project[] = [
     images: ["/mareflota-preview.png"],
   },
   {
+    slug: "agrovet-gestion",
+    area: "software",
+    name: "Agrovet MDP",
+    type: "Sistema de gestión",
+    summary: "Caja, stock, ventas y sucursales de una veterinaria en un solo panel.",
+    description:
+      "Panel de gestión para una veterinaria con dos sucursales: caja, stock por sucursal, ventas del mostrador y de la tienda online, clientes y un tablero con cómo viene cada día.",
+    chips: ["Caja", "Stock", "Sucursales"],
+    images: ["/agrovet-panel.png"],
+  },
+  {
     slug: "forza",
     area: "software",
     name: "Forza Presupuestos",

@@ -1,6 +1,7 @@
 // Tamaño real de cada captura de proyecto (para next/image y para saber si es vertical).
 const sizes: Record<string, { width: number; height: number }> = {
   "/agrovet-preview-actual.png": { width: 1899, height: 884 },
+  "/agrovet-panel.png": { width: 1440, height: 900 },
   "/pag-taller-preview.png": { width: 1366, height: 900 },
   "/hnv-preview.png": { width: 1897, height: 911 },
   "/latin-prospects-preview.png": { width: 1600, height: 870 },

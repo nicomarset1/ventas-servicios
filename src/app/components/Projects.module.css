@@ -9,6 +9,13 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 28px;
   }
+
+  /* Si queda una tarjeta sola en la última fila, va centrada */
+  .grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 28px) / 2);
+  }
 }
 
 .card {
