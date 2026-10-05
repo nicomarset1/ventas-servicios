@@ -1,0 +1,418 @@
+/* El ancho lo decide quien la usa; la ilustración ocupa todo ese ancho */
+.scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Fuera de pantalla no se anima nada */
+.scene[data-playing="false"] * {
+  animation-play-state: paused !important;
+}
+
+/* Piezas comunes de las dos escenas */
+.window {
+  fill: rgba(6, 22, 41, 0.82);
+  stroke: rgba(255, 255, 255, 0.14);
+}
+
+.rule {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.dot {
+  fill: rgba(255, 255, 255, 0.2);
+}
+
+.card {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.line {
+  fill: rgba(255, 255, 255, 0.16);
+}
+
+.number {
+  fill: rgba(255, 255, 255, 0.55);
+}
+
+/* Software */
+.menuActive {
+  fill: color-mix(in srgb, var(--brand) 45%, transparent);
+}
+
+.track {
+  fill: rgba(255, 255, 255, 0.08);
+}
+
+.fill {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: left;
+  animation: grow 4s var(--ease) infinite alternate;
+}
+
+.bar {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: bars 6s ease-in-out infinite;
+}
+
+.trend {
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  animation: draw 6s var(--ease) infinite;
+}
+
+.area {
+  animation: areaIn 6s var(--ease) infinite;
+}
+
+.trendDot {
+  fill: var(--accent);
+  stroke: var(--ink);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dotIn 6s var(--ease) infinite;
+}
+
+.chip {
+  fill: color-mix(in srgb, var(--brand) 70%, transparent);
+  animation: chip 5s ease-in-out infinite both;
+}
+
+.floating {
+  fill: #0a1d36;
+  stroke: rgba(255, 255, 255, 0.18);
+}
+
+.flowRail {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 2;
+}
+
+.flowPulse {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 0.18 0.82;
+  animation: pulse 2.7s linear infinite;
+}
+
+.step {
+  animation: step 6s var(--ease) infinite both;
+}
+
+.stepDot {
+  fill: var(--brand);
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+.stepCheck {
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stepText {
+  fill: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Web */
+.urlBar {
+  fill: rgba(255, 255, 255, 0.07);
+}
+
+.url {
+  fill: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 11px;
+}
+
+.logo,
+.accentBar,
+.button,
+.addButton {
+  fill: var(--accent);
+}
+
+.accentBar {
+  opacity: 0.85;
+}
+
+.ghostButton {
+  fill: rgba(255, 255, 255, 0.1);
+}
+
+.cartIcon {
+  fill: rgba(255, 255, 255, 0.1);
+}
+
+.cartBadge {
+  fill: var(--accent);
+  stroke: var(--navy);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: badge 9s var(--ease) infinite both;
+}
+
+.build {
+  animation: build 9s var(--ease) infinite both;
+}
+
+.cursor {
+  fill: white;
+  stroke: var(--ink);
+  stroke-width: 1.2;
+  animation: cursor 9s var(--ease) infinite both;
+}
+
+.ripple {
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ripple 9s ease-out infinite;
+}
+
+.phoneBody {
+  fill: #0b1b31;
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 1.5;
+}
+
+.notch {
+  fill: #0b1b31;
+}
+
+.phoneScroll {
+  animation: scroll 9s ease-in-out infinite;
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0.25);
+  }
+  to {
+    transform: scaleX(0.9);
+  }
+}
+
+@keyframes bars {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  25% {
+    transform: scaleY(0.6);
+  }
+  50% {
+    transform: scaleY(0.85);
+  }
+  75% {
+    transform: scaleY(0.45);
+  }
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  45%,
+  85% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes areaIn {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  55%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes dotIn {
+  0%,
+  42% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  56%,
+  85% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes chip {
+  0%,
+  40% {
+    fill: color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  50%,
+  100% {
+    fill: color-mix(in srgb, var(--brand) 70%, transparent);
+  }
+}
+
+@keyframes pulse {
+  from {
+    stroke-dashoffset: 0.18;
+  }
+  to {
+    stroke-dashoffset: -0.82;
+  }
+}
+
+@keyframes step {
+  0%,
+  8% {
+    opacity: 0.3;
+  }
+  16%,
+  80% {
+    opacity: 1;
+  }
+  92%,
+  100% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes build {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  8%,
+  86% {
+    opacity: 1;
+    transform: none;
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes cursor {
+  0%,
+  28% {
+    opacity: 0;
+    transform: translate(130px, -110px);
+  }
+  32% {
+    opacity: 1;
+    transform: translate(130px, -110px);
+  }
+  46% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: scale(0.85);
+  }
+  54%,
+  80% {
+    opacity: 1;
+    transform: none;
+  }
+  86%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes ripple {
+  0%,
+  48% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.3);
+  }
+  64%,
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+@keyframes badge {
+  0%,
+  50% {
+    transform: scale(0);
+  }
+  55% {
+    transform: scale(1.4);
+  }
+  60%,
+  88% {
+    transform: scale(1);
+  }
+  96%,
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes scroll {
+  0%,
+  18% {
+    transform: none;
+  }
+  62%,
+  80% {
+    transform: translateY(-200px);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+/* Con movimiento reducido queda la ilustración quieta y completa */
+@media (prefers-reduced-motion: reduce) {
+  .scene * {
+    animation: none !important;
+  }
+}
