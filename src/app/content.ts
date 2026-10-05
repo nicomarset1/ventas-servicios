@@ -58,7 +58,7 @@ export const areas: Area[] = [
       title: "Tu negocio en internet, bien hecho",
       copy: "Sitios y tiendas a medida para que te encuentren, te conozcan y te compren.",
     },
-    servicesTitle: "Qué incluye el desarrollo web",
+    servicesTitle: "Qué hago",
     services: [
       {
         icon: Globe,
@@ -68,7 +68,7 @@ export const areas: Area[] = [
       {
         icon: ShoppingCart,
         title: "Tiendas online",
-        text: "Catálogo, carrito y stock para vender por internet sin depender de terceros.",
+        text: "Catálogo, carrito, stock y cobro online, sin depender de terceros.",
       },
       {
         icon: Palette,
@@ -87,24 +87,24 @@ export const areas: Area[] = [
     hero: {
       eyebrow: "Sistemas · Automatizaciones",
       title: "Software a medida para tu empresa",
-      copy: "Sistemas de gestión y automatizaciones hechos para tu operación, para ordenar el trabajo y decidir con datos.",
+      copy: "Sistemas y automatizaciones para ordenar tu operación y decidir con datos.",
     },
-    servicesTitle: "Qué incluye el software para empresas",
+    servicesTitle: "Qué hago",
     services: [
       {
         icon: LayoutDashboard,
         title: "Sistemas de gestión",
-        text: "Paneles y apps para manejar personal, stock, flota o lo que tu operación necesite.",
+        text: "Paneles para manejar personal, stock, flota o lo que necesites.",
       },
       {
         icon: Zap,
         title: "Automatizaciones",
-        text: "Reportes, avisos y cargas de datos que hoy hacés a mano, resueltos solos.",
+        text: "Reportes, avisos y cargas que hoy hacés a mano, resueltos solos.",
       },
       {
         icon: Blocks,
         title: "Integraciones",
-        text: "WhatsApp, planillas, pagos y tus sistemas conectados entre sí.",
+        text: "WhatsApp, planillas, pagos y tus sistemas, conectados.",
       },
     ],
     projectsTitle: "Sistemas en uso",
@@ -113,9 +113,9 @@ export const areas: Area[] = [
 
 export const processSteps = [
   { step: "01", title: "Charlamos", text: "Entiendo tu negocio y qué querés resolver." },
-  { step: "02", title: "Propuesta", text: "Te paso alcance, plazo y precio claros." },
-  { step: "03", title: "Desarrollo", text: "Construyo y vas viendo avances reales." },
-  { step: "04", title: "Online", text: "Lo publico, lo probamos juntos y te acompaño." },
+  { step: "02", title: "Propuesta", text: "Alcance, plazo y precio claros." },
+  { step: "03", title: "Desarrollo", text: "Vas viendo avances reales." },
+  { step: "04", title: "Online", text: "Lo publico y te sigo acompañando." },
 ];
 
 export type Project = {
@@ -205,7 +205,7 @@ export const projects: Project[] = [
 ];
 
 export const contact = {
-  title: "¿Tenés una idea o un proceso para ordenar?",
-  copy: "Contame qué necesitás y te respondo con una propuesta concreta.",
+  title: "¿Tenés algo en mente?",
+  copy: "Contame qué necesitás y te paso una propuesta concreta.",
   cta: "Escribime por WhatsApp",
 };

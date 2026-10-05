@@ -2,11 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, MessageCircle, X } from "lucide-react";
+import { ArrowLeft, Menu, MessageCircle, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { AreaSlug } from "../content";
 import { areas, hero, navItems, whatsappUrl } from "../content";
 import styles from "./Header.module.css";
+
+// Mismo orden que en la home: software a la izquierda, web a la derecha.
+const areaOrder: AreaSlug[] = ["software", "web"];
 
 type Props = {
   // Página de área (/web o /software); sin valor es la home.
@@ -83,7 +86,7 @@ export default function Header({ area }: Props) {
         first.focus();
       }
     };
-    const desktop = window.matchMedia("(min-width: 900px)");
+    const desktop = window.matchMedia("(min-width: 1100px)");
     const onChange = () => desktop.matches && setMenuOpen(false);
 
     window.addEventListener("keydown", onKey);
@@ -97,8 +100,32 @@ export default function Header({ area }: Props) {
 
   const solid = scrolled || menuOpen;
   const closeMenu = () => setMenuOpen(false);
-  // En una página de área se ofrece el salto a la otra.
-  const otherArea = area ? areas.find((item) => item.slug !== area) : undefined;
+  // En una página de área: volver a la home o saltar a la otra área sin pasar por el menú.
+  const switcher = area && (
+    <nav className={styles.switcher} aria-label="Áreas">
+      <Link href="/" className={styles.home} aria-label="Volver al inicio" title="Volver al inicio" onClick={closeMenu}>
+        <ArrowLeft size={17} aria-hidden="true" />
+        <span className={styles.homeLabel}>Inicio</span>
+      </Link>
+      <span className={styles.segments}>
+        {areaOrder.map((slug) => {
+          const item = areas.find((entry) => entry.slug === slug)!;
+          const current = slug === area;
+          return (
+            <Link
+              key={slug}
+              href={`/${slug}`}
+              className={current ? styles.current : ""}
+              aria-current={current ? "page" : undefined}
+              onClick={closeMenu}
+            >
+              {item.short}
+            </Link>
+          );
+        })}
+      </span>
+    </nav>
+  );
   const brand = (
     <>
       <Image src="/logo-circle.png" alt="" width={36} height={36} preload />
@@ -114,7 +141,7 @@ export default function Header({ area }: Props) {
       <header className={`${styles.header} ${solid ? styles.solid : ""} ${menuOpen ? styles.menuOpen : ""}`}>
         <div className={styles.bar}>
           {area ? (
-            <Link className={styles.brand} href="/" onClick={closeMenu}>
+            <Link className={styles.brand} href="/" aria-label="NM Software: volver al inicio" onClick={closeMenu}>
               {brand}
             </Link>
           ) : (
@@ -122,6 +149,8 @@ export default function Header({ area }: Props) {
               {brand}
             </a>
           )}
+
+          {switcher}
 
           <nav className={styles.nav} aria-label="Principal">
             {navItems.map((item) => (
@@ -134,11 +163,6 @@ export default function Header({ area }: Props) {
                 {item.label}
               </a>
             ))}
-            {otherArea && (
-              <Link href={`/${otherArea.slug}`} className={styles.switch}>
-                {otherArea.short}
-              </Link>
-            )}
           </nav>
 
           <div className={styles.actions}>
@@ -177,9 +201,9 @@ export default function Header({ area }: Props) {
                 {item.label}
               </a>
             ))}
-            {otherArea && (
-              <Link href={`/${otherArea.slug}`} onClick={closeMenu}>
-                {otherArea.label}
+            {area && (
+              <Link href="/" onClick={closeMenu}>
+                Volver al inicio
               </Link>
             )}
             <a
