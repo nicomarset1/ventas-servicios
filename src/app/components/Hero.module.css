@@ -123,6 +123,26 @@
   }
 }
 
+/*
+  En compu la portada mide justo lo que se ve debajo del header: así se fija desde el primer
+  movimiento de la ruedita y la página no baja antes de que arranque la entrada.
+  En pantallas bajas se achican los márgenes y, si hace falta, el título, para que todo entre.
+*/
+@media (prefers-reduced-motion: no-preference) and (min-width: 961px) {
+  .stage {
+    height: calc(100lvh - var(--header-h));
+    align-content: safe center;
+  }
+
+  .layout {
+    padding-block: min(clamp(36px, 5vw, 72px), 4lvh) min(clamp(48px, 6vw, 80px), 4lvh);
+  }
+
+  .title {
+    font-size: clamp(36px, min(4.15vw, 8.2lvh), 60px);
+  }
+}
+
 @media (max-width: 480px) {
   .action {
     justify-items: stretch;
