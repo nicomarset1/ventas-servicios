@@ -5,13 +5,15 @@ import { useEffect } from "react";
 /*
   Al bajar, la portada queda fija y entramos a la pantalla de la notebook:
   la notebook va al centro y crece hasta que la pantalla ocupa todo, y ahí se vuelve la banda azul de trabajos.
+  La animación sigue al scroll con un poco de inercia: cada golpe de ruedita se desliza en vez de saltar.
   Los elementos se marcan con data-dive en Hero y HeroCollage. Solo mueve transform y opacity.
   Con "reducir movimiento" no corre: la portada queda quieta (ver Hero.module.css).
 */
 
-// Las mismas curvas que --ease-in-out y --ease-out de globals.css.
-const easeInOut = cubicBezier(0.77, 0, 0.175, 1);
-const easeOut = cubicBezier(0.23, 1, 0.32, 1);
+// Segundos que tarda la animación en alcanzar al scroll (constante de tiempo de la inercia).
+const SMOOTHING = 0.15;
+// Lo más atrás del scroll que puede quedar la animación (avance de 0 a 1), para que un tirón largo no la deje colgada.
+const MAX_LAG = 0.1;
 
 // Inclinación de la tapa en reposo: igual que .lid en HeroCollage.module.css.
 const LID_TILT = 12;
@@ -58,6 +60,7 @@ function start() {
   const header = document.querySelector<HTMLElement>("header");
   const flyers = [phone, second].filter((el): el is HTMLElement => el !== null);
 
+  let alive = true;
   let top = 0;
   let travel = 1;
   let dx = 0;
@@ -66,10 +69,16 @@ function start() {
   let vw = 0;
   let vh = 0;
   let frame = 0;
-  let last = -1;
+  let then = 0;
+  // Avance que se ve en pantalla: persigue al del scroll con inercia. Vale -1 hasta la primera medida.
+  let shown = -1;
+
+  // Avance real del scroll mientras la portada está fija, de 0 a 1.
+  const progress = () => clamp((top - root.getBoundingClientRect().top) / travel);
 
   // Medidas de layout (sin transforms): dónde está la pantalla y cuánto tiene que crecer para cubrir todo.
   const measure = () => {
+    if (!alive) return;
     vw = document.documentElement.clientWidth;
     vh = window.innerHeight;
     const headerH = header?.offsetHeight ?? 0;
@@ -90,38 +99,35 @@ function start() {
     dy = headerH + visibleH / 2 - (top + inStage.y + sh / 2);
     zoom = Math.max(vw / sw, visibleH / sh) * 1.08;
 
-    last = -1;
-    render();
+    const target = progress();
+    if (shown < 0) shown = target;
+    draw(shown, target);
+    request();
   };
 
-  const render = () => {
-    frame = 0;
-    const p = clamp((top - root.getBoundingClientRect().top) / travel);
-    if (p === last) return;
-    last = p;
-
+  const draw = (p: number, target: number) => {
     // La notebook va al centro, se endereza la tapa y la cámara entra a velocidad pareja (zoom geométrico).
-    const move = easeInOut(clamp(p / 0.55));
-    const scale = Math.pow(zoom, clamp(p / 0.9));
+    const move = smooth(p / 0.6);
+    const scale = Math.pow(zoom, p);
     laptop.style.transform = `translate3d(${dx * move}px, ${dy * move}px, 0) scale(${scale})`;
     laptop.style.pointerEvents = p > 0.02 ? "none" : "";
-    lid.style.transform = `rotateX(${LID_TILT * (1 - easeOut(clamp(p / 0.4)))}deg)`;
+    lid.style.transform = `rotateX(${LID_TILT * (1 - smooth(p / 0.45))}deg)`;
 
     // El texto sube y se va.
-    const textOut = clamp(p / 0.28);
+    const textOut = clamp(p / 0.3);
     copy.style.opacity = `${1 - textOut}`;
-    copy.style.transform = `translate3d(0, ${-48 * easeOut(textOut)}px, 0)`;
+    copy.style.transform = `translate3d(0, ${-48 * smooth(textOut)}px, 0)`;
     copy.style.visibility = textOut >= 1 ? "hidden" : "";
 
     if (caption) {
-      const captionOut = clamp(p / 0.1);
+      const captionOut = clamp(p / 0.12);
       caption.style.opacity = `${1 - captionOut}`;
       caption.style.visibility = captionOut >= 1 ? "hidden" : "";
     }
 
     // El celular y la hoja pasan al costado de la cámara.
-    const fly = easeInOut(clamp(p / 0.4));
-    const flyOut = clamp((p - 0.04) / 0.2);
+    const fly = smooth(p / 0.45);
+    const flyOut = clamp((p - 0.05) / 0.25);
     flyers.forEach((el, index) => {
       const side = index === 0 ? -1 : 1;
       el.style.transform = `translate3d(${side * 0.3 * vw * fly}px, ${0.24 * vh * fly}px, 0) rotate(${side * 10 * fly}deg) scale(${1 + 0.6 * fly})`;
@@ -129,26 +135,46 @@ function start() {
       el.style.visibility = flyOut >= 1 ? "hidden" : "";
     });
 
-    // Adentro de la pantalla todo se vuelve el azul de la banda de trabajos.
-    night.style.opacity = `${easeInOut(clamp((p - 0.66) / 0.2))}`;
-    portal.style.opacity = `${clamp((p - 0.84) / 0.1)}`;
+    // El panel se tiñe de a poco del azul de la banda de trabajos y al final el azul cubre todo.
+    night.style.opacity = `${smooth((p - 0.42) / 0.53)}`;
+    // Cuando la portada se suelta ya está toda azul, aunque la animación venga un poco atrás del scroll.
+    portal.style.opacity = `${Math.max(smooth((p - 0.72) / 0.25), clamp((target - 0.95) / 0.05))}`;
   };
 
-  const onScroll = () => {
-    if (!frame) frame = requestAnimationFrame(render);
+  // Cada cuadro acerca lo que se ve al avance real, igual a cualquier frecuencia de pantalla.
+  const tick = (now: number) => {
+    frame = 0;
+    const target = progress();
+    const dt = then ? Math.min(now - then, 100) / 1000 : 1 / 60;
+    shown += (target - shown) * (1 - Math.exp(-dt / SMOOTHING));
+    shown = Math.min(target + MAX_LAG, Math.max(target - MAX_LAG, shown));
+    if (Math.abs(target - shown) < 1e-4) shown = target;
+    draw(shown, target);
+
+    if (shown === target) {
+      then = 0;
+    } else {
+      then = now;
+      frame = requestAnimationFrame(tick);
+    }
+  };
+
+  const request = () => {
+    if (alive && !frame) frame = requestAnimationFrame(tick);
   };
 
   const resizeObserver = new ResizeObserver(() => measure());
   resizeObserver.observe(stage);
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", request, { passive: true });
   window.addEventListener("resize", measure);
   document.fonts?.ready.then(measure);
   measure();
 
   return () => {
+    alive = false;
     cancelAnimationFrame(frame);
     resizeObserver.disconnect();
-    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("scroll", request);
     window.removeEventListener("resize", measure);
     [stage, copy, laptop, lid, night, portal, caption, ...flyers].forEach((el) => el?.removeAttribute("style"));
   };
@@ -156,6 +182,14 @@ function start() {
 
 function clamp(value: number) {
   return Math.min(1, Math.max(0, value));
+}
+
+/*
+  Curva seno de ida y vuelta (easeInOutSine): arranca y termina suave.
+  Lo que sigue al scroll necesita una curva pareja: las fuertes de los tokens juntan casi todo el cambio en un par de golpes de ruedita.
+*/
+function smooth(value: number) {
+  return 0.5 - 0.5 * Math.cos(Math.PI * clamp(value));
 }
 
 // Posición de layout (sin transforms) de un elemento dentro de un ancestro posicionado.
@@ -169,41 +203,4 @@ function offsetWithin(element: HTMLElement, ancestor: HTMLElement) {
     node = node.offsetParent as HTMLElement | null;
   }
   return { x, y };
-}
-
-// Evalúa una cubic-bezier de CSS para usar las mismas curvas del sitio en JS.
-function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
-  const cx = 3 * x1;
-  const bx = 3 * (x2 - x1) - cx;
-  const ax = 1 - cx - bx;
-  const cy = 3 * y1;
-  const by = 3 * (y2 - y1) - cy;
-  const ay = 1 - cy - by;
-  const sampleX = (t: number) => ((ax * t + bx) * t + cx) * t;
-  const sampleY = (t: number) => ((ay * t + by) * t + cy) * t;
-  const slopeX = (t: number) => (3 * ax * t + 2 * bx) * t + cx;
-
-  return (x: number) => {
-    if (x <= 0) return 0;
-    if (x >= 1) return 1;
-    let t = x;
-    for (let i = 0; i < 8; i++) {
-      const error = sampleX(t) - x;
-      if (Math.abs(error) < 1e-5) return sampleY(t);
-      const slope = slopeX(t);
-      if (Math.abs(slope) < 1e-6) break;
-      t -= error / slope;
-    }
-    let low = 0;
-    let high = 1;
-    t = x;
-    for (let i = 0; i < 24; i++) {
-      const value = sampleX(t);
-      if (Math.abs(value - x) < 1e-5) break;
-      if (value < x) low = t;
-      else high = t;
-      t = (low + high) / 2;
-    }
-    return sampleY(t);
-  };
 }

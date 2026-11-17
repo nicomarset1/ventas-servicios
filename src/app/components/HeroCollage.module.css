@@ -250,6 +250,11 @@
   .caption {
     animation: fade-in 600ms var(--ease-out) 900ms backwards;
   }
+
+  /* HeroDive cambia su opacidad en cada cuadro: en su propia capa no hay que repintar la pantalla */
+  .night {
+    will-change: opacity;
+  }
 }
 
 /* Con "reducir movimiento" solo aparece, sin moverse */
