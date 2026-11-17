@@ -2,223 +2,69 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Menu, MessageCircle, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import type { AreaSlug } from "../content";
-import { areas, hero, navItems, whatsappUrl } from "../content";
+import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ctaLabel, navItems, whatsappUrl } from "../content";
+import WhatsAppIcon from "./WhatsAppIcon";
 import styles from "./Header.module.css";
 
-// Mismo orden que en la home: software a la izquierda, web a la derecha.
-const areaOrder: AreaSlug[] = ["software", "web"];
+// base: "" en páginas que tienen las secciones (home y áreas); "/" en las páginas de proyecto.
+export default function Header({ base = "" }: { base?: "" | "/" }) {
+  const [open, setOpen] = useState(false);
 
-type Props = {
-  // Página de área (/web o /software); sin valor es la home.
-  area?: AreaSlug;
-};
-
-export default function Header({ area }: Props) {
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const toggleRef = useRef<HTMLButtonElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  // Fondo al scrollear + sección activa según lo que se ve en pantalla
   useEffect(() => {
-    let frame = 0;
-
-    const update = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 12);
-
-        const marker = window.innerHeight * 0.35;
-        let current = "";
-        navItems.forEach(({ id }) => {
-          const section = document.getElementById(id);
-          if (section && section.getBoundingClientRect().top <= marker) current = id;
-        });
-
-        const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-        if (atBottom) current = navItems[navItems.length - 1].id;
-
-        setActiveSection(current);
-      });
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
-  // Menú mobile: bloquea el scroll, atrapa el foco, cierra con Esc y al pasar a desktop
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const root = document.documentElement;
-    const previousOverflow = root.style.overflow;
-    root.style.overflow = "hidden";
-
+    if (!open) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-        toggleRef.current?.focus();
-        return;
-      }
-      if (event.key !== "Tab") return;
-
-      const links = panelRef.current ? Array.from(panelRef.current.querySelectorAll<HTMLElement>("a")) : [];
-      const focusables = [toggleRef.current, ...links].filter((el): el is HTMLElement => el !== null);
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      const current = document.activeElement as HTMLElement | null;
-
-      if (event.shiftKey && (current === first || !focusables.includes(current!))) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && (current === last || !focusables.includes(current!))) {
-        event.preventDefault();
-        first.focus();
-      }
+      if (event.key === "Escape") setOpen(false);
     };
-    const desktop = window.matchMedia("(min-width: 1100px)");
-    const onChange = () => desktop.matches && setMenuOpen(false);
-
     window.addEventListener("keydown", onKey);
-    desktop.addEventListener("change", onChange);
-    return () => {
-      root.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKey);
-      desktop.removeEventListener("change", onChange);
-    };
-  }, [menuOpen]);
-
-  const solid = scrolled || menuOpen;
-  const closeMenu = () => setMenuOpen(false);
-  // En una página de área: volver a la home o saltar a la otra área sin pasar por el menú.
-  const switcher = area && (
-    <nav className={styles.switcher} aria-label="Áreas">
-      <Link href="/" className={styles.home} aria-label="Volver al inicio" title="Volver al inicio" onClick={closeMenu}>
-        <ArrowLeft size={17} aria-hidden="true" />
-        <span className={styles.homeLabel}>Inicio</span>
-      </Link>
-      <span className={styles.segments}>
-        {areaOrder.map((slug) => {
-          const item = areas.find((entry) => entry.slug === slug)!;
-          const current = slug === area;
-          return (
-            <Link
-              key={slug}
-              href={`/${slug}`}
-              className={current ? styles.current : ""}
-              aria-current={current ? "page" : undefined}
-              onClick={closeMenu}
-            >
-              {item.short}
-            </Link>
-          );
-        })}
-      </span>
-    </nav>
-  );
-  const brand = (
-    <>
-      <Image src="/logo-circle.png" alt="" width={36} height={36} preload />
-      <span>NM Software</span>
-    </>
-  );
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <>
-      {/* Fuera del header: su backdrop-filter haría que el fixed quede contenido en él */}
-      <div className={`${styles.overlay} ${menuOpen ? styles.overlayOpen : ""}`} aria-hidden="true" onClick={closeMenu} />
+    <header className={styles.header} data-open={open || undefined}>
+      <div className={`container ${styles.inner}`}>
+        <Link href="/" className={styles.brand} onClick={() => setOpen(false)}>
+          <Image src="/logo-circle.png" alt="" width={36} height={36} preload />
+          <span>NM Software</span>
+        </Link>
 
-      <header className={`${styles.header} ${solid ? styles.solid : ""} ${menuOpen ? styles.menuOpen : ""}`}>
-        <div className={styles.bar}>
-          {area ? (
-            <Link className={styles.brand} href="/" aria-label="NM Software: volver al inicio" onClick={closeMenu}>
-              {brand}
-            </Link>
-          ) : (
-            <a className={styles.brand} href="#inicio" onClick={closeMenu}>
-              {brand}
+        <nav className={styles.nav} aria-label="Secciones">
+          {navItems.map((item) => (
+            <a key={item.id} href={`${base}#${item.id}`} className={styles.navLink}>
+              {item.label}
             </a>
-          )}
+          ))}
+        </nav>
 
-          {switcher}
-
-          <nav className={styles.nav} aria-label="Principal">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={activeSection === item.id ? styles.active : ""}
-                aria-current={activeSection === item.id ? "location" : undefined}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className={styles.actions}>
-            <a className={`button button-primary ${styles.cta}`} href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-              <MessageCircle size={18} aria-hidden="true" />
-              <span>WhatsApp</span>
-            </a>
-            <button
-              ref={toggleRef}
-              type="button"
-              className={styles.toggle}
-              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-              aria-expanded={menuOpen}
-              aria-controls="menu-mobile"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
-            </button>
-          </div>
+        <div className={styles.actions}>
+          <a className={`btn ${styles.cta}`} href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <WhatsAppIcon size={19} />
+            <span className={styles.ctaLong}>{ctaLabel}</span>
+            <span className={styles.ctaShort}>WhatsApp</span>
+          </a>
+          <button
+            type="button"
+            className={styles.menuButton}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+          </button>
         </div>
+      </div>
 
-        <div
-          ref={panelRef}
-          id="menu-mobile"
-          className={`${styles.panel} ${menuOpen ? styles.panelOpen : ""}`}
-          inert={!menuOpen}
-        >
-          <nav className={styles.panelNav} aria-label="Principal mobile">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={activeSection === item.id ? styles.active : ""}
-                onClick={closeMenu}
-              >
-                {item.label}
-              </a>
-            ))}
-            {area && (
-              <Link href="/" onClick={closeMenu}>
-                Volver al inicio
-              </Link>
-            )}
-            <a
-              className={`button button-primary ${styles.panelCta}`}
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={closeMenu}
-            >
-              <MessageCircle size={18} aria-hidden="true" />
-              {hero.primaryCta}
+      <div id="menu-mobile" className={styles.panel} hidden={!open}>
+        <nav className="container" aria-label="Secciones">
+          {navItems.map((item) => (
+            <a key={item.id} href={`${base}#${item.id}`} className={styles.panelLink} onClick={() => setOpen(false)}>
+              {item.label}
             </a>
-          </nav>
-        </div>
-      </header>
-    </>
+          ))}
+        </nav>
+      </div>
+    </header>
   );
 }

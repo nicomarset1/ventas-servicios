@@ -1,0 +1,102 @@
+.head {
+  display: grid;
+  gap: 20px;
+  max-width: 820px;
+}
+
+.head h2 {
+  max-width: 16ch;
+}
+
+.table {
+  margin-top: clamp(40px, 5vw, 64px);
+  border-top: 1.5px solid var(--ink);
+}
+
+.columns,
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) 200px;
+  gap: 32px;
+}
+
+.columns {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 560;
+}
+
+.row {
+  align-items: start;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.today {
+  color: var(--muted);
+  font-size: var(--text-lg);
+  line-height: 1.45;
+}
+
+.solved {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 14px;
+  color: var(--ink);
+  font-size: var(--text-lg);
+  font-weight: 560;
+  line-height: 1.45;
+}
+
+.arrow {
+  margin-top: 3px;
+  color: var(--cobalt);
+}
+
+.client {
+  font-size: var(--text-sm);
+}
+
+.clientLink {
+  color: var(--ink);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--line-strong);
+  transition: text-decoration-color 160ms var(--ease-out);
+}
+
+.rubro {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .clientLink:hover {
+    text-decoration-color: var(--ink);
+  }
+}
+
+@media (max-width: 860px) {
+  .columns {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 24px 0;
+  }
+
+  .today {
+    font-size: var(--text-base);
+  }
+
+  .client {
+    padding-left: 34px;
+  }
+}

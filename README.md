@@ -1,7 +1,7 @@
 # NM Software
 
-Sitio de NM Software (https://nmsoftware.com.ar): software a medida, automatizaciones e integraciones para negocios.
-Hecho con Next.js 16, React 19, Tailwind 4 y CSS Modules, con íconos de lucide-react.
+Sitio de NM Software (https://nmsoftware.com.ar): tiendas online, sitios web y sistemas de gestión a medida.
+Hecho con Next.js 16, React 19 y CSS Modules, con íconos de lucide-react. La letra es Archivo (Omnibus-Type, Argentina): los títulos van expandidos con `font-stretch`.
 
 ## Correrlo en local
 
@@ -12,37 +12,32 @@ npm run dev
 
 Abrir la URL que muestra Next (por defecto http://localhost:3000).
 
-Antes de publicar conviene correr `npm run lint` y `npx tsc --noEmit`.
+Antes de publicar conviene correr `npm run lint`, `npx tsc --noEmit` y `npm run build`.
 
-## Textos, proyectos y contacto
+## Dónde está cada cosa
 
-Todo el contenido está en `src/app/content.ts`: número de WhatsApp (formato internacional, sin `+` ni espacios), mensaje predefinido, redes, textos de cada sección, servicios, pasos del proceso y proyectos.
+- `src/app/content.ts`: todos los textos. WhatsApp (formato internacional, sin `+` ni espacios), mensajes ya escritos, portada, problemas resueltos, servicios, pasos de trabajo, propuesta de ejemplo, preguntas frecuentes, contacto y las páginas de área (`/web` y `/software`).
+- `src/app/projects.ts`: los trabajos, con sus capturas, textos y datos para Google. Cada trabajo tiene su página en `/proyectos/<slug>`.
+- `src/app/globals.css`: colores, letra, espaciados y botones. Los módulos usan solo esos tokens.
 
-El sitio tiene dos áreas, definidas en `areas`: desarrollo web (`/web`) y software para empresas (`/software`). Cada una tiene su portada y sus servicios, y muestra los proyectos que llevan su `area`.
+Para sumar un trabajo: poné las capturas en `public/` (computadora a 1440x900 y celular a 390x844), agregalo a `projects` con las áreas donde va y creá `src/app/proyectos/<slug>/page.tsx` copiando cualquiera de las otras.
 
-Para sumar un proyecto, agregalo a `projects` en ese archivo, con el `area` que le corresponde, y poné sus capturas en `public/`. Cargá también el tamaño real de cada captura en `src/app/components/projectMedia.ts`.
+## Estructura de la home
 
-Los colores, radios, sombras y espaciados son tokens definidos en `src/app/globals.css`. Los módulos usan solo esos tokens.
-
-## Estructura
-
-| Archivo | Qué es |
+| Componente | Qué es |
 | --- | --- |
-| `src/app/page.tsx` | Home: la pantalla dividida y el JSON de datos estructurados |
-| `components/Header.tsx` | Header fijo, links con sección activa y menú mobile |
-| `components/Hero.tsx` | Portada con CTA a WhatsApp y capturas de proyectos |
-| `components/Projects.tsx` | Grilla de proyectos; cada tarjeta abre `ProjectModal.tsx` |
-| `src/app/web`, `src/app/software` | Páginas de cada área, sobre la plantilla `components/AreaPage.tsx` |
-| `components/Split.tsx` | Home: pantalla dividida en dos, cada mitad lleva a un área |
-| `components/Services.tsx` | Tarjetas de servicios de un área |
-| `components/Process.tsx` | Pasos de cómo trabajo |
-| `components/Contact.tsx` | Bloque final de contacto |
-| `components/Footer.tsx` | Footer con redes (íconos en `socials.tsx`) |
-| `components/Reveal.tsx` | Animación de entrada al hacer scroll |
-| `src/app/proyectos/*` | Subpáginas de cada proyecto, sobre la plantilla `ProjectCase.tsx` |
-| `src/app/ScrollToTopProgress.tsx` | Botón de volver arriba con progreso |
-
-Cada componente tiene sus estilos en un `.module.css` al lado.
+| `components/SitePage.tsx` | Arma la home y las páginas de área con las secciones de abajo |
+| `components/Header.tsx` | Header fijo con menú para el celular |
+| `components/Hero.tsx` + `HeroCollage.tsx` | Portada: promesa, botón de WhatsApp y capturas reales |
+| `components/WorkStage.tsx` + `Showcase.tsx` | Vitrina de trabajos por rubro; pasa sola mientras se ve, hasta que la persona toca algo |
+| `components/Ledger.tsx` | Problemas del día a día y lo que ya hicimos para cada uno |
+| `components/Services.tsx` | Servicios contados por lo que la persona quiere lograr |
+| `components/Process.tsx` | Pasos de trabajo y la propuesta de ejemplo |
+| `components/Faq.tsx` | Preguntas frecuentes |
+| `components/Contact.tsx` | Arma el mensaje de WhatsApp según lo que la persona elige |
+| `components/MobileCta.tsx` | Botón de WhatsApp fijo abajo, solo en el celular |
+| `components/Footer.tsx` | Footer con servicios, trabajos y redes |
+| `src/app/proyectos/ProjectCase.tsx` | Plantilla de la página de cada trabajo |
 
 ## Publicación
 

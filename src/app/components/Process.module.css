@@ -1,69 +1,173 @@
-.steps {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.layout {
   display: grid;
-  gap: 36px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(48px, 7vw, 112px);
+  align-items: start;
+}
+
+.lead {
+  margin-top: 20px;
+}
+
+.steps {
+  margin-top: clamp(36px, 4vw, 52px);
+  border-top: 1px solid var(--line);
 }
 
 .step {
-  position: relative;
-  padding-left: 72px;
   display: grid;
-  gap: 6px;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .number {
-  position: absolute;
-  top: -4px;
-  left: 0;
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 1;
+  color: var(--cobalt);
+  font-size: 34px;
+  font-stretch: 125%;
+  font-weight: 800;
   letter-spacing: -0.04em;
-  color: var(--brand);
-  opacity: 0.35;
+  line-height: 1;
 }
 
-/* Línea conectora vertical en mobile */
-.step:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 48px;
-  bottom: -28px;
-  left: 22px;
-  width: 1px;
-  background: var(--line);
+.step h3 {
+  font-size: 21px;
 }
 
 .step p {
-  color: var(--muted);
+  margin-top: 6px;
+  color: var(--ink-soft);
+  line-height: 1.55;
 }
 
-@media (min-width: 900px) {
-  .steps {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
+/* Propuesta de ejemplo */
+.docWrap {
+  position: sticky;
+  top: calc(var(--header-h) + 40px);
+  padding: clamp(28px, 4vw, 48px);
+  border-radius: var(--radius-lg);
+  background: var(--mist);
+}
+
+.doc {
+  margin: 0;
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 6px;
+  background: var(--paper);
+  transform: rotate(1.2deg);
+  box-shadow:
+    0 0 0 1px rgba(11, 27, 51, 0.05),
+    var(--shadow-object);
+}
+
+.docHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 760;
+  font-stretch: 114%;
+  letter-spacing: -0.02em;
+}
+
+.docHead img {
+  border-radius: 50%;
+}
+
+.docLabel {
+  margin-left: auto;
+  color: var(--muted);
+  font-weight: 500;
+  font-stretch: 100%;
+  letter-spacing: 0;
+}
+
+.docTitle {
+  margin-top: 20px;
+  color: var(--ink);
+  font-size: clamp(21px, 2vw, 25px);
+  font-stretch: 114%;
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.docSection {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.docList {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.docList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.docList svg {
+  flex: none;
+  color: var(--cobalt);
+}
+
+.docLater li {
+  color: var(--ink-soft);
+}
+
+.dash {
+  flex: none;
+  width: 15px;
+  height: 1.5px;
+  background: var(--line-strong);
+}
+
+.terms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.term {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--mist);
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  font-weight: 560;
+}
+
+/* El valor real se charla: acá va tapado */
+.blur {
+  display: block;
+  width: 72%;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--line-strong), #d8e0ea);
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
   }
 
-  .step {
-    padding-left: 0;
-    padding-top: 72px;
-  }
-
-  .number {
-    top: 0;
-    font-size: 48px;
-  }
-
-  /* Línea conectora horizontal entre pasos */
-  .step:not(:last-child)::after {
-    top: 24px;
-    bottom: auto;
-    left: 80px;
-    right: -16px;
-    width: auto;
-    height: 1px;
+  .docWrap {
+    position: static;
+    max-width: 520px;
   }
 }
