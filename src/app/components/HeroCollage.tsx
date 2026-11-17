@@ -12,17 +12,17 @@ import styles from "./HeroCollage.module.css";
 
 type Piece = { slug: string; name: string; image: StaticImageData; alt: string };
 type Collage = {
-  browser: Piece & { label: string };
+  // En la pantalla de la notebook.
+  screen: Piece;
   phone: Piece;
   // A la derecha: una hoja (PDF) o un segundo celular.
   second: Piece & { kind: "paper" | "phone" };
 };
 
-const panel: Collage["browser"] = {
+const panel: Piece = {
   slug: "agrovet",
   name: "Agrovet",
   image: agrovetPanel,
-  label: "Panel de gestión de Agrovet",
   alt: "Panel de gestión de Agrovet con las ventas del día y el stock de cada sucursal",
 };
 
@@ -42,13 +42,12 @@ const forza: Collage["second"] = {
 };
 
 const collages: Record<"home" | AreaSlug, Collage> = {
-  home: { browser: panel, phone: mecanica, second: forza },
+  home: { screen: panel, phone: mecanica, second: forza },
   web: {
-    browser: {
+    screen: {
       slug: "agrovet",
       name: "Agrovet",
       image: agrovetStore,
-      label: "Tienda online de Agrovet",
       alt: "Tienda online de Agrovet en la computadora",
     },
     phone: mecanica,
@@ -61,7 +60,7 @@ const collages: Record<"home" | AreaSlug, Collage> = {
     },
   },
   software: {
-    browser: panel,
+    screen: panel,
     phone: {
       slug: "mareflota",
       name: "Mareflota",
@@ -72,57 +71,72 @@ const collages: Record<"home" | AreaSlug, Collage> = {
   },
 };
 
-// Trabajos reales en la portada, cada uno lleva a su página.
+/*
+  Trabajos reales en la portada: una notebook, un celular y una hoja. Cada uno lleva a su página.
+  Los data-dive son las piezas que mueve HeroDive al bajar.
+*/
 export default function HeroCollage({ area }: { area?: AreaSlug }) {
-  const { browser, phone, second } = collages[area ?? "home"];
+  const { screen, phone, second } = collages[area ?? "home"];
 
   return (
     <figure className={styles.figure}>
       <div className={styles.collage}>
-        <Link href={`/proyectos/${browser.slug}`} className={styles.browser} aria-label={`Ver el trabajo de ${browser.name}`}>
-          <span className={styles.bar} aria-hidden="true">
-            <span className={styles.dots}>
-              <i />
-              <i />
-              <i />
-            </span>
-            <span className={styles.address}>{browser.label}</span>
-          </span>
-          <span className={styles.screen}>
-            <Image
-              src={browser.image}
-              alt={browser.alt}
-              fill
-              sizes="(max-width: 960px) 90vw, 620px"
-              placeholder="blur"
-              preload
-              className={styles.image}
-            />
-          </span>
-        </Link>
+        <div className={styles.laptop} data-dive="laptop">
+          <div className={styles.lidWrap}>
+            <div className={styles.lid} data-dive="lid">
+              <div className={styles.bezel}>
+                <span className={styles.camera} aria-hidden="true" />
+                <Link
+                  href={`/proyectos/${screen.slug}`}
+                  className={styles.screen}
+                  data-dive="screen"
+                  aria-label={`Ver el trabajo de ${screen.name}`}
+                >
+                  <Image
+                    src={screen.image}
+                    alt={screen.alt}
+                    fill
+                    sizes="(max-width: 960px) 100vw, 1440px"
+                    placeholder="blur"
+                    preload
+                    className={styles.image}
+                  />
+                  <span className={styles.glare} aria-hidden="true" />
+                  <span className={styles.power} aria-hidden="true" />
+                  <span className={styles.night} data-dive="night" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className={styles.base} aria-hidden="true" />
+        </div>
 
-        <Link href={`/proyectos/${phone.slug}`} className={styles.phone} aria-label={`Ver el trabajo de ${phone.name}`}>
-          <span className={styles.phoneScreen}>
-            <Image src={phone.image} alt={phone.alt} fill sizes="(max-width: 960px) 28vw, 190px" placeholder="blur" className={styles.image} />
-          </span>
-        </Link>
-
-        <Link
-          href={`/proyectos/${second.slug}`}
-          className={second.kind === "paper" ? styles.paper : `${styles.phone} ${styles.phoneRight}`}
-          aria-label={`Ver el trabajo de ${second.name}`}
-        >
-          {second.kind === "paper" ? (
-            <Image src={second.image} alt={second.alt} fill sizes="(max-width: 960px) 30vw, 210px" placeholder="blur" className={styles.image} />
-          ) : (
+        <div className={styles.flyPhone} data-dive="phone">
+          <Link href={`/proyectos/${phone.slug}`} className={styles.phone} aria-label={`Ver el trabajo de ${phone.name}`}>
             <span className={styles.phoneScreen}>
-              <Image src={second.image} alt={second.alt} fill sizes="(max-width: 960px) 28vw, 190px" placeholder="blur" className={styles.image} />
+              <Image src={phone.image} alt={phone.alt} fill sizes="(max-width: 960px) 28vw, 190px" placeholder="blur" className={styles.image} />
             </span>
-          )}
-        </Link>
+          </Link>
+        </div>
+
+        <div className={second.kind === "paper" ? styles.flyPaper : styles.flyPhoneRight} data-dive="second">
+          <Link
+            href={`/proyectos/${second.slug}`}
+            className={second.kind === "paper" ? styles.paper : `${styles.phone} ${styles.phoneRight}`}
+            aria-label={`Ver el trabajo de ${second.name}`}
+          >
+            {second.kind === "paper" ? (
+              <Image src={second.image} alt={second.alt} fill sizes="(max-width: 960px) 30vw, 210px" placeholder="blur" className={styles.image} />
+            ) : (
+              <span className={styles.phoneScreen}>
+                <Image src={second.image} alt={second.alt} fill sizes="(max-width: 960px) 28vw, 190px" placeholder="blur" className={styles.image} />
+              </span>
+            )}
+          </Link>
+        </div>
       </div>
-      <figcaption className={styles.caption}>
-        Trabajos reales para <Link href={`/proyectos/${browser.slug}`}>{browser.name}</Link>,{" "}
+      <figcaption className={styles.caption} data-dive="caption">
+        Trabajos reales para <Link href={`/proyectos/${screen.slug}`}>{screen.name}</Link>,{" "}
         <Link href={`/proyectos/${phone.slug}`}>{phone.name}</Link> y <Link href={`/proyectos/${second.slug}`}>{second.name}</Link>.
       </figcaption>
     </figure>

@@ -214,3 +214,11 @@
     flex: none;
   }
 }
+
+/* Con movimiento la banda sigue a la pantalla de la portada (HeroDive): va de lado a lado y sin esquinas arriba */
+@media (prefers-reduced-motion: no-preference) {
+  .stage {
+    margin-inline: 0;
+    border-radius: 0;
+  }
+}
