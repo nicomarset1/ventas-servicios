@@ -129,7 +129,7 @@ export default function ProjectCase({ slug }: { slug: string }) {
         <section className={styles.cta} data-hide-mobile-cta>
           <div className="container">
             <h2>¿Querés algo así para tu negocio?</h2>
-            <p className="lead">Contanos qué necesitás y te pasamos una propuesta por escrito con plazo y precio. La primera charla es sin cargo.</p>
+            <p className="lead">Contanos qué necesitás. Te mostramos una demo gratis y te pasamos una propuesta por escrito con plazo y precio.</p>
             <a className="btn btn-primary" href={whatsappLink(project.message)} target="_blank" rel="noopener noreferrer">
               <WhatsAppIcon />
               Escribinos por WhatsApp

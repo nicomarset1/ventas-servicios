@@ -12,7 +12,7 @@ const archivo = Archivo({
 
 const title = "NM Software | Desarrollo web y software a medida en Mar del Plata";
 const description =
-  "Tiendas online, sitios web y sistemas de gestión a medida para comercios y empresas. Equipo de desarrollo de Mar del Plata que trabaja con clientes de todo el país.";
+  "Tiendas online, sitios web y sistemas de gestión a medida para comercios y empresas, desde Mar del Plata para todo el país. Demo gratis antes de contratar.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nmsoftware.com.ar"),

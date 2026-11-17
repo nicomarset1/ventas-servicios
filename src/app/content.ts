@@ -35,8 +35,8 @@ export const hero: HeroText = {
 
 // Lo que saca el miedo a escribir, al lado del botón.
 export const heroPoints = [
-  "La primera charla es sin cargo",
-  "Propuesta por escrito con plazo y precio",
+  "Demo gratis antes de contratar",
+  "Listo en un mes o menos",
   "Te responde quien programa tu proyecto",
 ];
 
@@ -153,12 +153,16 @@ export const process = {
   steps: [
     { title: "Charlamos", text: "Nos contás qué querés resolver y cómo trabajás hoy. La primera charla es sin cargo." },
     {
-      title: "Te pasamos una propuesta",
-      text: "Por escrito: qué incluye, qué no, plazos y precio. Si conviene, la separamos en etapas.",
+      title: "Te mostramos una demo gratis",
+      text: "La armamos con lo que nos contaste, para que veas cómo quedaría antes de decidir.",
     },
-    { title: "Lo desarrollamos", text: "Vas viendo avances reales y opinás antes de que esté terminado." },
+    {
+      title: "Te pasamos una propuesta",
+      text: "Por escrito: qué incluye, qué no, plazo y precio. Se paga la mitad al empezar y la otra mitad al entregar.",
+    },
+    { title: "Lo desarrollamos", text: "Como mucho, en un mes. Vas viendo avances reales y opinás antes de que esté terminado." },
     { title: "Lo publicamos y te enseñamos", text: "Lo dejamos funcionando y te mostramos cómo usarlo." },
-    { title: "Te acompañamos", text: "Si querés, sumás un mantenimiento mensual para soporte, ajustes y cambios." },
+    { title: "Te acompañamos", text: "Si querés, sumás un plan mensual con atención 24/7 y mejoras." },
   ],
 };
 
@@ -187,12 +191,26 @@ export const faqs: Faq[] = [
   {
     question: "¿Cuánto sale?",
     answer:
-      "Depende de lo que necesites: no es lo mismo un sitio para mostrar tus servicios que una tienda con stock o un sistema con panel. Después de la primera charla te mandamos una propuesta por escrito con qué incluye, qué no, los plazos y el precio. Si conviene, la separamos en etapas.",
+      "Depende de lo que necesites: no es lo mismo un sitio para mostrar tus servicios que una tienda con stock o un sistema con panel. Antes de empezar te mandamos una propuesta por escrito con qué incluye, qué no, el plazo y el precio. Si conviene, la separamos en etapas.",
+  },
+  {
+    question: "¿Puedo ver cómo quedaría antes de contratar?",
+    answer:
+      "Sí. Después de la primera charla te armamos una demo gratis con lo que nos contaste, así ves cómo quedaría antes de decidir.",
   },
   {
     question: "¿Cuánto tarda?",
     answer:
-      "El plazo queda escrito en la propuesta. Depende del alcance y de que tengas listo el material: fotos, textos, productos y accesos.",
+      "Depende del alcance, pero como mucho, un mes. Solo un proyecto muy grande puede llevar más, y en ese caso te lo decimos en la propuesta. Ayuda que tengas listo el material: fotos, textos, productos y accesos.",
+  },
+  {
+    question: "¿Cómo se paga?",
+    answer: "La mitad al empezar y la otra mitad cuando te lo entregamos. Si necesitás otra forma, lo charlamos.",
+  },
+  {
+    question: "¿Hay costos aparte del desarrollo?",
+    answer:
+      "Nosotros no te cobramos nada más. Lo único extra es lo que cuesta tenerlo online, como el hosting, la base de datos y el dominio: depende de cada proyecto y te lo detallamos en la propuesta. Si usás Mercado Pago o Tiendanube, sus comisiones y planes los cobran ellos.",
   },
   {
     question: "¿Lo voy a poder manejar yo?",
@@ -202,7 +220,7 @@ export const faqs: Faq[] = [
   {
     question: "¿Qué pasa después de la entrega?",
     answer:
-      "Podés sumar un mantenimiento mensual con soporte, ajustes y cambios de contenido. Si más adelante querés algo nuevo, lo presupuestamos aparte.",
+      "Queda funcionando y solo pagás lo que cuesta tenerlo online. Si más adelante querés cambios, los presupuestamos aparte. También podés sumar un plan mensual con atención 24/7 y mejoras.",
   },
   {
     question: "¿Por qué a medida y no una plataforma o un sistema enlatado?",
@@ -212,11 +230,6 @@ export const faqs: Faq[] = [
   {
     question: "¿Necesito saber de computación?",
     answer: "No. Lo armamos para que lo use cualquiera de tu equipo y te enseñamos a usarlo paso a paso.",
-  },
-  {
-    question: "¿Hay costos aparte del desarrollo?",
-    answer:
-      "Sí, y te los detallamos en la propuesta: el dominio, el hosting y los servicios externos que uses, como Mercado Pago o la plataforma de la tienda, se pagan aparte.",
   },
   {
     question: "¿Trabajan con negocios de otras ciudades?",
