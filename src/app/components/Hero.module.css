@@ -1,5 +1,9 @@
 .hero {
-  padding-block: clamp(36px, 5vw, 72px) clamp(48px, 6vw, 80px);
+  position: relative;
+}
+
+.stage {
+  position: relative;
 }
 
 .layout {
@@ -7,6 +11,12 @@
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(40px, 5vw, 80px);
+  padding-block: clamp(36px, 5vw, 72px) clamp(48px, 6vw, 80px);
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
 }
 
 .title {
@@ -47,8 +57,42 @@
   color: var(--cobalt);
 }
 
+/* Arriba del texto: al crecer, la notebook lo tapa */
 .visual {
+  position: relative;
+  z-index: 2;
   min-width: 0;
+}
+
+/* Azul de la banda de trabajos: cubre todo al final de la entrada */
+.portal {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--night);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.space {
+  display: none;
+}
+
+/* Con movimiento: la portada queda fija mientras se baja por "space" (HeroDive ajusta el top) */
+@media (prefers-reduced-motion: no-preference) {
+  .stage {
+    position: sticky;
+    top: var(--header-h);
+    display: grid;
+    align-content: center;
+    min-height: calc(100lvh - var(--header-h));
+    overflow: clip;
+  }
+
+  .space {
+    display: block;
+    height: 110lvh;
+  }
 }
 
 @media (max-width: 960px) {
@@ -63,6 +107,12 @@
 
   .visual {
     max-width: 640px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 960px) {
+  .space {
+    height: 85lvh;
   }
 }
 

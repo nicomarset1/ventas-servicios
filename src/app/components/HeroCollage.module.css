@@ -2,11 +2,11 @@
   margin: 0;
 }
 
-/* Medidas en % del ancho del collage (cqi) para que escale entero */
+/* Medidas en % del ancho del collage (cqi) para que la escena escale entera */
 .collage {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 0.84;
+  aspect-ratio: 1 / 0.8;
   container-type: inline-size;
 }
 
@@ -15,80 +15,140 @@
   object-position: top center;
 }
 
-.browser,
-.phone,
-.paper {
+/* Notebook: tapa con la pantalla y el frente de la base */
+.laptop {
   position: absolute;
-  display: block;
-  transition: transform 240ms var(--ease-out);
+  z-index: 1;
+  top: 1cqi;
+  left: 9cqi;
+  width: 84cqi;
 }
 
-.browser {
-  top: 0;
-  right: 0;
-  width: 90%;
-  overflow: hidden;
-  border-radius: 1.8cqi;
-  background: #f4f6fa;
+.lidWrap {
+  perspective: 150cqi;
+  perspective-origin: 50% 35%;
+}
+
+/* En reposo la tapa está apenas inclinada hacia atrás (HeroDive la endereza al bajar) */
+.lid {
+  transform-origin: 50% 100%;
+  transform: rotateX(12deg);
+}
+
+.bezel {
+  position: relative;
+  padding: 2.4cqi 2.4cqi 3cqi;
+  border-radius: 2.6cqi 2.6cqi 0.8cqi 0.8cqi;
+  background: #121821;
   box-shadow:
-    0 0 0 1px rgba(11, 27, 51, 0.09),
-    var(--shadow-object);
+    0 0 0 0.3cqi #b9c1cc,
+    inset 0 0 0 0.15cqi rgba(255, 255, 255, 0.07);
 }
 
-.bar {
-  display: flex;
-  align-items: center;
-  gap: 2cqi;
-  height: 5cqi;
-  padding: 0 2cqi;
-  background: #e8ecf3;
-  border-bottom: 1px solid rgba(11, 27, 51, 0.08);
-}
-
-.dots {
-  display: flex;
-  gap: 0.8cqi;
-}
-
-.dots i {
-  width: 1.15cqi;
-  height: 1.15cqi;
+.camera {
+  position: absolute;
+  top: 0.9cqi;
+  left: 50%;
+  width: 0.6cqi;
+  height: 0.6cqi;
+  margin-left: -0.3cqi;
   border-radius: 50%;
-  background: #c3cbd8;
-}
-
-.address {
-  flex: 1;
-  max-width: 52%;
-  margin-inline: auto;
-  padding: 0.5cqi 1.8cqi;
-  border-radius: 999px;
-  background: #fff;
-  color: var(--muted);
-  font-size: clamp(9px, 1.7cqi, 12px);
-  font-weight: 500;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  background: #2b3444;
 }
 
 .screen {
   position: relative;
   display: block;
   aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0.4cqi;
+  background: var(--night);
+}
+
+/* Reflejo suave del vidrio */
+.glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 38%);
+  pointer-events: none;
+}
+
+/* Pantalla apagada: se prende cuando se abre la tapa */
+.power {
+  position: absolute;
+  inset: 0;
+  background: #0a0e14;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Al entrar a la pantalla todo se vuelve el azul de la banda de trabajos */
+.night {
+  position: absolute;
+  inset: 0;
+  background: var(--night);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.base {
+  position: relative;
+  width: 114%;
+  height: 2.8cqi;
+  margin-left: -7%;
+  border-radius: 0.3cqi 0.3cqi 4cqi 4cqi / 0.3cqi 0.3cqi 2.4cqi 2.4cqi;
+  background: linear-gradient(180deg, #eef1f5 0%, #cdd3dc 40%, #a3acb9 100%);
+  box-shadow: 0 2.4cqi 3.2cqi -1.6cqi rgba(11, 27, 51, 0.45);
+}
+
+/* Hendidura para abrir la tapa */
+.base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16%;
+  height: 40%;
+  transform: translateX(-50%);
+  border-radius: 0 0 1.2cqi 1.2cqi;
+  background: #b4bcc8;
+}
+
+/* Celular y hoja: el envoltorio lo mueve HeroDive y el de adentro tiene la entrada y el hover */
+.flyPhone,
+.flyPaper,
+.flyPhoneRight {
+  position: absolute;
+  z-index: 2;
+}
+
+.flyPhone {
+  left: 0;
+  bottom: 0;
+  width: 26%;
+}
+
+.flyPaper {
+  right: 2%;
+  bottom: 1%;
+  width: 28%;
+}
+
+.flyPhoneRight {
+  right: 4%;
+  bottom: 2%;
+  width: 24%;
 }
 
 .phone {
-  left: 0;
-  bottom: 0;
-  width: 27%;
+  display: block;
   padding: 1cqi;
-  border-radius: 4.8cqi;
+  border-radius: 4.6cqi;
   background: #0a1426;
   box-shadow:
     0 0 0 1px rgba(11, 27, 51, 0.16),
     var(--shadow-object);
+  transition: translate 240ms var(--ease-out);
 }
 
 .phoneScreen {
@@ -96,34 +156,44 @@
   display: block;
   aspect-ratio: 390 / 844;
   overflow: hidden;
-  border-radius: 3.9cqi;
+  border-radius: 3.7cqi;
+}
+
+.phoneRight {
+  rotate: 2.5deg;
+  transition:
+    translate 240ms var(--ease-out),
+    rotate 240ms var(--ease-out);
 }
 
 .paper {
-  right: 5%;
-  bottom: 1.5%;
-  width: 29%;
+  position: relative;
+  display: block;
   aspect-ratio: 700 / 982;
   overflow: hidden;
   border-radius: 0.6cqi;
   background: #fff;
-  transform: rotate(3deg);
+  rotate: 3deg;
   box-shadow:
     0 0 0 1px rgba(11, 27, 51, 0.08),
     var(--shadow-object);
+  transition:
+    translate 240ms var(--ease-out),
+    rotate 240ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .browser:hover {
-    transform: translateY(-4px);
-  }
-
-  .phone:hover {
-    transform: translateY(-6px);
+  .phone:hover,
+  .paper:hover {
+    translate: 0 -6px;
   }
 
   .paper:hover {
-    transform: rotate(1.5deg) translateY(-6px);
+    rotate: 1.5deg;
+  }
+
+  .phoneRight:hover {
+    rotate: 1deg;
   }
 }
 
@@ -155,16 +225,68 @@
   }
 }
 
-.phoneRight {
-  left: auto;
-  right: 6%;
-  bottom: 3%;
-  width: 25%;
-  transform: rotate(2.5deg);
+/*
+  Entrada al cargar, una sola vez: se abre la tapa, se prende la pantalla y llegan el celular y la hoja.
+  Usa las propiedades rotate/translate para no pisar el transform que pone HeroDive al bajar.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .lid {
+    animation: lid-open 1300ms var(--ease-out) 120ms backwards;
+  }
+
+  .power {
+    animation: power-on 600ms var(--ease-out) 560ms backwards;
+  }
+
+  .phone {
+    animation: rise-left 900ms var(--ease-out) 420ms backwards;
+  }
+
+  .paper,
+  .phone.phoneRight {
+    animation: rise-right 900ms var(--ease-out) 500ms backwards;
+  }
+
+  .caption {
+    animation: fade-in 600ms var(--ease-out) 900ms backwards;
+  }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .phoneRight:hover {
-    transform: rotate(1deg) translateY(-6px);
+/* Con "reducir movimiento" solo aparece, sin moverse */
+@media (prefers-reduced-motion: reduce) {
+  .collage {
+    animation: fade-in 400ms var(--ease-out) backwards;
+  }
+}
+
+@keyframes lid-open {
+  from {
+    rotate: x 72deg;
+  }
+}
+
+@keyframes power-on {
+  from {
+    opacity: 1;
+  }
+}
+
+@keyframes rise-left {
+  from {
+    opacity: 0;
+    translate: -3cqi 6cqi;
+  }
+}
+
+@keyframes rise-right {
+  from {
+    opacity: 0;
+    translate: 3cqi 6cqi;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
 }
