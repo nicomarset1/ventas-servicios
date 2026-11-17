@@ -78,7 +78,10 @@
   display: none;
 }
 
-/* Con movimiento: la portada queda fija mientras se baja por "space" (HeroDive ajusta el top) */
+/*
+  Con movimiento: la portada queda fija mientras se baja por "space" (HeroDive ajusta el top).
+  El alto de "space" es cuánto hay que bajar para toda la entrada: más alto, más lenta.
+*/
 @media (prefers-reduced-motion: no-preference) {
   .stage {
     position: sticky;
@@ -89,9 +92,13 @@
     overflow: clip;
   }
 
+  .portal {
+    will-change: opacity;
+  }
+
   .space {
     display: block;
-    height: 110lvh;
+    height: min(180lvh, 1800px);
   }
 }
 
@@ -112,7 +119,7 @@
 
 @media (prefers-reduced-motion: no-preference) and (max-width: 960px) {
   .space {
-    height: 85lvh;
+    height: 130lvh;
   }
 }
 
