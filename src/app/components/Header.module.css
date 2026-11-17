@@ -1,210 +1,58 @@
-/* Arriba de todo es una barra transparente de ancho completo; al scrollear se despega y queda flotante, tipo vidrio */
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 50;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  border: 1px solid transparent;
-  border-radius: 0;
-  color: white;
-  transition:
-    top 0.5s var(--ease),
-    width 0.5s var(--ease),
-    max-width 0.5s var(--ease),
-    border-radius 0.5s var(--ease),
-    background-color 0.4s var(--ease),
-    border-color 0.4s var(--ease),
-    box-shadow 0.4s var(--ease),
-    color 0.3s var(--ease),
-    backdrop-filter 0.4s var(--ease);
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
 }
 
-.solid {
-  top: 12px;
-  width: calc(100% - 24px);
-  max-width: 1040px;
-  border-color: rgba(255, 255, 255, 0.55);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.62);
-  box-shadow: 0 10px 34px rgba(5, 15, 29, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  color: var(--ink);
-  backdrop-filter: saturate(180%) blur(18px);
-}
-
-.bar {
-  width: min(1120px, calc(100% - 40px));
-  height: var(--header-h);
-  margin: 0 auto;
+.inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  transition:
-    width 0.5s var(--ease),
-    height 0.5s var(--ease),
-    padding 0.5s var(--ease);
-}
-
-.solid .bar {
-  width: 100%;
-  height: 60px;
-  padding: 0 8px 0 14px;
+  height: var(--header-h);
 }
 
 .brand {
-  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  gap: 11px;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 760;
+  font-stretch: 116%;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
 }
 
 .brand img {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-}
-
-/* En celulares angostos queda solo el logo, para que entre el selector de áreas */
-@media (max-width: 479px) {
-  .brand span {
-    display: none;
-  }
+  border-radius: 50%;
 }
 
 .nav {
-  display: none;
-}
-
-.nav a {
-  position: relative;
-  padding: 8px 2px;
-  font-size: 15px;
-  font-weight: 600;
-  opacity: 0.72;
-  transition: opacity 0.25s var(--ease);
-}
-
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transition: transform 0.3s var(--ease);
-}
-
-.nav a:hover,
-.nav a.active {
-  opacity: 1;
-}
-
-.nav a.active::after {
-  transform: scaleX(1);
-}
-
-/* Volver a la home y cambiar de área: siempre a la vista, también en celular */
-.switcher {
-  margin-right: auto;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
-.home,
-.segments {
-  height: 38px;
-  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+.navLink {
+  padding: 10px 14px;
   border-radius: 999px;
-}
-
-.home {
-  min-width: 38px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  font-weight: 560;
   transition:
-    background-color 0.25s var(--ease),
-    border-color 0.25s var(--ease);
+    color 160ms var(--ease-out),
+    background-color 160ms var(--ease-out);
 }
 
-.home svg {
-  flex-shrink: 0;
-  transition: transform 0.25s var(--ease);
-}
-
-/* El texto "Inicio" se suma cuando hay lugar; en celular queda solo la flecha */
-.homeLabel {
-  display: none;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-@media (min-width: 560px) {
-  .home {
-    padding: 0 14px 0 11px;
-  }
-
-  .homeLabel {
-    display: inline;
-  }
-}
-
-.segments {
-  padding: 3px;
-  display: flex;
-}
-
-.segments a {
-  padding: 0 13px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  opacity: 0.72;
-  transition:
-    background-color 0.25s var(--ease),
-    color 0.25s var(--ease),
-    opacity 0.25s var(--ease);
-}
-
-/* Área actual resaltada: blanca sobre la portada oscura, oscura sobre el vidrio */
-.segments a.current {
-  background: white;
-  color: var(--ink);
-  opacity: 1;
-}
-
-.solid .segments a.current {
-  background: var(--ink);
-  color: white;
-}
-
-@media (hover: hover) {
-  .home:hover {
-    border-color: currentColor;
-    background: color-mix(in srgb, currentColor 10%, transparent);
-  }
-
-  .home:hover svg {
-    transform: translateX(-2px);
-  }
-
-  .segments a:not(.current):hover {
-    opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .navLink:hover {
+    color: var(--ink);
+    background: var(--mist);
   }
 }
 
@@ -215,135 +63,94 @@
 }
 
 .cta {
+  min-height: 46px;
+  padding: 0 20px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 15.5px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background: #1b3157;
+  }
+}
+
+.ctaShort {
   display: none;
-  min-height: 42px;
-  padding: 0 18px;
-  font-size: 15px;
-  box-shadow: none;
 }
 
-.toggle {
-  width: 44px;
-  height: 44px;
-  border: 0;
-  border-radius: var(--radius-sm);
-  display: grid;
+.menuButton {
+  display: none;
   place-items: center;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  transition: background-color 0.25s var(--ease);
-}
-
-.menuOpen {
-  background: rgba(255, 255, 255, 0.92);
-}
-
-@media (hover: hover) {
-  .toggle:hover {
-    background: rgba(127, 140, 160, 0.14);
-  }
-}
-
-/* Overlay debajo del panel mobile: oscurece la página y cierra al tocarlo */
-.overlay {
-  position: fixed;
-  z-index: 49;
-  inset: 0;
-  background: rgba(5, 15, 29, 0.55);
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.3s var(--ease),
-    visibility 0s linear 0.3s;
-}
-
-.overlayOpen {
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity 0.3s var(--ease),
-    visibility 0s;
-}
-
-/* Panel mobile */
-.panel {
-  position: absolute;
-  inset: calc(100% + 8px) 0 auto;
-  overflow: hidden;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--mist);
   color: var(--ink);
-  opacity: 0;
-  transform: translateY(-8px);
-  visibility: hidden;
-  transition:
-    opacity 0.3s var(--ease),
-    transform 0.3s var(--ease),
-    visibility 0s linear 0.3s;
+  cursor: pointer;
 }
 
-.panelOpen {
-  opacity: 1;
-  transform: none;
-  visibility: visible;
-  transition:
-    opacity 0.3s var(--ease),
-    transform 0.3s var(--ease),
-    visibility 0s;
+.panel {
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  padding: 8px 0 20px;
 }
 
-.panelNav {
+.panel nav {
   display: grid;
-  padding: 8px 20px 20px;
 }
 
-.panelNav > a:not(.panelCta) {
-  padding: 14px 0;
+.panelLink {
+  padding: 15px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text);
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 650;
+  font-stretch: 110%;
+  letter-spacing: -0.02em;
 }
 
-.panelNav > a.active {
-  color: var(--brand);
-}
-
-.panelCta {
-  margin-top: 20px;
-  width: 100%;
-}
-
-@media (min-width: 560px) {
-  .cta {
-    display: inline-flex;
-  }
-}
-
-/* El menú completo aparece recién con lugar para él y el selector de áreas */
-@media (min-width: 1100px) {
-  .nav {
-    display: flex;
-    gap: 20px;
-  }
-
-  .toggle,
-  .overlay,
+@media (min-width: 961px) {
   .panel {
     display: none;
   }
 }
 
-@media (min-width: 1200px) {
-  .nav {
-    gap: 28px;
+@media (max-width: 1080px) {
+  .ctaLong {
+    display: none;
+  }
+
+  .ctaShort {
+    display: inline;
   }
 }
 
-.header:not(.solid) :focus-visible {
-  outline-color: white;
+@media (max-width: 960px) {
+  .nav {
+    display: none;
+  }
+
+  .menuButton {
+    display: grid;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand span {
+    font-size: 17px;
+  }
+
+  .cta {
+    padding: 0 16px;
+  }
+}
+
+/* En el celular el botón de WhatsApp vive abajo (MobileCta) */
+@media (max-width: 720px) {
+  .cta {
+    display: none;
+  }
 }

@@ -1,38 +1,38 @@
-import type { Metadata } from "next";
-import { Manrope, Space_Grotesk } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 
-const body = Manrope({
+// Archivo es de Omnibus-Type (Argentina). Variable con ancho (wdth) para los títulos expandidos.
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-body",
+  axes: ["wdth"],
+  variable: "--font-archivo",
+  display: "swap",
 });
 
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-});
+const title = "NM Software | Desarrollo web y software a medida en Mar del Plata";
+const description =
+  "Tiendas online, sitios web y sistemas de gestión a medida para comercios y empresas. Equipo de desarrollo de Mar del Plata que trabaja con clientes de todo el país.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nmsoftware.com.ar"),
   title: {
-    default: "NM Software | Software, automatizaciones e integraciones a medida",
+    default: title,
     template: "%s | NM Software",
   },
-  description:
-    "NM Software desarrolla software a medida, automatizaciones de procesos e integraciones entre herramientas para negocios: páginas web, tiendas online, paneles de gestión y sistemas de stock.",
+  description,
   keywords: [
     "NM Software",
-    "desarrollo de software a medida",
+    "desarrollo web Mar del Plata",
+    "software a medida Mar del Plata",
+    "diseño web Mar del Plata",
+    "tienda online",
+    "sistemas de gestión a medida",
     "automatización de procesos",
-    "integraciones entre sistemas",
     "páginas web para negocios",
-    "sistemas de gestión",
-    "sistemas de stock",
-    "tiendas online",
-    "software para empresas",
-    "desarrollo web Argentina",
+    "desarrollo de software Argentina",
   ],
-  authors: [{ name: "Nicolás Marset" }],
+  authors: [{ name: "NM Software" }],
   creator: "NM Software",
   publisher: "NM Software",
   alternates: {
@@ -43,15 +43,13 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: "https://nmsoftware.com.ar/",
     siteName: "NM Software",
-    title: "NM Software | Software, automatizaciones e integraciones a medida",
-    description:
-      "Software a medida, automatizaciones de procesos e integraciones entre herramientas para vender y administrar mejor.",
+    title,
+    description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "NM Software | Software, automatizaciones e integraciones",
-    description:
-      "Software, automatizaciones e integraciones a medida para negocios.",
+    title,
+    description,
   },
   robots: {
     index: true,
@@ -66,6 +64,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -73,7 +75,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es-AR">
-      <body className={`${body.variable} ${display.variable}`}>{children}</body>
+      <body className={archivo.variable}>{children}</body>
     </html>
   );
 }

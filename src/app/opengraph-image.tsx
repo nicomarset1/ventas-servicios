@@ -3,15 +3,16 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { hero } from "./content";
 
-export const alt = "NM Software, software a medida para negocios";
+export const alt = "NM Software, desarrollo web y software a medida en Mar del Plata";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Imagen que se ve al compartir el link (WhatsApp, redes). Colores = tokens de globals.css.
+// Imagen que se ve al compartir el link (WhatsApp, redes). Colores y letra = los del sitio.
 export default async function OpengraphImage() {
-  const [logo, font] = await Promise.all([
+  const [logo, display, text] = await Promise.all([
     readFile(join(process.cwd(), "public/logo-circle.png"), "base64"),
-    readFile(join(process.cwd(), "src/app/fonts/SpaceGrotesk-SemiBold.ttf")),
+    readFile(join(process.cwd(), "src/app/fonts/Archivo-ExpandedExtraBold.ttf")),
+    readFile(join(process.cwd(), "src/app/fonts/Archivo-Medium.ttf")),
   ]);
 
   return new ImageResponse(
@@ -20,51 +21,44 @@ export default async function OpengraphImage() {
         style={{
           width: "100%",
           height: "100%",
-          position: "relative",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "0 96px",
-          // Un solo glow de marca arriba a la derecha, sobre el fondo navy
-          backgroundImage:
-            "radial-gradient(circle at 88% 18%, rgba(0, 84, 210, 0.5) 0px, rgba(0, 84, 210, 0) 520px), linear-gradient(180deg, #061629 0%, #050f1d 100%)",
+          justifyContent: "space-between",
+          padding: "72px 80px",
+          background: "#0b1b33",
           color: "white",
-          fontFamily: "Space Grotesk",
+          fontFamily: "Archivo",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`data:image/png;base64,${logo}`} width={72} height={72} alt="" style={{ borderRadius: 9999 }} />
-          <div style={{ fontSize: 36, fontWeight: 600, letterSpacing: -0.5 }}>NM Software</div>
+          <img src={`data:image/png;base64,${logo}`} width={64} height={64} alt="" style={{ borderRadius: 9999 }} />
+          <div style={{ fontFamily: "Archivo Expanded", fontSize: 30, letterSpacing: -1 }}>NM Software</div>
         </div>
         <div
           style={{
-            marginTop: 48,
-            maxWidth: 860,
+            display: "flex",
+            maxWidth: 1000,
+            fontFamily: "Archivo Expanded",
             fontSize: 76,
-            fontWeight: 600,
-            lineHeight: 1.08,
-            letterSpacing: -2,
+            lineHeight: 1.02,
+            letterSpacing: -3.4,
           }}
         >
           {hero.title}
         </div>
-        <div style={{ marginTop: 28, fontSize: 30, letterSpacing: -0.3, color: "rgba(255, 255, 255, 0.72)" }}>
-          Webs, sistemas y automatizaciones
+        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 28, color: "#c7d3e6" }}>
+          <div style={{ width: 14, height: 14, borderRadius: 3, background: "#ff7a1a" }} />
+          Tiendas online, sitios web y sistemas a medida. Mar del Plata.
         </div>
-        <div
-          style={{
-            position: "absolute",
-            left: 96,
-            bottom: 64,
-            width: 96,
-            height: 6,
-            borderRadius: 9999,
-            background: "#ff7a1a",
-          }}
-        />
       </div>
     ),
-    { ...size, fonts: [{ name: "Space Grotesk", data: font, weight: 600, style: "normal" }] }
+    {
+      ...size,
+      fonts: [
+        { name: "Archivo Expanded", data: display, weight: 800, style: "normal" },
+        { name: "Archivo", data: text, weight: 500, style: "normal" },
+      ],
+    }
   );
 }

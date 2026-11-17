@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import AreaPage from "../components/AreaPage";
+import SitePage from "../components/SitePage";
+import { areas } from "../content";
+
+const area = areas.find((item) => item.slug === "software")!;
 
 export const metadata: Metadata = {
-  title: "Software para empresas: sistemas de gestión y automatizaciones",
-  description: "Sistemas de gestión, automatizaciones de procesos e integraciones a medida para empresas, desarrollados por NM Software.",
-  alternates: {
-    canonical: "/software",
-  },
+  title: area.metaTitle,
+  description: area.metaDescription,
+  alternates: { canonical: "/software" },
   openGraph: {
-    title: "Software para empresas: sistemas de gestión y automatizaciones",
-    description: "Sistemas de gestión, automatizaciones de procesos e integraciones a medida para empresas, desarrollados por NM Software.",
+    title: area.metaTitle,
+    description: area.metaDescription,
     url: "https://nmsoftware.com.ar/software",
   },
 };
 
 export default function SoftwareAreaPage() {
-  return <AreaPage slug="software" />;
+  return <SitePage hero={area.hero} area="software" />;
 }

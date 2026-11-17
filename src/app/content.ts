@@ -1,222 +1,290 @@
-import type { LucideIcon } from "lucide-react";
-import { Blocks, Globe, LayoutDashboard, Palette, ShoppingCart, Zap } from "lucide-react";
+// Todos los textos del sitio. Los proyectos (con sus capturas) están en projects.ts.
 
 export const whatsappNumber = "5492234264682";
 export const instagramUrl = "https://www.instagram.com/nm.software/";
 export const facebookUrl = "https://www.facebook.com/profile.php?id=61590461681057";
 export const siteUrl = "https://nmsoftware.com.ar";
 
-const whatsappMessage = "Hola Nicolás, quiero consultar por un desarrollo para mi negocio.";
-export const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+const defaultMessage = "Hola Nicolás, vi la web de NM Software y quiero consultar por un desarrollo para mi negocio.";
+
+// Link a WhatsApp con el mensaje ya escrito. Sin texto, usa el mensaje general.
+export function whatsappLink(message: string = defaultMessage) {
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+export const whatsappUrl = whatsappLink();
 
 export const navItems = [
-  { id: "proyectos", label: "Proyectos" },
+  { id: "trabajos", label: "Trabajos" },
   { id: "servicios", label: "Servicios" },
-  { id: "proceso", label: "Cómo trabajo" },
-  { id: "contacto", label: "Contacto" },
+  { id: "proceso", label: "Cómo trabajamos" },
+  { id: "preguntas", label: "Preguntas" },
 ];
-
-export const hero = {
-  eyebrow: "Webs · Sistemas · Automatizaciones",
-  title: "Software a medida que trabaja por vos",
-  copy: "Herramientas hechas para tu negocio, para que venda más y pierda menos tiempo.",
-  primaryCta: "Hablemos por WhatsApp",
-  secondaryCta: "Ver proyectos",
-};
-
-export type Service = {
-  icon: LucideIcon;
-  title: string;
-  text: string;
-};
 
 export type AreaSlug = "web" | "software";
 
-export type Area = {
-  slug: AreaSlug;
-  label: string;
-  // Nombre corto para el menú.
-  short: string;
-  icon: LucideIcon;
-  summary: string;
-  hero: { eyebrow: string; title: string; copy: string };
-  servicesTitle: string;
-  services: Service[];
-  projectsTitle: string;
+export type HeroText = {
+  title: string;
+  lead: string;
 };
 
-// Las dos áreas del sitio: cada una tiene su página (/web y /software) con sus servicios y proyectos.
-export const areas: Area[] = [
-  {
-    slug: "web",
-    label: "Desarrollo web",
-    short: "Web",
-    icon: Globe,
-    summary: "Sitios y tiendas online a medida para que te encuentren, te conozcan y te compren.",
-    hero: {
-      eyebrow: "Sitios · Tiendas online · Landings",
-      title: "Tu negocio en internet, bien hecho",
-      copy: "Sitios y tiendas a medida para que te encuentren, te conozcan y te compren.",
-    },
-    servicesTitle: "Qué hago",
-    services: [
-      {
-        icon: Globe,
-        title: "Sitios web",
-        text: "Sitios y landings que cargan rápido y se ven bien en el celular.",
-      },
-      {
-        icon: ShoppingCart,
-        title: "Tiendas online",
-        text: "Catálogo, carrito, stock y cobro online, sin depender de terceros.",
-      },
-      {
-        icon: Palette,
-        title: "Diseño a medida",
-        text: "Un diseño pensado para tu marca, no una plantilla.",
-      },
-    ],
-    projectsTitle: "Sitios y tiendas publicados",
-  },
-  {
-    slug: "software",
-    label: "Software para empresas",
-    short: "Software",
-    icon: LayoutDashboard,
-    summary: "Sistemas de gestión, automatizaciones e integraciones hechos para tu operación.",
-    hero: {
-      eyebrow: "Sistemas · Automatizaciones",
-      title: "Software a medida para tu empresa",
-      copy: "Sistemas y automatizaciones para ordenar tu operación y decidir con datos.",
-    },
-    servicesTitle: "Qué hago",
-    services: [
-      {
-        icon: LayoutDashboard,
-        title: "Sistemas de gestión",
-        text: "Paneles para manejar personal, stock, flota o lo que necesites.",
-      },
-      {
-        icon: Zap,
-        title: "Automatizaciones",
-        text: "Reportes, avisos y cargas que hoy hacés a mano, resueltos solos.",
-      },
-      {
-        icon: Blocks,
-        title: "Integraciones",
-        text: "WhatsApp, planillas, pagos y tus sistemas, conectados.",
-      },
-    ],
-    projectsTitle: "Sistemas en uso",
-  },
+export const hero: HeroText = {
+  title: "Tu negocio, ordenado y vendiendo online.",
+  lead: "Hacemos tiendas online, sitios web y sistemas de gestión a medida para comercios y empresas. Somos un equipo de Mar del Plata y trabajamos con clientes de todo el país.",
+};
+
+// Lo que saca el miedo a escribir, al lado del botón.
+export const heroPoints = [
+  "La primera charla es sin cargo",
+  "Propuesta por escrito con plazo y precio",
+  "Te responde quien programa tu proyecto",
 ];
 
-export const processSteps = [
-  { step: "01", title: "Charlamos", text: "Entiendo tu negocio y qué querés resolver." },
-  { step: "02", title: "Propuesta", text: "Alcance, plazo y precio claros." },
-  { step: "03", title: "Desarrollo", text: "Vas viendo avances reales." },
-  { step: "04", title: "Online", text: "Lo publico y te sigo acompañando." },
-];
+export const stage = {
+  title: "Mirá lo que hicimos para negocios como el tuyo",
+};
 
-export type Project = {
-  slug: string;
+// Problemas reales y lo que ya hicimos para resolverlos. "project" es el slug del trabajo que lo muestra.
+export type Pain = {
   area: AreaSlug;
-  name: string;
-  type: string;
-  summary: string;
-  description: string;
-  chips: string[];
-  liveUrl?: string;
-  images: string[];
+  today: string;
+  solved: string;
+  project: string;
 };
 
-export const projects: Project[] = [
+export const ledger = {
+  title: "¿Tu negocio todavía funciona con Excel y papeles?",
+  lead: "Estas son cosas que ya resolvimos para otros negocios. Capaz alguna te suena.",
+  columns: { today: "Lo que pasa hoy", solved: "Lo que hicimos", client: "Para quién" },
+  rows: [
+    {
+      area: "web",
+      today: "Los pedidos llegan por WhatsApp, Instagram y teléfono, y alguno se pierde.",
+      solved: "Una tienda online donde el cliente elige, paga con Mercado Pago y el pedido queda registrado.",
+      project: "agrovet",
+    },
+    {
+      area: "software",
+      today: "El stock está en una planilla que nadie actualiza.",
+      solved: "Stock por sucursal que se descuenta solo con cada venta, en el local o en la web.",
+      project: "agrovet",
+    },
+    {
+      area: "software",
+      today: "Te enterás de que un documento venció cuando ya es tarde.",
+      solved: "Avisos antes de que venza cada documento de la tripulación.",
+      project: "mareflota",
+    },
+    {
+      area: "software",
+      today: "Para armar un presupuesto tenés que sentarte en la compu.",
+      solved: "Presupuestos desde el celular, con el PDF listo para mandar.",
+      project: "forza",
+    },
+    {
+      area: "web",
+      today: "Te buscan en Google y encuentran poco o nada.",
+      solved: "Un sitio con tus servicios, tus reseñas, cómo llegar y un botón para pedir turno.",
+      project: "mecanica-marset",
+    },
+    {
+      area: "software",
+      today: "Hay tareas que repetís a mano todas las semanas.",
+      solved: "Una automatización que graba, sube y publica cada programa sin que nadie toque nada.",
+      project: "hasta-que-nos-vayamos",
+    },
+  ] satisfies Pain[],
+};
+
+export type Service = {
+  area: AreaSlug;
+  title: string;
+  text: string;
+  includes: string[];
+  example: string;
+  message: string;
+};
+
+export const servicesSection = {
+  title: "Qué hacemos",
+  lead: "Contanos qué querés lograr y te proponemos la forma más simple de hacerlo.",
+  exampleLabel: "Ejemplo",
+  ask: "Consultar por WhatsApp",
+};
+
+export const services: Service[] = [
   {
-    slug: "agrovet",
     area: "web",
-    name: "Agrovet MDP",
-    type: "Tienda online",
-    summary: "Tienda online con carrito y control de stock para una veterinaria.",
-    description:
-      "Tienda online para veterinaria y pet shop con catálogo, carrito, stock y un panel para administrar todo desde el celular.",
-    chips: ["Catálogo", "Carrito", "Stock"],
-    liveUrl: "https://agrovet-gestion-y-web.vercel.app",
-    images: ["/agrovet-preview-actual.png"],
+    title: "Vender online",
+    text: "Tiendas con catálogo, carrito y pago online. A medida o en Tiendanube, según lo que más te convenga.",
+    includes: ["Catálogo con fotos, buscador y categorías", "Pago con Mercado Pago", "Stock y pedidos en un panel"],
+    example: "agrovet",
+    message: "Hola Nicolás, vi la web de NM Software y quiero vender online. ¿Me contás cómo sería?",
   },
   {
-    slug: "mecanica-marset",
     area: "web",
-    name: "Mecánica Marset",
-    type: "Sitio web",
-    summary: "Sitio para un taller mecánico con turnos por WhatsApp.",
-    description:
-      "Sitio para un taller mecánico con turnos por WhatsApp, reseñas y ubicación, pensado para generar confianza desde el primer vistazo.",
-    chips: ["WhatsApp", "Reseñas", "Ubicación"],
-    liveUrl: "https://mecanicamarset.netlify.app/",
-    images: ["/pag-taller-preview.png"],
+    title: "Que te encuentren en internet",
+    text: "Sitios rápidos y pensados para el celular, para que quien te busca entienda qué hacés y te escriba.",
+    includes: ["Diseño propio, no una plantilla", "WhatsApp, ubicación y reseñas", "Bien armado para aparecer en Google"],
+    example: "mecanica-marset",
+    message: "Hola Nicolás, vi la web de NM Software y quiero un sitio para mi negocio. ¿Me contás cómo sería?",
   },
   {
-    slug: "hasta-que-nos-vayamos",
-    area: "web",
-    name: "Hasta Que Nos Vayamos",
-    type: "Radio online",
-    summary: "Radio en vivo con grabación y publicación automática.",
-    description:
-      "Sitio para un programa de radio con streaming en vivo y un archivo de programas que se graba, sube y publica solo cada semana.",
-    chips: ["En vivo", "Automatización", "Archivo"],
-    liveUrl: "https://hastaquenosvayamos.com.ar",
-    images: ["/hnv-preview.png"],
-  },
-  {
-    slug: "latin-prospects",
-    area: "web",
-    name: "Latin Prospects",
-    type: "Sitio web",
-    summary: "Sitio de scouting de básquet con rankings de prospectos latinoamericanos.",
-    description:
-      "Sitio para una plataforma de scouting de básquet de Latinoamérica: rankings de prospectos por año de nacimiento con el perfil de cada jugador, noticias, calendario de eventos y solicitud de evaluación.",
-    chips: ["Rankings", "Noticias", "Evaluaciones"],
-    liveUrl: "https://latin-prospects-web.vercel.app",
-    images: ["/latin-prospects-preview.png"],
-  },
-  {
-    slug: "mareflota",
     area: "software",
-    name: "Mareflota",
-    type: "Sistema de gestión",
-    summary: "Gestión de tripulación, barcos y capturas para una pesquera.",
-    description:
-      "Web app para una empresa pesquera: tripulación, barcos, viajes y capturas en un solo lugar, con alertas de vencimiento de documentos y estadísticas por barco y especie.",
-    chips: ["Tripulación", "Viajes", "Vencimientos"],
-    liveUrl: "https://mareflota.com.ar",
-    images: ["/mareflota-preview.png"],
+    title: "Ordenar tu operación",
+    text: "Sistemas de gestión hechos para cómo trabaja tu negocio: stock, caja, ventas, personal, flota o lo que manejes.",
+    includes: ["Todo en un solo lugar, también desde el celular", "Acceso con usuario para vos y tu equipo", "Reportes para decidir con datos"],
+    example: "mareflota",
+    message: "Hola Nicolás, vi la web de NM Software y quiero un sistema de gestión para mi negocio. ¿Me contás cómo sería?",
   },
   {
-    slug: "agrovet-gestion",
     area: "software",
-    name: "Agrovet MDP",
-    type: "Sistema de gestión",
-    summary: "Caja, stock, ventas y sucursales de una veterinaria en un solo panel.",
-    description:
-      "Panel de gestión para una veterinaria con dos sucursales: caja, stock por sucursal, ventas del mostrador y de la tienda online, clientes y un tablero con cómo viene cada día.",
-    chips: ["Caja", "Stock", "Sucursales"],
-    images: ["/agrovet-panel.png"],
+    title: "Dejar de hacer todo a mano",
+    text: "Automatizaciones e integraciones para que las tareas repetidas se hagan solas.",
+    includes: ["Reportes y avisos automáticos", "WhatsApp, planillas y pagos conectados", "Cargas de datos sin copiar y pegar"],
+    example: "hasta-que-nos-vayamos",
+    message: "Hola Nicolás, vi la web de NM Software y quiero automatizar tareas de mi negocio. ¿Me contás cómo sería?",
+  },
+];
+
+export const process = {
+  title: "Cómo trabajamos",
+  lead: "Somos un equipo chico: hablás directo con quien programa tu proyecto, sin intermediarios.",
+  steps: [
+    { title: "Charlamos", text: "Nos contás qué querés resolver y cómo trabajás hoy. La primera charla es sin cargo." },
+    {
+      title: "Te pasamos una propuesta",
+      text: "Por escrito: qué incluye, qué no, plazos y precio. Si conviene, la separamos en etapas.",
+    },
+    { title: "Lo desarrollamos", text: "Vas viendo avances reales y opinás antes de que esté terminado." },
+    { title: "Lo publicamos y te enseñamos", text: "Lo dejamos funcionando y te mostramos cómo usarlo." },
+    { title: "Te acompañamos", text: "Si querés, sumás un mantenimiento mensual para soporte, ajustes y cambios." },
+  ],
+};
+
+// Lo que muestra la propuesta de ejemplo al lado de los pasos.
+export const proposalSample = {
+  label: "Propuesta",
+  title: "Tienda online para tu negocio",
+  includesTitle: "Qué incluye",
+  includes: ["Catálogo con fotos y categorías", "Carrito y pago con Mercado Pago", "Stock que se descuenta solo", "Panel para cargar productos y precios"],
+  laterTitle: "Para una segunda etapa",
+  later: ["Precios mayoristas", "Envíos a todo el país"],
+  termsTitle: "Plazo y valor",
+  terms: ["Plazo estimado", "Valor"],
+  alt: "Ejemplo de propuesta por escrito, con lo que incluye, lo que queda para una segunda etapa, el plazo y el valor.",
+};
+
+export type Faq = { question: string; answer: string };
+
+export const faqSection = {
+  title: "Preguntas frecuentes",
+  lead: "¿Te quedó alguna duda? Escribinos y la charlamos.",
+  cta: "Preguntar por WhatsApp",
+};
+
+export const faqs: Faq[] = [
+  {
+    question: "¿Cuánto sale?",
+    answer:
+      "Depende de lo que necesites: no es lo mismo un sitio para mostrar tus servicios que una tienda con stock o un sistema con panel. Después de la primera charla te mandamos una propuesta por escrito con qué incluye, qué no, los plazos y el precio. Si conviene, la separamos en etapas.",
   },
   {
-    slug: "forza",
-    area: "software",
-    name: "Forza Presupuestos",
-    type: "App privada",
-    summary: "App para armar presupuestos en PDF desde el celular.",
-    description:
-      "Webapp para una empresa de reformas en Mallorca: arma presupuestos, guarda el historial y genera el PDF final desde cualquier lugar, con acceso por login.",
-    chips: ["Login", "Historial", "PDF"],
-    images: ["/forza-preview.png", "/forza-pdf-preview.png"],
+    question: "¿Cuánto tarda?",
+    answer:
+      "El plazo queda escrito en la propuesta. Depende del alcance y de que tengas listo el material: fotos, textos, productos y accesos.",
+  },
+  {
+    question: "¿Lo voy a poder manejar yo?",
+    answer:
+      "Sí. Si necesitás cargar productos, precios o contenido, te dejamos un panel simple, que también funciona desde el celular, y te enseñamos a usarlo.",
+  },
+  {
+    question: "¿Qué pasa después de la entrega?",
+    answer:
+      "Podés sumar un mantenimiento mensual con soporte, ajustes y cambios de contenido. Si más adelante querés algo nuevo, lo presupuestamos aparte.",
+  },
+  {
+    question: "¿Por qué a medida y no una plataforma o un sistema enlatado?",
+    answer:
+      "No siempre hace falta. Si Tiendanube o una herramienta que ya existe te alcanza, la armamos ahí: es más rápido y más barato. Hacemos a medida cuando necesitás algo que esas herramientas no resuelven, como stock por sucursal, la caja del local o la forma de trabajar de tu negocio.",
+  },
+  {
+    question: "¿Necesito saber de computación?",
+    answer: "No. Lo armamos para que lo use cualquiera de tu equipo y te enseñamos a usarlo paso a paso.",
+  },
+  {
+    question: "¿Hay costos aparte del desarrollo?",
+    answer:
+      "Sí, y te los detallamos en la propuesta: el dominio, el hosting y los servicios externos que uses, como Mercado Pago o la plataforma de la tienda, se pagan aparte.",
+  },
+  {
+    question: "¿Trabajan con negocios de otras ciudades?",
+    answer:
+      "Sí. Estamos en Mar del Plata y trabajamos por WhatsApp y videollamada con clientes de todo el país y del exterior, como Forza en Mallorca.",
+  },
+  {
+    question: "¿Necesito tener todo claro para escribir?",
+    answer:
+      "No. Alcanza con que nos cuentes qué querés resolver. Si tenés logo, fotos o ejemplos que te gusten, mejor, pero lo vamos armando juntos.",
   },
 ];
 
 export const contact = {
-  title: "¿Tenés algo en mente?",
-  copy: "Contame qué necesitás y te paso una propuesta concreta.",
-  cta: "Escribime por WhatsApp",
+  title: "Contanos qué necesitás",
+  lead: "Elegí una opción y te abrimos WhatsApp con el mensaje listo para mandar.",
+  question: "¿Qué estás buscando?",
+  options: ["Una tienda online", "Un sitio web", "Un sistema de gestión", "Automatizar tareas", "Todavía no sé"],
+  detailLabel: "Contanos un poco de tu negocio (opcional)",
+  detailPlaceholder: "Ej.: tengo una veterinaria con dos locales y quiero vender online",
+  cta: "Enviar por WhatsApp",
+  note: "Te responde quien va a programar tu proyecto.",
+  // Arma el mensaje que se abre en WhatsApp.
+  message(option: string, detail: string) {
+    const parts = ["Hola Nicolás, vi la web de NM Software."];
+    if (option === "Todavía no sé") parts.push("Quiero mejorar algo de mi negocio y no sé bien qué necesito.");
+    else if (option) parts.push(`Estoy buscando: ${option.toLowerCase()}.`);
+    if (detail.trim()) parts.push(detail.trim());
+    return parts.join(" ");
+  },
 };
+
+export const ctaLabel = "Escribinos por WhatsApp";
+
+export const footer = {
+  tagline: "Desarrollo web y software a medida en Mar del Plata, Argentina.",
+};
+
+export type Area = {
+  slug: AreaSlug;
+  label: string;
+  hero: HeroText;
+  metaTitle: string;
+  metaDescription: string;
+};
+
+// Páginas de área (/web y /software): misma estructura que la home, filtrada por área.
+export const areas: Area[] = [
+  {
+    slug: "web",
+    label: "Desarrollo web",
+    hero: {
+      title: "Un sitio que trabaja para tu negocio.",
+      lead: "Sitios web y tiendas online a medida, rápidos y pensados para el celular, para que te encuentren, te conozcan y te compren. Desde Mar del Plata para todo el país.",
+    },
+    metaTitle: "Desarrollo web en Mar del Plata: sitios y tiendas online a medida",
+    metaDescription:
+      "Sitios web y tiendas online a medida para negocios, con diseño propio, pago con Mercado Pago y pensados para el celular. NM Software, Mar del Plata.",
+  },
+  {
+    slug: "software",
+    label: "Software para empresas",
+    hero: {
+      title: "Tu operación, ordenada en un solo sistema.",
+      lead: "Sistemas de gestión, automatizaciones e integraciones a medida para empresas: stock, caja, personal, flota o lo que tu negocio maneje. Desde Mar del Plata para todo el país.",
+    },
+    metaTitle: "Software a medida para empresas: sistemas de gestión y automatizaciones",
+    metaDescription:
+      "Sistemas de gestión, automatizaciones e integraciones a medida para empresas: stock, caja, personal y flota. NM Software, Mar del Plata.",
+  },
+];

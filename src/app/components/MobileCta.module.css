@@ -1,0 +1,29 @@
+.bar {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .bar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    display: block;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line);
+    transform: translateY(110%);
+    transition: transform 280ms var(--ease-out);
+  }
+
+  .bar[data-visible] {
+    transform: translateY(0);
+  }
+
+  .button {
+    width: 100%;
+  }
+}

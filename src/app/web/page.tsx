@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import AreaPage from "../components/AreaPage";
+import SitePage from "../components/SitePage";
+import { areas } from "../content";
+
+const area = areas.find((item) => item.slug === "web")!;
 
 export const metadata: Metadata = {
-  title: "Desarrollo web: sitios y tiendas online a medida",
-  description: "Sitios web, landings y tiendas online a medida para negocios, con diseño propio y pensados para el celular, desarrollados por NM Software.",
-  alternates: {
-    canonical: "/web",
-  },
+  title: area.metaTitle,
+  description: area.metaDescription,
+  alternates: { canonical: "/web" },
   openGraph: {
-    title: "Desarrollo web: sitios y tiendas online a medida",
-    description: "Sitios web, landings y tiendas online a medida para negocios, con diseño propio y pensados para el celular, desarrollados por NM Software.",
+    title: area.metaTitle,
+    description: area.metaDescription,
     url: "https://nmsoftware.com.ar/web",
   },
 };
 
 export default function WebAreaPage() {
-  return <AreaPage slug="web" />;
+  return <SitePage hero={area.hero} area="web" />;
 }

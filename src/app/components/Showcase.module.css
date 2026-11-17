@@ -1,0 +1,129 @@
+/*
+  Composición con proporción fija (así no salta la altura al cambiar de trabajo).
+  Todo se mide en % del ancho para que escale igual en cualquier pantalla.
+*/
+.showcase {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  container-type: inline-size;
+}
+
+.image {
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Ventana de navegador */
+.browser {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1.6cqi;
+  background: #f4f6fa;
+  box-shadow:
+    0 0 0 1px rgba(11, 27, 51, 0.08),
+    var(--shadow-object);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 2cqi;
+  height: 4.6cqi;
+  min-height: 22px;
+  padding: 0 1.8cqi;
+  background: #e8ecf3;
+  border-bottom: 1px solid rgba(11, 27, 51, 0.08);
+}
+
+.dots {
+  display: flex;
+  gap: 0.75cqi;
+}
+
+.dots i {
+  width: 1.05cqi;
+  height: 1.05cqi;
+  min-width: 6px;
+  min-height: 6px;
+  border-radius: 50%;
+  background: #c3cbd8;
+}
+
+.address {
+  flex: 1;
+  max-width: 46%;
+  margin-inline: auto;
+  padding: 0.5cqi 1.6cqi;
+  border-radius: 999px;
+  background: #fff;
+  color: #5a6880;
+  font-size: clamp(9px, 1.45cqi, 12px);
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+}
+
+/* Hoja (PDF) */
+.paper {
+  position: absolute;
+  top: 2%;
+  left: 7%;
+  width: 46%;
+  aspect-ratio: 700 / 982;
+  overflow: hidden;
+  border-radius: 0.6cqi;
+  background: #fff;
+  transform: rotate(-2.5deg);
+  box-shadow:
+    0 0 0 1px rgba(11, 27, 51, 0.06),
+    var(--shadow-object);
+}
+
+/* Celular */
+.phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 25%;
+  padding: 0.9cqi;
+  border-radius: 4.4cqi;
+  background: #0a1426;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    var(--shadow-object);
+}
+
+.showcase[data-kind="paper"] .phone {
+  right: 9%;
+  bottom: 3%;
+  width: 27%;
+  transform: rotate(2deg);
+}
+
+.phoneScreen {
+  position: relative;
+  aspect-ratio: 390 / 844;
+  overflow: hidden;
+  border-radius: 3.6cqi;
+  background: #fff;
+}
+
+.showcase[data-tone="light"] .phone {
+  box-shadow:
+    0 0 0 1px rgba(11, 27, 51, 0.12),
+    var(--shadow-object);
+}
