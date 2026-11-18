@@ -26,9 +26,15 @@
   box-shadow: 0 14px 34px -24px rgb(11 27 51 / calc(0.55 * (1 - var(--mix))));
 }
 
-/* Con el menú del celular abierto queda clara, como el panel que se despliega */
-.header[data-open] {
-  --mix: 0;
+/* Con el menú del celular abierto la barra se vuelve azul y forma una sola pieza con la hoja que baja */
+@media (max-width: 960px) {
+  .header[data-open] {
+    --mix: 1;
+  }
+
+  .header[data-open] .progress {
+    opacity: 0;
+  }
 }
 
 .inner {
@@ -243,24 +249,137 @@
   cursor: pointer;
 }
 
+/* Ícono del botón: las tres rayas giran y se convierten en la cruz */
+.menuIcons {
+  display: grid;
+}
+
+.menuIcons > svg {
+  grid-area: 1 / 1;
+  transition:
+    opacity 180ms ease,
+    rotate 300ms var(--ease-out);
+}
+
+.iconClose {
+  opacity: 0;
+  rotate: -90deg;
+}
+
+.header[data-open] .iconMenu {
+  opacity: 0;
+  rotate: 90deg;
+}
+
+.header[data-open] .iconClose {
+  opacity: 1;
+  rotate: 0deg;
+}
+
+/*
+  Menú del celular: una hoja azul que se despliega hacia abajo desde la barra (clip-path) y la página
+  queda atenuada detrás. Al cerrar se enrolla más rápido. Van en posición absoluta: no empujan la página.
+*/
+.backdrop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 100lvh;
+  background: rgb(11 27 51 / 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 200ms;
+}
+
+.header[data-open] .backdrop {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 320ms var(--ease-out),
+    visibility 0s;
+}
+
 .panel {
-  border-top: 1px solid var(--line);
-  background: var(--paper);
-  padding: 8px 0 20px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 4px 0 24px;
+  border-radius: 0 0 24px 24px;
+  background: var(--night);
+  box-shadow: 0 30px 50px -24px rgb(0 0 0 / 0.6);
+  clip-path: inset(0 0 100% 0 round 0 0 24px 24px);
+  visibility: hidden;
+  transition:
+    clip-path 240ms var(--ease-out),
+    visibility 0s linear 240ms;
+}
+
+.header[data-open] .panel {
+  clip-path: inset(0 0 0 0 round 0 0 24px 24px);
+  visibility: visible;
+  transition:
+    clip-path 480ms var(--ease-out),
+    visibility 0s;
 }
 
 .panel nav {
   display: grid;
 }
 
+.panelLink,
+.panelCta {
+  opacity: 0;
+  translate: 0 -8px;
+  transition:
+    opacity 140ms ease,
+    translate 140ms ease;
+}
+
+/* Al abrir, los links entran en cascada detrás de la hoja */
+.header[data-open] .panelLink,
+.header[data-open] .panelCta {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 360ms var(--ease-out) calc(100ms + var(--i) * 45ms),
+    translate 460ms var(--ease-out) calc(100ms + var(--i) * 45ms);
+}
+
 .panelLink {
-  padding: 15px 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink);
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  color: #fff;
+  font-size: 22px;
   font-weight: 650;
   font-stretch: 110%;
   letter-spacing: -0.02em;
+}
+
+/* La sección en la que estás lleva el punto naranja */
+.panelLink::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 4px rgb(255 122 26 / 0.2);
+  opacity: 0;
+}
+
+.panelLink[aria-current]::after {
+  opacity: 1;
+}
+
+.panelCta {
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* Entrada al abrir la página, una sola vez: marca, links y botón bajan en cascada junto con la portada */
@@ -292,8 +411,43 @@
 }
 
 @media (min-width: 961px) {
-  .panel {
+  .panel,
+  .backdrop {
     display: none;
+  }
+}
+
+/* Con "reducir movimiento": la hoja y los links solo aparecen y desaparecen, sin desplazarse */
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .header[data-open] .panel {
+    clip-path: none;
+  }
+
+  .panel {
+    opacity: 0;
+    transition:
+      opacity 160ms ease,
+      visibility 0s linear 160ms;
+  }
+
+  .header[data-open] .panel {
+    opacity: 1;
+    transition:
+      opacity 160ms ease,
+      visibility 0s;
+  }
+
+  .panelLink,
+  .panelCta,
+  .header[data-open] .panelLink,
+  .header[data-open] .panelCta {
+    translate: none;
+    transition: opacity 160ms ease;
+  }
+
+  .menuIcons > svg {
+    transition: opacity 160ms ease;
   }
 }
 
