@@ -27,6 +27,7 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
   const headerRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     headerEntered = true;
@@ -51,6 +52,11 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
       const height = header.offsetHeight;
       const width = document.documentElement.clientWidth;
       header.toggleAttribute("data-scrolled", window.scrollY > 4);
+
+      // Línea naranja de abajo: cuánto de la página ya recorriste.
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const read = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${read.toFixed(4)})`;
 
       // Qué parte del header tapa una banda azul de lado a lado (con márgenes quedaría una franja clara).
       let covered = 0;
@@ -148,7 +154,9 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
 
         <div className={styles.actions}>
           <a className={`btn ${styles.cta}`} href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-            <WhatsAppIcon size={19} />
+            <span className={styles.ctaIcon}>
+              <WhatsAppIcon size={17} />
+            </span>
             <span className={styles.ctaLong}>{ctaLabel}</span>
             <span className={styles.ctaShort}>WhatsApp</span>
           </a>
@@ -164,6 +172,8 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
           </button>
         </div>
       </div>
+
+      <span ref={progressRef} className={styles.progress} aria-hidden="true" />
 
       <div id="menu-mobile" className={styles.panel} hidden={!open}>
         <nav className="container" aria-label="Secciones">

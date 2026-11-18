@@ -68,11 +68,25 @@
 }
 
 .brandTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--muted);
   color: color-mix(in srgb, rgb(255 255 255 / 0.68) calc(var(--on-dark) * 100%), var(--muted));
   font-size: 12px;
   font-weight: 520;
   letter-spacing: 0;
+}
+
+/* Detalles en naranja (el del logo): un punto en la bajada, la marca de la sección activa,
+   el círculo del ícono de WhatsApp y la línea de lo recorrido */
+.brandTag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px rgb(255 122 26 / 0.18);
 }
 
 /* Los links van en una cápsula, como un selector */
@@ -111,6 +125,19 @@
 
 .pill[data-on="1"] {
   opacity: 1;
+}
+
+/* Rayita naranja debajo de la sección activa */
+.pill::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 16px;
+  height: 3px;
+  margin-left: -8px;
+  border-radius: 2px;
+  background: var(--signal);
 }
 
 .navLink {
@@ -152,7 +179,7 @@
 /* Sin fundido de color: cambia junto con la barra, en el mismo cuadro */
 .cta {
   min-height: 46px;
-  padding: 0 20px;
+  padding: 0 20px 0 8px;
   background: var(--ink);
   background: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
   color: #fff;
@@ -166,6 +193,36 @@
     background: #1b3157;
     background: color-mix(in srgb, #dfe7f3 calc(var(--on-dark) * 100%), #1b3157);
   }
+}
+
+.ctaIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--signal);
+  color: var(--ink);
+  transition: transform 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover .ctaIcon {
+    transform: rotate(-12deg) scale(1.06);
+  }
+}
+
+/* Lo recorrido de la página, en una línea naranja finita al pie de la barra */
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--header-h) - 2px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--signal) 0%, var(--signal-hover) 100%);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
 }
 
 .ctaShort {
