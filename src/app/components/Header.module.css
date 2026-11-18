@@ -1,16 +1,11 @@
 /*
-  --mix dice cuánto de azul noche tiene la barra (0 clara, 1 azul):
-  1 sobre las bandas azules de lado a lado (data-dark, con transición) y, en la portada, lo que pase HeroDive
-  en --dive-night mientras se entra a la pantalla. Todos los colores salen de ahí, así cambian juntos.
+  --mix: cuánto azul noche tiene la barra (0 clara, 1 azul). Sale de lo que tiene debajo, sin demoras:
+  --header-dark es la parte del header que tapa una banda azul de lado a lado (Header.tsx) y
+  --dive-night el azul de la entrada a la pantalla de la portada (HeroDive). Se suman porque donde
+  termina una empieza la otra: así nunca hay un salto a blanco en el medio.
 */
-@property --header-dark {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
 .header {
-  --mix: max(var(--header-dark), var(--dive-night, 0));
+  --mix: min(1, calc(var(--header-dark, 0) + var(--dive-night, 0)));
   /* Texto y botones pasan de oscuro a claro de una vez, a mitad de camino: nunca quedan grises sobre gris */
   --on-dark: clamp(0, (var(--mix) - 0.55) * 100, 1);
   position: sticky;
@@ -22,19 +17,13 @@
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
   border-bottom-color: color-mix(in srgb, transparent calc(var(--mix) * 100%), var(--line));
-  transition:
-    --header-dark 300ms var(--ease-out),
-    box-shadow 240ms var(--ease-out);
+  transition: box-shadow 240ms var(--ease-out);
 }
 
-.header[data-dark] {
-  --header-dark: 1;
-}
-
-/* Al bajar, una sombra suave en lugar de la línea */
+/* Al bajar, una sombra suave en lugar de la línea (sobre el azul no hace falta) */
 .header[data-scrolled] {
   border-bottom-color: transparent;
-  box-shadow: 0 14px 34px -24px rgb(11 27 51 / 0.55);
+  box-shadow: 0 14px 34px -24px rgb(11 27 51 / calc(0.55 * (1 - var(--mix))));
 }
 
 /* Con el menú del celular abierto queda clara, como el panel que se despliega */
@@ -50,49 +39,74 @@
   height: var(--header-h);
 }
 
+/* Marca: logo, nombre y qué hacemos */
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 11px;
   color: var(--ink);
   color: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
-  font-size: 18px;
-  font-weight: 760;
-  font-stretch: 116%;
-  letter-spacing: -0.03em;
   white-space: nowrap;
-  transition: color 200ms var(--ease-out);
 }
 
 .brand img {
   border-radius: 50%;
   box-shadow: 0 0 0 1px rgb(255 255 255 / calc(var(--on-dark) * 0.28));
-  transition: box-shadow 200ms var(--ease-out);
 }
 
+.brandText {
+  display: grid;
+  gap: 3px;
+  line-height: 1;
+}
+
+.brandName {
+  font-size: 18px;
+  font-weight: 760;
+  font-stretch: 116%;
+  letter-spacing: -0.03em;
+}
+
+.brandTag {
+  color: var(--muted);
+  color: color-mix(in srgb, rgb(255 255 255 / 0.68) calc(var(--on-dark) * 100%), var(--muted));
+  font-size: 12px;
+  font-weight: 520;
+  letter-spacing: 0;
+}
+
+/* Los links van en una cápsula, como un selector */
 .nav {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--mist);
+  background: color-mix(in srgb, rgb(255 255 255 / 0.07) calc(var(--on-dark) * 100%), var(--mist));
+  box-shadow: inset 0 0 0 1px rgb(11 27 51 / 0.06);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, rgb(255 255 255 / 0.1) calc(var(--on-dark) * 100%), rgb(11 27 51 / 0.06));
 }
 
-/* La pastilla que marca la sección en la que estás: se desliza de un link al otro */
+/* La pastilla de la sección en la que estás: una ficha blanca que se desliza de un link al otro */
 .pill {
   position: absolute;
-  inset-block: 0;
+  inset-block: 4px;
   left: 0;
   width: 0;
   border-radius: 999px;
-  background: rgb(11 27 51 / 0.07);
-  background: color-mix(in srgb, rgb(255 255 255 / 0.15) calc(var(--on-dark) * 100%), rgb(11 27 51 / 0.07));
+  background: #fff;
+  background: color-mix(in srgb, rgb(255 255 255 / 0.16) calc(var(--on-dark) * 100%), #fff);
+  box-shadow:
+    0 1px 2px rgb(11 27 51 / calc(0.1 * (1 - var(--on-dark)))),
+    0 6px 14px -8px rgb(11 27 51 / calc(0.35 * (1 - var(--on-dark))));
   opacity: 0;
   pointer-events: none;
   transition:
     transform 380ms var(--ease-out),
     width 380ms var(--ease-out),
-    opacity 220ms ease,
-    background-color 200ms var(--ease-out);
+    opacity 220ms ease;
 }
 
 .pill[data-on="1"] {
@@ -102,15 +116,13 @@
 .navLink {
   position: relative;
   z-index: 1;
-  padding: 10px 14px;
+  padding: 8px 14px;
   border-radius: 999px;
   color: var(--ink-soft);
   color: color-mix(in srgb, rgb(255 255 255 / 0.78) calc(var(--on-dark) * 100%), var(--ink-soft));
   font-size: var(--text-sm);
   font-weight: 560;
-  transition:
-    color 160ms var(--ease-out),
-    background-color 160ms var(--ease-out);
+  transition: background-color 160ms var(--ease-out);
 }
 
 .navLink[aria-current] {
@@ -122,8 +134,8 @@
   .navLink:hover {
     color: var(--ink);
     color: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
-    background: var(--mist);
-    background: color-mix(in srgb, rgb(255 255 255 / 0.1) calc(var(--on-dark) * 100%), var(--mist));
+    background: rgb(255 255 255 / 0.7);
+    background: color-mix(in srgb, rgb(255 255 255 / 0.1) calc(var(--on-dark) * 100%), rgb(255 255 255 / 0.7));
   }
 
   .navLink[aria-current]:hover {
@@ -137,6 +149,7 @@
   gap: 8px;
 }
 
+/* Sin fundido de color: cambia junto con la barra, en el mismo cuadro */
 .cta {
   min-height: 46px;
   padding: 0 20px;
@@ -145,6 +158,7 @@
   color: #fff;
   color: color-mix(in srgb, var(--ink) calc(var(--on-dark) * 100%), #fff);
   font-size: 15.5px;
+  transition: transform 160ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -170,9 +184,6 @@
   color: var(--ink);
   color: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
   cursor: pointer;
-  transition:
-    background-color 200ms var(--ease-out),
-    color 200ms var(--ease-out);
 }
 
 .panel {
@@ -195,9 +206,31 @@
   letter-spacing: -0.02em;
 }
 
+/* Entrada al abrir la página, una sola vez: marca, links y botón bajan en cascada junto con la portada */
+@media (prefers-reduced-motion: no-preference) {
+  .header[data-enter] .brand {
+    animation: header-in 700ms var(--ease-out) 60ms backwards;
+  }
+
+  .header[data-enter] .nav {
+    animation: header-in 700ms var(--ease-out) 140ms backwards;
+  }
+
+  .header[data-enter] .actions {
+    animation: header-in 700ms var(--ease-out) 220ms backwards;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pill {
     transition: opacity 220ms ease;
+  }
+}
+
+@keyframes header-in {
+  from {
+    opacity: 0;
+    translate: 0 -10px;
   }
 }
 
@@ -228,12 +261,18 @@
 }
 
 @media (max-width: 420px) {
-  .brand span {
+  .brandName {
     font-size: 17px;
   }
 
   .cta {
     padding: 0 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brandTag {
+    display: none;
   }
 }
 

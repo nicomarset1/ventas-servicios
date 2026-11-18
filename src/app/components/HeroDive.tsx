@@ -76,10 +76,11 @@ function start() {
   // Avance que se ve en pantalla: persigue al del scroll con inercia. Vale -1 hasta la primera medida.
   let shown = -1;
 
-  // Avance real del scroll mientras la portada está fija, de 0 a 1, y si la portada sigue debajo del header.
+  // Avance real del scroll mientras la portada está fija (0 a 1) y qué parte del header tiene la portada debajo:
+  // 1 mientras está fija y baja a 0 a medida que su borde de abajo pasa por detrás del header.
   const read = () => {
     const rect = root.getBoundingClientRect();
-    return { target: clamp((top - rect.top) / travel), under: rect.bottom > headerHalf };
+    return { target: clamp((top - rect.top) / travel), under: clamp(rect.bottom / (headerHalf * 2)) };
   };
 
   // Medidas de layout (sin transforms): dónde está la pantalla y cuánto tiene que crecer para cubrir todo.
@@ -113,7 +114,7 @@ function start() {
     request();
   };
 
-  const draw = (p: number, target: number, under: boolean) => {
+  const draw = (p: number, target: number, under: number) => {
     // La notebook va al centro, se endereza la tapa y la cámara entra a velocidad pareja (zoom geométrico).
     const move = smooth(p / 0.6);
     const scale = Math.pow(zoom, p);
@@ -152,8 +153,9 @@ function start() {
     // La barra de arriba toma el azul de lo que tiene justo debajo: primero el fondo con el portal y,
     // cuando la pantalla (o su marco oscuro) llega al borde del header, el azul de la pantalla.
     const reach = clamp((scale - reachScale * 0.82) / (reachScale * 0.18));
-    const headerNight = Math.max(cover, tint * reach);
-    header?.style.setProperty("--dive-night", under ? headerNight.toFixed(3) : "0");
+    // Se multiplica por la parte del header que la portada tiene debajo: el resto lo pone la banda de trabajos.
+    const headerNight = Math.max(cover, tint * reach) * under;
+    header?.style.setProperty("--dive-night", headerNight.toFixed(3));
   };
 
   // Cada cuadro acerca lo que se ve al avance real, igual a cualquier frecuencia de pantalla.
