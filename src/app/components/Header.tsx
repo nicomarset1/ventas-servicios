@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { ctaLabel, navItems, whatsappUrl } from "../content";
 import WhatsAppIcon from "./WhatsAppIcon";
 import styles from "./Header.module.css";
@@ -41,6 +42,27 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  // Con el menú abierto la página de atrás no se mueve.
+  useEffect(() => {
+    if (!open) return;
+    const html = document.documentElement;
+    const previous = html.style.overflow;
+    html.style.overflow = "hidden";
+    return () => {
+      html.style.overflow = previous;
+    };
+  }, [open]);
+
+  // Si la pantalla pasa a tamaño compu, el menú del celular se cierra solo.
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 961px)");
+    const onChange = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", onChange);
+    return () => desktop.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -168,20 +190,43 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
             onClick={() => setOpen((value) => !value)}
           >
-            {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+            <span className={styles.menuIcons} aria-hidden="true">
+              <Menu size={22} className={styles.iconMenu} />
+              <X size={22} className={styles.iconClose} />
+            </span>
           </button>
         </div>
       </div>
 
       <span ref={progressRef} className={styles.progress} aria-hidden="true" />
 
-      <div id="menu-mobile" className={styles.panel} hidden={!open}>
+      {/* Menú del celular: una hoja azul que baja desde la barra, con la página atenuada detrás */}
+      <div className={styles.backdrop} aria-hidden="true" onClick={() => setOpen(false)} />
+      <div id="menu-mobile" className={styles.panel} inert={!open}>
         <nav className="container" aria-label="Secciones">
-          {navItems.map((item) => (
-            <a key={item.id} href={`${base}#${item.id}`} className={styles.panelLink} onClick={() => setOpen(false)}>
+          {navItems.map((item, index) => (
+            <a
+              key={item.id}
+              href={`${base}#${item.id}`}
+              className={styles.panelLink}
+              style={{ "--i": index } as CSSProperties}
+              aria-current={active === item.id ? "location" : undefined}
+              onClick={() => setOpen(false)}
+            >
               {item.label}
             </a>
           ))}
+          <a
+            className={`btn btn-primary ${styles.panelCta}`}
+            style={{ "--i": navItems.length } as CSSProperties}
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+          >
+            <WhatsAppIcon size={20} />
+            {ctaLabel}
+          </a>
         </nav>
       </div>
     </header>
