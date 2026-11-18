@@ -8,20 +8,29 @@ import { ctaLabel, navItems, whatsappUrl } from "../content";
 import WhatsAppIcon from "./WhatsAppIcon";
 import styles from "./Header.module.css";
 
+// La entrada de la barra va una sola vez por visita: al pasar de una página a otra no se repite.
+let headerEntered = false;
+
 /*
   Barra de arriba. Acompaña el recorrido:
-  - una pastilla se desliza hasta la sección en la que estás;
+  - los links van en una cápsula y una pastilla blanca se desliza hasta la sección en la que estás;
   - al bajar aparece una sombra suave;
-  - se vuelve azul sobre las bandas azules que van de lado a lado ([data-header-dark]) y, en la portada,
-    junto con la entrada a la pantalla (HeroDive le pasa --dive-night).
+  - toma el azul de lo que tiene debajo, siguiendo el borde con el scroll y sin demoras:
+    --header-dark es cuánto del header tapa una banda azul de lado a lado ([data-header-dark]) y,
+    en la portada, HeroDive le pasa --dive-night mientras se entra a la pantalla.
 */
 // base: "" en páginas que tienen las secciones (home y áreas); "/" en las páginas de proyecto.
 export default function Header({ base = "" }: { base?: "" | "/" }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const [enter] = useState(() => !headerEntered);
   const headerRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    headerEntered = true;
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -39,16 +48,19 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
 
     const update = () => {
       frame = 0;
-      const line = header.offsetHeight / 2;
+      const height = header.offsetHeight;
       const width = document.documentElement.clientWidth;
       header.toggleAttribute("data-scrolled", window.scrollY > 4);
 
-      // Solo las bandas azules de lado a lado: con márgenes a los costados quedaría una franja clara.
-      const dark = Array.from(document.querySelectorAll<HTMLElement>("[data-header-dark]")).some((element) => {
+      // Qué parte del header tapa una banda azul de lado a lado (con márgenes quedaría una franja clara).
+      let covered = 0;
+      for (const element of Array.from(document.querySelectorAll<HTMLElement>("[data-header-dark]"))) {
         const rect = element.getBoundingClientRect();
-        return rect.top <= line && rect.bottom >= line && rect.left <= 1 && rect.right >= width - 1;
-      });
-      header.toggleAttribute("data-dark", dark);
+        if (rect.left > 1 || rect.right < width - 1) continue;
+        const overlap = Math.min(rect.bottom, height) - Math.max(rect.top, 0);
+        covered = Math.max(covered, overlap / height);
+      }
+      header.style.setProperty("--header-dark", Math.min(1, Math.max(0, covered)).toFixed(3));
 
       if (base === "") {
         const probe = window.innerHeight * 0.4;
@@ -109,11 +121,14 @@ export default function Header({ base = "" }: { base?: "" | "/" }) {
   }, [active]);
 
   return (
-    <header ref={headerRef} className={styles.header} data-open={open || undefined}>
+    <header ref={headerRef} className={styles.header} data-open={open || undefined} data-enter={enter || undefined}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.brand} onClick={() => setOpen(false)}>
-          <Image src="/logo-circle.png" alt="" width={36} height={36} preload />
-          <span>NM Software</span>
+          <Image src="/logo-circle.png" alt="" width={38} height={38} preload />
+          <span className={styles.brandText}>
+            <span className={styles.brandName}>NM Software</span>
+            <span className={styles.brandTag}>Desarrollo a medida</span>
+          </span>
         </Link>
 
         <nav ref={navRef} className={styles.nav} aria-label="Secciones">
