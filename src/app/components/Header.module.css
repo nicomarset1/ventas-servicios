@@ -1,11 +1,45 @@
+/*
+  --mix dice cuánto de azul noche tiene la barra (0 clara, 1 azul):
+  1 sobre las bandas azules de lado a lado (data-dark, con transición) y, en la portada, lo que pase HeroDive
+  en --dive-night mientras se entra a la pantalla. Todos los colores salen de ahí, así cambian juntos.
+*/
+@property --header-dark {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 .header {
+  --mix: max(var(--header-dark), var(--dive-night, 0));
+  /* Texto y botones pasan de oscuro a claro de una vez, a mitad de camino: nunca quedan grises sobre gris */
+  --on-dark: clamp(0, (var(--mix) - 0.55) * 100, 1);
   position: sticky;
   top: 0;
   z-index: 50;
   background: rgba(255, 255, 255, 0.97);
+  background: color-mix(in srgb, var(--night) calc(var(--mix) * 100%), rgb(255 255 255 / 0.97));
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
+  border-bottom-color: color-mix(in srgb, transparent calc(var(--mix) * 100%), var(--line));
+  transition:
+    --header-dark 300ms var(--ease-out),
+    box-shadow 240ms var(--ease-out);
+}
+
+.header[data-dark] {
+  --header-dark: 1;
+}
+
+/* Al bajar, una sombra suave en lugar de la línea */
+.header[data-scrolled] {
+  border-bottom-color: transparent;
+  box-shadow: 0 14px 34px -24px rgb(11 27 51 / 0.55);
+}
+
+/* Con el menú del celular abierto queda clara, como el panel que se despliega */
+.header[data-open] {
+  --mix: 0;
 }
 
 .inner {
@@ -21,27 +55,57 @@
   align-items: center;
   gap: 11px;
   color: var(--ink);
+  color: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
   font-size: 18px;
   font-weight: 760;
   font-stretch: 116%;
   letter-spacing: -0.03em;
   white-space: nowrap;
+  transition: color 200ms var(--ease-out);
 }
 
 .brand img {
   border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / calc(var(--on-dark) * 0.28));
+  transition: box-shadow 200ms var(--ease-out);
 }
 
 .nav {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
+/* La pastilla que marca la sección en la que estás: se desliza de un link al otro */
+.pill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background: rgb(11 27 51 / 0.07);
+  background: color-mix(in srgb, rgb(255 255 255 / 0.15) calc(var(--on-dark) * 100%), rgb(11 27 51 / 0.07));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 380ms var(--ease-out),
+    width 380ms var(--ease-out),
+    opacity 220ms ease,
+    background-color 200ms var(--ease-out);
+}
+
+.pill[data-on="1"] {
+  opacity: 1;
+}
+
 .navLink {
+  position: relative;
+  z-index: 1;
   padding: 10px 14px;
   border-radius: 999px;
   color: var(--ink-soft);
+  color: color-mix(in srgb, rgb(255 255 255 / 0.78) calc(var(--on-dark) * 100%), var(--ink-soft));
   font-size: var(--text-sm);
   font-weight: 560;
   transition:
@@ -49,10 +113,21 @@
     background-color 160ms var(--ease-out);
 }
 
+.navLink[aria-current] {
+  color: var(--ink);
+  color: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
+}
+
 @media (hover: hover) and (pointer: fine) {
   .navLink:hover {
     color: var(--ink);
+    color: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
     background: var(--mist);
+    background: color-mix(in srgb, rgb(255 255 255 / 0.1) calc(var(--on-dark) * 100%), var(--mist));
+  }
+
+  .navLink[aria-current]:hover {
+    background: transparent;
   }
 }
 
@@ -66,13 +141,16 @@
   min-height: 46px;
   padding: 0 20px;
   background: var(--ink);
+  background: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
   color: #fff;
+  color: color-mix(in srgb, var(--ink) calc(var(--on-dark) * 100%), #fff);
   font-size: 15.5px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .cta:hover {
     background: #1b3157;
+    background: color-mix(in srgb, #dfe7f3 calc(var(--on-dark) * 100%), #1b3157);
   }
 }
 
@@ -88,8 +166,13 @@
   border: 0;
   border-radius: 50%;
   background: var(--mist);
+  background: color-mix(in srgb, rgb(255 255 255 / 0.12) calc(var(--on-dark) * 100%), var(--mist));
   color: var(--ink);
+  color: color-mix(in srgb, #fff calc(var(--on-dark) * 100%), var(--ink));
   cursor: pointer;
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out);
 }
 
 .panel {
@@ -110,6 +193,12 @@
   font-weight: 650;
   font-stretch: 110%;
   letter-spacing: -0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: opacity 220ms ease;
+  }
 }
 
 @media (min-width: 961px) {
