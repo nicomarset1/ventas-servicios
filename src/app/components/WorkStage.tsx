@@ -110,6 +110,7 @@ export default function WorkStage({ title, projects }: Props) {
       ref={rootRef}
       id="trabajos"
       className={styles.stage}
+      data-header-dark
       aria-labelledby="trabajos-title"
       onPointerEnter={(event) => event.pointerType === "mouse" && setPaused(true)}
       onPointerLeave={() => setPaused(false)}
